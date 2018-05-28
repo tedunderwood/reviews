@@ -6,7 +6,7 @@ The key elements here are
 titlemeta.csv
 -------------
 
-A short list of the periodicals or periodical indexes gathered in this project.
+A short list of the periodicals or periodical indexes gathered in this project. Note the column 'index,' which has 'Y' only for periodical indexes.
 
 volmeta.csv
 -----------
