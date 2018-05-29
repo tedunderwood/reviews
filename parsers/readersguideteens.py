@@ -239,122 +239,29 @@ class Citation:
 
         return outrow
 
-def divide_into_citations(page):
+def parse_chunk(chunk):
     '''
-    Given a tagged page, go through the whole sequence
-    dividing it into citations. We rely on the Poole's convention
-    that each citation ends with a pair of numbers. However, since
-    there are various exceptions to that rule, we need to be a little
-    cautious. For instance, this is a well-formed Poole's citation:
-
-    Same art. Chr. Lit. 11: 105 a, 129 a.
-
-    I don't know what those a's are telling us. But clearly our confidence
-    that numeric/alpha boundaries correspond to citation boundaries needs
-    to be qualified. One number is enough to flag the beginning of a numeric
-    section. But you need more than one alphabetic token, or a capitalized token,
-    to signal the start of an alphabetic sequence. And alphabetic tokens that
-    are fullstopped should go with the previous citation if not capitalized
-    and the preceding number was not fullstopped.
+    Given a chunk of tagged lines, this divides them into citations.
     '''
+    citations = []
 
-    # The logic is, iterate through the sequence, finding pairs of
-    # alphabetic-sequence followed by numeric-sequence. We'll record
-    # start and end points as we hit them. When they don't exist yet,
-    # they are None.
+    tag, entryline = chunk[0]
+    the_entry = ' '.join(entryline.stringseq)
 
-    # Initial conditions:
+    holding = []
 
-    alphabet_start = 0
-    alphabet_end = None
-    numeric_start = None
-    numeric_end = None
-
-    citation_list = []
-
-    for i in range(page.length):
-
-        end_of_citation = False
-
-        if i == page.length - 1:
-            if not alphabet_end:
-                alphabet_end = i
-            if not numeric_start:
-                numeric_start = i
-            if not numeric_end:
-                numeric_end = i
-
-            end_of_citation = True
-
-        elif not alphabet_end:
-            if not page.hastag(i, 'numeric'):
-                pass
-                # we are in the middle of an alphabetic sequence
-                # everything good
-            elif page.hastag(i, 'numeric') and page.hastag(i, 'closeparen'):
-                pass
-                # numbers inside parentheses are often dates
-            else:
-                # we are in an alphabetic sequence and just reached
-                # a numeric token
-
-                alphabet_end = i + 1
-                numeric_start = i + 1
-                # python logic, sequences are start-inclusive, end-exclusive
-
-        elif alphabet_end and page.hastag(i, 'numeric'):
-            # we are in a numeric sequence and this is a number
-            # there is no problem, all is well with the world
-            pass
-
+    for idx in range(1, len(chunk)):
+        tag, line = chunk[idx]
+        if tag == 'endcitation':
+            holding.append(line)
+            citations.append(parse_citation(holding, the_entry))
+            holding = []
         else:
-            # We are in a numeric sequence and this is not a number.
-            # Has the numeric sequence ended yet?
-            # One non-numeric token is not enough to trigger this
+            holding.append(line)
 
-            if page.hastag(i, 'titlecase') or page.hastag(i, 'startdash'):
-                end_of_citation = True
 
-            elif page.hastag(i - 1, 'fullstop'):
-                end_of_citation = True
-                # the previous token was fullstopped so
-                # it was probably the end
 
-            elif page.hastag(i, 'fullstop') and page.hastag(i - 1, 'numeric'):
-                # this is a non-numeric token but it is full stopped and the previous
-                # token was numeric and not stopped, so we're going to count this
-                # as part of the numeric sequence.
-                pass
 
-            elif not page.hastag(i + 1, 'numeric'):
-                end_of_citation = True
-                # This token is not numeric, neither is the next one,
-                # so probably the numeric section is over
-            else:
-                # the next token is numeric, so relax, we're still in a numeric
-                # sequence
-                pass
-
-        if end_of_citation:
-
-            numeric_end = i
-            if alphabet_start == numeric_end:
-                continue
-
-            next_cite = Citation(page.subdivide(alphabet_start, numeric_end))
-
-            relative_num_start = (numeric_start - alphabet_start) - 1
-            relative_num_end = numeric_end - alphabet_start
-
-            next_cite.add_part('volandpgnums', relative_num_start, relative_num_end)
-            citation_list.append(next_cite)
-
-            alphabet_start = i
-            alphabet_end = None
-            numeric_start = None
-            numeric_end = None
-
-    return citation_list
 
 def parse_citation(cite, startinitial, endinitial):
     '''
@@ -543,7 +450,7 @@ def is_entry(tl):
         suspicious += 1
     if tl.hastag(linelen - 1, 'closeparen'):
         suspicious += 1
-    if tl.stringseq[linelen-1].endswith('Continued'):
+    if tl.stringseq[linelen-1].endswith('ontinued'):
         suspicious += 1
 
     for i in range(linelen):
@@ -559,19 +466,12 @@ def is_entry(tl):
     else:
         return False
 
-
-
 ## MAIN
 
-paths = glob.glob('../pooles/poolesclean*txt')
-
-citations = []
-start_headword = ''
-end_headword = ''
 
 rule_list = lexparse.patterns2rules(lexical_patterns)
 
-def parse_pages(pagefiles, rule_list):
+def parse_pages(pagefiles, rule_list, prev_entry = 'A'):
 
     for p in pagefiles:
         ## first read in a page and tag all the strings in each line
@@ -603,14 +503,97 @@ def parse_pages(pagefiles, rule_list):
             elif is_all_text(line):
                 linetag = 'alltext'
             else:
-                linetag = 'ambigious'
+                linetag = 'ambiguous'
 
             linetuples.append((linetag, line))
 
 
-        citations.extend(get_citations(page, rule_list, start_headword, end_headword))
+        # Now we organize lines into groups that share an entry.
+        # First, use alphabetical sequence to confirm entries. We're going create
+        # a list of lines that we think are entries.
 
-        # Now we assign main subjects.
+        entrypoints = []
+
+        # We're going to rely on the variable prev_entry, inerited from
+        # the previous page, to make sure
+        # that entries are in alphabetical order. But we also need a
+        # way to correct errors if we get off.
+
+        lowerthanprev = 0
+        allentries = 1
+        # note a bit of additive smoothing
+        firstonpage = 'Aa'
+
+        for ltuple in linetuples:
+            tag, line = ltuple
+            if tag == 'entry':
+                firstword = line.stringseq[0]
+
+                if firstonpage == 'Aa':
+                    firstonpage = firstword
+                    # 'Aa' is just a flag that we haven't taken the firstonpage yet
+
+                allentries += 1
+                if firstword < prev_entry:
+                    lowerthanprev += 1
+
+        if (lowerthanprev / allentries) > 0.5:
+            prev_entry = firstonpage
+
+            # If more than half the entries on the page begin with a word
+            # alphabetically earlier than prev_entry, we have gotten out of
+            # order, and the prev_entry needs to be reset to the first on page.
+
+        for idx, ltuple in enumerate(linetuples):
+            tag, line = ltuple
+            firstword = line.stringseq[0]
+            if tag == 'entry' and firstword >= prev_entry:
+                entrypoints.append(idx)
+                prev_entry = firstword
+            elif tag == 'alltext' and line.stringseq[0] >= prev_entry:
+                for idx2 in range(idx +1, len(linetuples)):
+                    tag2, line2 = linetuples[idx2]
+                    if tag2 == 'entry' and line2.stringseq[0] >= firstword:
+                        entrypoints.append(idx)
+                        prev_entry = firstword
+                        break
+                    elif tag2 == 'entry':
+                        break
+            else:
+                continue
+
+        # okay, now we have a list of lines that we think are entries.
+        # we can use that to create chunks of lines that share the same
+        # entry
+
+        chunks = []
+        for idx, entrypoint in enumerate(entrypoints):
+            linenum = entrypoint
+            if idx + 1 >= len(entrypoints):
+                chunks.append((entrypoint, len(linetuples)))
+            else:
+                for idx2 in range(idx + 1, len(entrypoints)):
+                    linenum2 = entrypoints[idx2]
+                    if linenum2 = linenum + 1:
+                        # sequential entries should be kept together
+                        linenum = linenum2
+                    else:
+                        # aha, a break
+                        chunks.append((entrypoint, linenum2))
+                        break
+
+        citations = []
+        for chunktuple in chunks:
+            startline, stopline = chunktuple
+            new_chunk = linetuples[startline: stopline]
+            new_citations = parse_chunk(new_chunk)
+            citations.extend(new_citations)
+
+
+
+
+
+
 
         current_header = ''
         for cite in citations:
