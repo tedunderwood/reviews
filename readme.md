@@ -20,4 +20,4 @@ Code used to extract publication facts from periodical indexes.
 pooles
 ------
 
-Preliminary results for *Poole's Index to Periodical Literature.*
+Preliminary results for *Poole's Index to Periodical Literature,* in the 19c.
