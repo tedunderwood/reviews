@@ -20,7 +20,7 @@ def extract(suffix):
 	with ZipFile(zippath) as z:
 		pageinfo = z.infolist()
 		for p in pageinfo:
-			pg = z.read(p.filename)
+			pg = str(z.read(p.filename), 'utf-8')
 			lines = pg.split('\n')
 			pages.append(lines)
 

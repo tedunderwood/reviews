@@ -35,6 +35,9 @@ def get_authors(pagelist):
 			if line.isupper():
 				upperpct = 1
 				digitpct = 0
+			elif len(line) == 0:
+				upperpct = 0
+				digitpct = 0
 			else:
 				upper = 0
 				lower = 0
