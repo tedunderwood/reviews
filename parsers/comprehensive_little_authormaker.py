@@ -9,7 +9,7 @@ from difflib import SequenceMatcher
 
 templates = {'LITTLE MAGAZINE INDEX', 'WORKS BY', 'WORKS ABOUT'}
 
-def match_strings(stringa, stringb):
+def match_strings(stringA, stringB):
 	m = SequenceMatcher(None, stringA, stringB)
 	match = m.quick_ratio()
 
