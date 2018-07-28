@@ -51,8 +51,8 @@ def get_authors(pagelist):
 					elif char.isdigit():
 						digits += 1
 
-				upperpct = upper / (upper + lower)
-				digitpct = digits / len(line)
+				upperpct = upper / (upper + lower + 0.1)
+				digitpct = digits / (len(line) + 0.1)
 
 			if upperpct < 0.9:
 				continue
