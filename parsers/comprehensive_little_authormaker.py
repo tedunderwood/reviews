@@ -11,12 +11,12 @@ templates = {'LITTLE MAGAZINE INDEX', 'WORKS BY', 'WORKS ABOUT'}
 
 def match_strings(stringa, stringb):
 	m = SequenceMatcher(None, stringA, stringB)
-    match = m.quick_ratio()
+	match = m.quick_ratio()
 
-    if match > 0.7:
-    	match = m.ratio()
+	if match > 0.7:
+		match = m.ratio()
 
-    return match
+	return match
 
 def get_authors(pagelist):
 	global templates
