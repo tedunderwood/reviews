@@ -19,7 +19,7 @@ for vol in vols2parse:
     pagelist = extractor.extract(vol)
     authors, author_names = authormaker.get_authors(pagelist)
 
-    with open('authorlist.txt', mode = 'w', encoding = 'utf-8') as f:
+    with open('authorlist.txt', mode = 'a', encoding = 'utf-8') as f:
         for auth in author_names:
             f.write(auth + '\n')
 
