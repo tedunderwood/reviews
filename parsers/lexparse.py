@@ -92,6 +92,15 @@ class TaggedList:
         else:
             return False
 
+    def extend(self, other_tagged_list):
+
+        for idx, tag in other_tagged_list.tagseq:
+            self.tagseq.append(tag)
+            matching_string = other_tagged_list.stringseq[idx]
+            self.stringseq.append(matching_string)
+
+        self.length = len(self.stringseq)
+
 
 def patterns2rules(patterntuple_list):
     '''
@@ -131,6 +140,12 @@ def apply_rule_list(rule_list, string_list):
                 tagsforthisstring.add(lexrule.tag)
 
         tag_list.append(tagsforthisstring)
+
+    # the last string in a string_list
+    # is always tagged end-of-line
+
+    if len(tag_list) > 0:
+        tag_list[-1].add('EOL')
 
     marked_up = TaggedList(string_list, tag_list)
 
