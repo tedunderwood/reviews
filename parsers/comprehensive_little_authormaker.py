@@ -87,12 +87,16 @@ def get_authors(pagelist):
 			# First we assess the percentage of characters that are uppercase,
 			# and the percentage that are digits.
 
-			if line.isupper():
+			if line.isalpha() and line.isupper():
 				upperpct = 1
 				digitpct = 0
+				upper = 10
+
 			elif len(line) == 0:
 				upperpct = 0
 				digitpct = 0
+				upper = 0
+				
 			else:
 				upper = 0
 				lower = 0
