@@ -94,7 +94,7 @@ class TaggedList:
 
     def extend(self, other_tagged_list):
 
-        for idx, tag in other_tagged_list.tagseq:
+        for idx, tag in enumerate(other_tagged_list.tagseq):
             self.tagseq.append(tag)
             matching_string = other_tagged_list.stringseq[idx]
             self.stringseq.append(matching_string)
