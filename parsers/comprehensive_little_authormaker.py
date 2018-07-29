@@ -132,13 +132,17 @@ def get_authors(pagelist):
 
 			else:
 				# maybe we need fuzzy matching?
-
+				matched = False
 				for t in templates:
 					match = match_strings(line, t)
-					if match > 0.88:
-						if line != 'LITTLE MAGAZINE INDEX':
+					if match > 0.85:
+						if t != 'LITTLE MAGAZINE INDEX':
 							last_auth_lines.append(line)
-						continue
+						matched = True
+						break
+						
+				if matched:
+					continue
 
 			# If flow reaches this point, all the reasons to ignore this line
 			# have been exhausted. We infer that it's an author name!

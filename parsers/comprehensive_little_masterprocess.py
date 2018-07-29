@@ -1,6 +1,6 @@
 # comprehensive_little_masterprocess.py
 
-import os, sys
+import os, sys, csv
 
 outfile = sys.argv[1]
 fieldnames = ['articleauth', 'byorabout', 'genre', 'year', 'journal', 'subject']
@@ -26,7 +26,7 @@ for vol in vols2parse:
     citations = citationmaker.authors_to_citations(authors)
 
     with open(outfile, mode = 'a', encoding = 'utf-8') as f:
-        writer = DictWriter(f, delimiter = '\t', fieldnames = fieldnames)
+        writer = csv.DictWriter(f, delimiter = '\t', fieldnames = fieldnames)
 
         for cite in citations:
 

@@ -19,8 +19,21 @@ def extract(suffix):
 
 	with ZipFile(zippath) as z:
 		pageinfo = z.infolist()
+
+		pagetuples = []
 		for p in pageinfo:
-			pg = str(z.read(p.filename), 'utf-8')
+			print(p.filename)
+			sequence = p.filename.split('/')[-1].replace('.txt', '')
+			try:
+				sequence = int(sequence)
+			except:
+				print(sequence)
+			pagetuples.append((sequence, p.filename))
+
+		pagetuples.sort()
+
+		for sequence, filename in pagetuples:
+			pg = str(z.read(filename), 'utf-8')
 			lines = pg.split('\n')
 			pages.append(lines)
 
