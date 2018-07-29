@@ -264,6 +264,8 @@ def subdivide_author(auth, rule_list):
 
     tokenchunk = []
 
+    tagged_group = 'not yet used'
+
     for line, group_tag in rawlines:
         tokens = line.strip().split()
 
@@ -295,7 +297,8 @@ def subdivide_author(auth, rule_list):
     # when we're done, since there's not a next tag to trigger the
     # division of tagged_group, we have to do it explicitly
 
-    if len(tagged_group) > 0:
+    if type(tagged_group) != str:
+        # slightly cheesy way of confirming that it's a TaggedList
         new_citations = divide_into_citations(tagged_group, last_tag, author_name)
         citation_list.extend(new_citations)
 
