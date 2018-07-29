@@ -256,6 +256,7 @@ def subdivide_author(auth, rule_list):
     '''
 
     author_name = auth.name
+    print(author_name)
     rawlines = auth.get_lines()
 
     last_tag = 'match-any'
@@ -268,7 +269,8 @@ def subdivide_author(auth, rule_list):
 
     for line, group_tag in rawlines:
         tokens = line.strip().split()
-
+        if len(tokens) < 1:
+            continue
         # what to do with the tokens depends on
         # where we are in a tag sequence
 
