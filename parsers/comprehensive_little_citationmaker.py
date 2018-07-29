@@ -371,7 +371,7 @@ def assign_genre(cite):
             continue
         elif genrebegun and not 'genreword' in taglist:
             # we've reached the end of the genre section
-            startposition = index
+            startposition = index + 1
             break
         else:
             continue

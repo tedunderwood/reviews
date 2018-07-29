@@ -106,7 +106,7 @@ def get_authors(pagelist):
 					elif char.isdigit():
 						digits += 1
 
-				upperpct = upper / (upper + lower + 0.1)
+				upperpct = upper / (len(line) + 0.1)
 				digitpct = digits / (len(line) + 0.1)
 
 			# Now that we have those percentages, we
@@ -140,7 +140,7 @@ def get_authors(pagelist):
 							last_auth_lines.append(line)
 						matched = True
 						break
-						
+
 				if matched:
 					continue
 

@@ -21,13 +21,13 @@ def extract(suffix):
 		pageinfo = z.infolist()
 
 		pagetuples = []
+
 		for p in pageinfo:
-			print(p.filename)
 			sequence = p.filename.split('/')[-1].replace('.txt', '')
 			try:
 				sequence = int(sequence)
 			except:
-				print(sequence)
+				print('non-integer filename: ', sequence)
 			pagetuples.append((sequence, p.filename))
 
 		pagetuples.sort()
