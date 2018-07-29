@@ -267,7 +267,6 @@ def subdivide_author(auth, rule_list):
     tagged_group = 'not yet used'
 
     for line, group_tag in rawlines:
-        print(group_tag)
         tokens = line.strip().split()
 
         # what to do with the tokens depends on
@@ -326,6 +325,7 @@ def assign_date(cite):
         if parenbegun and 'openparen' in taglist:
             startposition = index
             parenfinished = True
+            break
 
     if parenfinished:
         cite.add_part('date-parenthesis', startposition, endposition + 1)
