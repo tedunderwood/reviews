@@ -96,7 +96,7 @@ def get_authors(pagelist):
 				upperpct = 0
 				digitpct = 0
 				upper = 0
-				
+
 			else:
 				upper = 0
 				lower = 0
@@ -120,7 +120,7 @@ def get_authors(pagelist):
 				# this is a page number on the top of the page
 				# ignore it
 
-			elif upperpct < 0.95 or upper < 5:
+			elif upperpct < 0.75 or upper < 5:
 				last_auth_lines.append(line)
 				continue
 				# lowercase lines are not authors
