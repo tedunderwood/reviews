@@ -10,6 +10,8 @@
 # As often with Python, it may make sense to start reading from the
 # bottom of the script, and move up.
 
+import lexparse
+
 class Citation:
 
     # A citation, like a TaggedList, is basically a sequence of
