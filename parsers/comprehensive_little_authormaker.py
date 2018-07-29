@@ -106,21 +106,21 @@ def get_authors(pagelist):
 					elif char.isdigit():
 						digits += 1
 
-				upperpct = upper / (len(line) + 0.1)
-				digitpct = digits / (len(line) + 0.1)
+				upperpct = upper / (len(line) + 0.01)
+				digitpct = digits / (len(line) + 0.01)
 
 			# Now that we have those percentages, we
 
-			if upperpct < 0.9:
+			if digitpct > .96 and linenum < 2:
+				continue
+				# this is a page number on the top of the page
+				# ignore it
+
+			elif upperpct < 0.95 or upper < 5:
 				last_auth_lines.append(line)
 				continue
 				# lowercase lines are not authors
 				# but should be appended to these_lines
-
-			elif digitpct > .95 and linenum < 2:
-				continue
-				# this is a page number on the top of the page
-				# ignore it
 
 			elif line in templates:
 				# this is a line like "WORKS BY"
