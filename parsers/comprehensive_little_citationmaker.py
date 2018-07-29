@@ -448,8 +448,8 @@ def authors_to_citations(author_list):
 
     for auth in author_list:
         citation_list = subdivide_author(auth, rule_list)
-        parsed_citations = parse_parts(citation_list)
-        all_parsed_citations.extend(parsed_citations)
+        parse_parts(citation_list)
+        all_parsed_citations.extend(citation_list)
 
     return all_parsed_citations
 
