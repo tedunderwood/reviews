@@ -10,24 +10,37 @@
 # As often with Python, it may make sense to start reading from the
 # bottom of the script, and move up.
 
-import os, sys
-from difflib import SequenceMatcher
-
 class Citation:
 
-    # a citation has an author_name,
-    # it has a group_tag such as 'WORKS ABOUT' or 'WORKS BY'
-    # and it has a sequence of strings and tagsets
+    # A citation, like a TaggedList, is basically a sequence of
+    # strings paired with an equal-length sequence of tagsets.
 
-    # as it is parsed, it may also acquire "parts," which
-    # are dictionary entries associated with a "partname,"
-    # a "startposition" within the citation, and and
-    # "endposition" inside the citation.
+    # In addition, a citation can have "parts" and attributes.
+
+    # Parts are subsets of the sequence, represented as
+    # dictionary entries associated with a "partname,"
+    # a "startposition" within the citation, and an
+    # "endposition" inside the citation. Parts also have
+    # a 'stringvalue' which is simply the string version of
+    # the whole subsequence.
+
+    # Attributes are possessed globally by the citation as a whole.
+    # In the *Comprehensive Index to English-Language Little Magazines,*
+    # citations always have
+
+    # an author_name: the author entry under which this was found, and
+
+    # a group_tag: which will be "by" if this occurred in WORKS BY, or
+    #              "about" if it occurred in WORKS ABOUT.
+
+    # Citations *may* also have a date: the year of publication, if we can
+    # infer it.
 
     def __init__(self, tuples, group_tag, author_name):
 
-        self.group_tag = group_tag
-        self.author_name = author_name
+        self.attributes = dict()
+        self.attributes['group_tag'] = group_tag
+        self.attributes['author_name'] = author_name
         self.tagseq = []
         self.stringseq = []
 
@@ -36,6 +49,7 @@ class Citation:
             self.stringseq.append(astring)
 
         self.parts = dict()
+        self.length = len(self.stringseq)
 
     def is_assigned_to_part(self, index):
         for partname, part in self.parts.items():
@@ -44,6 +58,12 @@ class Citation:
 
         # or, if no part matched
         return False
+
+    def add_attribute(self, attribute_name, attribute_value):
+        ''' This is extremely simple. Attributes are just
+        basically a dictionary possessed by the Citation.'''
+
+        self.attributes[attribute_name] = attribute_value
 
     def add_part(self, partname, start, end):
 
@@ -156,6 +176,11 @@ class Citation:
                 break
 
         return i
+
+    def enumerate_reversed_tags(self):
+
+        for idx in reversed(range(len(self.tagseq))):
+            yield idx, self.tagseq[idx]
 
 def divide_into_citations(tagged_group, group_tag, author_name):
 
@@ -274,11 +299,129 @@ def subdivide_author(auth, rule_list):
 
     return citation_list
 
+def assign_date(cite):
+    ''' In the Comprehensive Index, dates are contained within parentheses
+    near the end of the citation.
+
+    So our strategy is going to be to iterate through the citation *starting
+    at the end and proceeding in reverse.* We will tag the first closeparen-openparen
+    pair we find as the "date-parenthesis." Then, if possible, we will extract
+    a year from that citation part.'''
+
+    parenbegun = False
+    parenfinished = False
+
+    for index, taglist in cite.enumerate_reversed_tags():
+
+        if 'closeparen' in taglist:
+            parenbegun = True
+            endposition = index
+
+        if parenbegun and 'openparen' in taglist:
+            startposition = index
+            parenfinished = True
+
+    if parenfinished:
+        cite.add_part('date-parenthesis', startposition, endposition + 1)
+        # +1 for the usual Python reason that sequences are start-inclusive
+        # and end-exclusive
+
+        last_string = cite.stringseq[endposition]
+        number_part = last_string.strip("[]()'")
+        try:
+            year2digit = int(number_part)
+        except:
+            year2digit = -1
+
+        if year2digit >= 0 and year2digit < 100:
+            date = 1900 + year2digit
+            cite.add_attribute('date', date)
+
+def assign_genre(cite):
+    ''' Citations in the Comprehensive Index tend to contain a one- or
+    two-word phrase defining the "genre" of the piece. Common options
+    include 'article.', 'poem.', 'fict.', or 'reviewed by'.
+
+    We want to find this phrase, both in order to identify book reviews
+    and in order to identify journal names, which tend to occupy the
+    space between the 'genre' and the 'date-parenthesis.'
+
+    We iterate from the end, in reverse order, because we are less likely
+    to hit misleading false positives that way. E.g. "reviewed" could
+    occur in a title, but it won't occur at the end of a citation.
+    '''
+
+    genrebegun = False
+    startposition = 0
+
+    for index, taglist in cite.enumerate_reversed_tags():
+
+        if not genrebegun and 'genreword' in taglist:
+            genrebegun = True
+            endposition = index
+        elif 'genreword' in taglist:
+            continue
+        elif genrebegun and not 'genreword' in taglist:
+            # we've reached the end of the genre section
+            startposition = index
+            break
+        else:
+            continue
+
+    if genrebegun:
+        cite.add_part('genre', startposition, endposition + 1)
+
+def assign_journal(cite):
+    '''
+    Right now this works very simply. We're going to assume that
+    everything between the "genre" phrase and the "date-parenthesis"
+    is the journal name. In reality, that won't be true. Often we have
+    a situation like
+
+    reviewed by Edwin R. Murrow. Brit. Review, vol. 10 (My '61)
+
+    In that situation the genre phrase is "reviewed by." The space
+    between genre phrase and date-parenthesis includes the reviewer's
+    name as well as the journal name.
+
+    But the only way we're going to be able to separate reviewers' names
+    from journal names is to start by getting a lot of these phrases and
+    then identifying the parts at the end that remain the same -- e.g.
+    "Brit Review."
+    '''
+
+    if 'genre' in cite.parts and 'date-parenthesis' in cite.parts:
+        startjournal, endjournal = cite.locs_between('genre', 'date-parenthesis')
+
+        if startjournal > 0 and endjournal > startjournal:
+            cite.add_part('journal', startjournal, endjournal)
+
+def assign_subject(cite):
+    ''' Our heuristic is that everything before the first string
+    identified as another part == 'subject'. Usually this will mean
+    everything before the 'genre'.
+    '''
+
+    startsubject = 0
+    endsubject = cite.unassigned_intro()
+
+    cite.add_part('subject', startsubject, endsubject)
+
+def parse_parts(citation_list):
+
+    for cite in citation_list:
+
+        assign_date(cite)
+        assign_genre(cite)
+        assign_journal(cite)
+        assign_subject(cite)
+
 def authors_to_citations(author_list):
 
     lexical_patterns = [('numeric', '.?[0-9]{1,7}.?[0-9]*[,.:=]?'), \
-    ('samearticle', {'Same', 'art.', 'same', 'art', 'Snme', 'Art.'}), \
-    ('newseries', {'n.s.', 'n.', 's.', 'n', 's'}), \
+    ('genreword', {'reviewed', 'by', 'review.', 'review', 'by,',
+        'article.', 'article', 'article-non', 'lit.', 'non-lit.',
+        'poem.', 'fict.', 'fiction', 'fict', 'fiction.', 'poem'}),
     ('openparen', '\(.*'),
     ('closeparen', '.*\)'),
     ('fullstop', '.*\.'),
@@ -295,5 +438,12 @@ def authors_to_citations(author_list):
 
     rule_list = lexparse.patterns2rules(lexical_patterns)
 
+    all_parsed_citations = []
+
     for auth in author_list:
         citation_list = subdivide_author(auth, rule_list)
+        parsed_citations = parse_parts(citation_list)
+        all_parsed_citations.extend(parsed_citations)
+
+    return all_parsed_citations
+

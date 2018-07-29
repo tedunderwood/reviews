@@ -156,14 +156,5 @@ def get_authors(pagelist):
 			last_author_name = line
 			author_names.append(line)
 
-	return authors
-
-vols2parse = ['39015019184806']
-
-for vol in vols2parse:
-	pagelist = extract_pagelist.extract(vol)
-	authors = get_authors(pagelist)
-	with open('authorlist.txt', mode = 'w', encoding = 'utf-8') as f:
-		for auth in author_names:
-			f.write(auth + '\n')
+	return authors, author_names
 
