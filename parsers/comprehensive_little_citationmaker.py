@@ -191,7 +191,7 @@ def writegroup(taggedlist):
         if 'EOL' in tags:
             outlines.append('>\n')
 
-    with open('taggedlists.txt', mode = 'w', encoding = 'utf-8') as f:
+    with open('taggedlists.txt', mode = 'a', encoding = 'utf-8') as f:
         f.write(' '.join(outlines))
         f.write('\nNEW LIST\n')
 
