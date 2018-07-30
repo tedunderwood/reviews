@@ -309,6 +309,9 @@ def subdivide_author(auth, rule_list):
 
             # and create a new tagged_group
             tagged_group = lexparse.apply_rule_list(rule_list, tokens)
+            # and make this tag into the last_tag
+            last_tag = group_tag
+
 
     # when we're done, since there's not a next tag to trigger the
     # division of tagged_group, we have to do it explicitly
