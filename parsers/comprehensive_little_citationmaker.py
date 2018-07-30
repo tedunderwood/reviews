@@ -184,6 +184,18 @@ class Citation:
         for idx in reversed(range(len(self.tagseq))):
             yield idx, self.tagseq[idx]
 
+def writegroup(taggedlist):
+    outlines = []
+    for astring, tags in zip(taggedlist.stringseq, taggedlist.tagseq):
+        outlines.append(astring)
+        if 'EOL' in tags:
+            outlines.append('>\n')
+
+    with open('taggedlists.txt', mode = 'w', encoding = 'utf-8') as f:
+        f.write(' '.join(outlines))
+        f.write('\nNEW LIST\n')
+
+
 def divide_into_citations(tagged_group, group_tag, author_name):
 
     # we look for a sequence of three triggers to
@@ -208,6 +220,8 @@ def divide_into_citations(tagged_group, group_tag, author_name):
     parenopened = False
     parenclosed = False
     interruptions = 0
+
+    writegroup(tagged_group)
 
     for string, tags in zip(tagged_group.stringseq, tagged_group.tagseq):
         tuples_for_next_citation.append((string, tags))
