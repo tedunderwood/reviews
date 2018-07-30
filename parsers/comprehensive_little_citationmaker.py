@@ -185,6 +185,8 @@ class Citation:
             yield idx, self.tagseq[idx]
 
 def writegroup(taggedlist):
+    ''' Was used for debugging,
+    now deactivated.'''
     outlines = []
     for astring, tags in zip(taggedlist.stringseq, taggedlist.tagseq):
         outlines.append(astring)
@@ -201,9 +203,9 @@ def divide_into_citations(tagged_group, group_tag, author_name):
     # we look for a sequence of three triggers to
     # divide citations:
     #   1) an open parenthesis
-    #   2) a close parenthesis.
+    #   2) a close parenthesis with some numbers attached.
     #   3) a token that contains
-    #      digits, ended with an EOL.
+    #      digits, ended with a period and/or an EOL.
     #
     # e.g  (Ap '61) 341-42.
 
@@ -221,23 +223,24 @@ def divide_into_citations(tagged_group, group_tag, author_name):
     parenclosed = False
     interruptions = 0
 
-    writegroup(tagged_group)
+    # writegroup(tagged_group)
+    # was used for debugging, now deactivated
 
     for string, tags in zip(tagged_group.stringseq, tagged_group.tagseq):
         tuples_for_next_citation.append((string, tags))
 
-        if parenclosed and 'EOL' in tags and 'somenumeric' in tags:
+        if parenclosed and ('fullstop' in tags or 'EOL' in tags) and 'somenumeric' in tags:
             next_citation = Citation(tuples_for_next_citation, group_tag, author_name)
             citation_list.append(next_citation)
             tuples_for_next_citation = []
 
-        elif parenopened and 'closeparen' in tags:
+        elif parenopened and 'closeparen' in tags and 'somenumeric' in tags:
             parenclosed = True
             interruptions = 0
 
         elif 'openparen' in tags:
             parenopened = True
-            if 'closeparen' in tags:
+            if 'closeparen' in tags and 'somenumeric' in tags:
                 parenclosed = True
                 # it's possible for both to happen at once, like
                 # ('44)

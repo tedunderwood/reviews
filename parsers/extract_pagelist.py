@@ -11,7 +11,12 @@
 from zipfile import ZipFile
 import os, sys
 
-def extract(suffix):
+def extract(suffix, startpage):
+	''' Reads pages in the zipfile named by suffix.
+	First it sorts the pages to put them in integer order.
+	It only reads pages after startpage.
+	'''
+	
 	datadir = '/media/secure_volume/volsinuse/'
 	zippath = datadir + suffix + '.zip'
 
@@ -33,6 +38,9 @@ def extract(suffix):
 		pagetuples.sort()
 
 		for sequence, filename in pagetuples:
+			if sequence < startpage:
+				continue
+
 			pg = str(z.read(filename), 'utf-8')
 			lines = pg.split('\n')
 			pages.append(lines)

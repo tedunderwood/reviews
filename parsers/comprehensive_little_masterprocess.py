@@ -2,8 +2,8 @@
 
 import os, sys, csv
 
-outfile = sys.argv[1]
-fieldnames = ['articleauth', 'byorabout', 'genre', 'year', 'journal', 'subject']
+outfile = '/media/secure_volume/output/' + sys.argv[1]
+fieldnames = ['articleauth', 'byorabout', 'genre', 'journal', 'year', 'subject']
 
 if not os.path.isfile(outfile):
     with open(outfile, mode = 'w', encoding = 'utf-8') as f:
@@ -13,10 +13,10 @@ import comprehensive_little_authormaker as authormaker
 import comprehensive_little_citationmaker as citationmaker
 import extract_pagelist as extractor
 
-vols2parse = ['39015019184806']
+vols2parse = [('39015019184806', 37)]
 
-for vol in vols2parse:
-    pagelist = extractor.extract(vol)
+for vol, startpage in vols2parse:
+    pagelist = extractor.extract(vol, startpage)
     authors, author_names = authormaker.get_authors(pagelist)
 
     with open('authorlist.txt', mode = 'a', encoding = 'utf-8') as f:
