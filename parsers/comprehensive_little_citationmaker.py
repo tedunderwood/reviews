@@ -236,6 +236,7 @@ def divide_into_citations(tagged_group, group_tag, author_name):
             parenopened = False
             parenclosed = False
             interruptions = 0
+            print('trigger3')
 
         elif parenopened and 'closeparen' in tags and 'somenumeric' in tags:
             parenclosed = True
