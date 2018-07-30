@@ -233,6 +233,9 @@ def divide_into_citations(tagged_group, group_tag, author_name):
             next_citation = Citation(tuples_for_next_citation, group_tag, author_name)
             citation_list.append(next_citation)
             tuples_for_next_citation = []
+            parenopened = False
+            parenclosed = False
+            interruptions = 0
 
         elif parenopened and 'closeparen' in tags and 'somenumeric' in tags:
             parenclosed = True
@@ -460,7 +463,7 @@ def authors_to_citations(author_list):
     ('monthabbrev', {'Ja', 'F', 'Mr', 'Ap', 'My', 'Je', 'Jl', 'Ag', 'S', 'O', 'N', 'D'}),
     ('lineendingyear', '[\'"•■]\d+'),
     ('volandpgrange', '[0-9]+[:][0-9-]+'),
-    ('somenumeric', '\S?\d+\S?'),
+    ('somenumeric', '.?[0-9]{1,7}.?.?[0-9]*.?'),
     ('allcaps', '[A-Z\']+')
     ]
 
