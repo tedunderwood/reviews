@@ -22,7 +22,7 @@ pooles
 
 Preliminary results for *Poole's Index to Periodical Literature,* in the 19c.
 
-Manual data
+manual data
 ------
 
 data facilitating python script
