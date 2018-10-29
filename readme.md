@@ -1,7 +1,7 @@
 reviews
 =======
 
-Mining periodical indexes and book reviews, 1800-2010. In collaboration with Richard Jean So and Yuerong Hu.
+Mining periodical indexes and book reviews, 1800-2010. In collaboration with Kent Kai-hsiung Chang, Yuerong Hu, and Richard Jean So.
 
 The project is at an early stage of development. Our ultimate goal is to develop a database of responses to fiction (and poetry, where possible). Evidence of contemporary reception can be used to train models of genre and literary prestige.
 
