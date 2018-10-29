@@ -17,3 +17,8 @@ tedsnewvolids.txt
 -----------------
 
 A flat list of all the volids used in this project.
+
+nytbr.txt
+----------
+
+A list of volumes in the New York Times Book Review. Formatted as a Python list.
