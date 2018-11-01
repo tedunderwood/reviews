@@ -97,21 +97,45 @@ class Citation:
 
         titledone = False
         authordone = False
+        authorstop = False
+
+        # The underlying logic here is elegant. We take words up to the first
+        # full stop as the "author." From there to the next full stop is
+        # the "title." Except, well, in cases of initials.
+        # Since "Adams, B. V." has two periods, the rule is that we need
+        # a non-fullstopped word or a word of more than three characters to trigger
+        # 'title."
+
+        # To implement that we need two flags:
+        #   authorstop -- we have reached a full stop
+        #   authordone -- we also hit a subsequent word that lacks a period
+        #                 or is more than three chars long
+
         title = []
         author = []
         price = 0
         publisher = []
 
         for word, tags in alltuples:
-            if not titledone:
+
+            if authorstop and not authordone:
+                if len(word) > 3:
+                    authordone = True
+                elif 'fullstop' not in tags:
+                    authordone = True
+
+            if not authordone:
+                author.append(word)
+                if 'fullstop' in tags:
+                    authorstop = True
+                if authorstop and len(word) > 2:
+                    authordone = True
+                    # because that wasn't an initial
+
+            elif not titledone:
                 title.append(word)
                 if 'fullstop' in tags:
                     titledone = True
-
-            elif not authordone:
-                author.append(word)
-                if 'fullstop' in tags:
-                    authordone = True
 
             else:
                 if 'dollarprice' in tags:
