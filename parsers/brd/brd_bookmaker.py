@@ -148,7 +148,7 @@ def get_books(pagelist):
     ('dollarprice', '.*\$.?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
     ('hyphennumber', '[0-9]*[-—]+[0-9]*[,.:=]?'),
-    ('openquote', '[\"\'“‘]+\S*)')
+    ('openquote', '[\"\'“‘]+\S*')
     ]
 
     rule_list = lexparse.patterns2rules(lexical_patterns)
