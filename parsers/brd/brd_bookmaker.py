@@ -17,13 +17,13 @@ from difflib import SequenceMatcher
 import lexparse
 
 def match_strings(stringA, stringB):
-	m = SequenceMatcher(None, stringA, stringB)
-	match = m.quick_ratio()
+    m = SequenceMatcher(None, stringA, stringB)
+    match = m.quick_ratio()
 
-	if match > 0.7:
-		match = m.ratio()
+    if match > 0.7:
+        match = m.ratio()
 
-	return match
+    return match
 
 def pricetranslate(astring):
     digits = ''
@@ -60,7 +60,7 @@ class Book:
 
     def __init__(self, cite, linelist):
 
-    	self.thecitation = cite
+        self.thecitation = cite
         self.reviewlines = linelist
         self.author = cite.author
         self.title = cite.title
@@ -153,7 +153,7 @@ def get_books(pagelist):
 
     rule_list = lexparse.patterns2rules(lexical_patterns)
 
-	# Our strategy is to find pairs of lines that bookend a citation. A
+    # Our strategy is to find pairs of lines that bookend a citation. A
     # citation and the lines that follow it (before the next citation)
     # is going to count as an Author.
 
@@ -166,15 +166,15 @@ def get_books(pagelist):
     # $ + number or number + c, or number containing a hyphen, or that ends
     # with a publisher.
 
-	# We create a list of author_names as well as a list of Author objects.
+    # We create a list of author_names as well as a list of Author objects.
 
-	author_errors = []
-	books = []
+    author_errors = []
+    books = []
 
-	# We keep track of the last author name we've seen; it's going to be
-	# the name that governs the lines we are currently examining.
+    # We keep track of the last author name we've seen; it's going to be
+    # the name that governs the lines we are currently examining.
 
-	last_author_name = ''
+    last_author_name = ''
 
     textpage = 1
 
@@ -184,9 +184,9 @@ def get_books(pagelist):
     governing_citation = Citation(['Anonymous. My book. $1.00. Macmillan.'], rule_list, textpage)
     aligned = 0
 
-	for pagenum, page in enumerate(pagelist):
+    for pagenum, page in enumerate(pagelist):
 
-		for linenum, line in enumerate(page):
+        for linenum, line in enumerate(page):
 
             # Line numbers are only relevant in guiding us to ignore the running header,
             # and to update the page number. This will be imperfect, because OCR,
@@ -282,5 +282,5 @@ def get_books(pagelist):
                     citationlines.append(line)
 
 
-	return books, author_errors
+    return books, author_errors
 
