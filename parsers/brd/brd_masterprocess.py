@@ -17,7 +17,7 @@ vols2parse = [('39015078260935', 9)]
 
 for vol, startpage in vols2parse:
     pagelist = extractor.extract(vol, startpage)
-    books = bookmaker.get_books(pagelist)
+    books, author_errors = bookmaker.get_books(pagelist)
 
     with open(outfile, mode = 'a', encoding = 'utf-8') as f:
         writer = csv.DictWriter(f, delimiter = '\t', fieldnames = fieldnames)
@@ -32,6 +32,8 @@ for vol, startpage in vols2parse:
             c['lines'] = len(book.reviewlines)
 
             writer.writerow(c)
+
+        print(author_errors)
 
 
 
