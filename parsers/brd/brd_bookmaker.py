@@ -206,7 +206,7 @@ def get_books(pagelist):
                 if line.isdigit() and aligned < 4:
                     try:
                         newtextpage = int(line)
-                        if textpage + 1 = newtextpage:
+                        if textpage + 1 == newtextpage:
                             aligned += 1
                         else:
                             aligned = 0
