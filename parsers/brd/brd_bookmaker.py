@@ -67,6 +67,7 @@ class Book:
         self.price = cite.price
         self.publisher = cite.publisher
         self.pagenum = cite.pagenum
+
         # Note that we give the book a pagenumber corresponding to the page
         # where its citation ended.
 
