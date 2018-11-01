@@ -105,12 +105,12 @@ class Citation:
         for word, tags in alltuples:
             if not titledone:
                 title.append(word)
-                if fullstop in tags:
+                if 'fullstop' in tags:
                     titledone = True
 
             elif not authordone:
                 author.append(word)
-                if fullstop in tags:
+                if 'fullstop' in tags:
                     authordone = True
 
             else:
