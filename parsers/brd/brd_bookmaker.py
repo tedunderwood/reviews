@@ -227,6 +227,13 @@ def get_books(pagelist):
                     continue
                     # skip this line
 
+                if len(line) > 15:
+                    thetail = line[-11: ]
+                    thematch = match_strings('—Continued.', thetail)
+                    if thematch > 0.8:
+                        print("continued: ", line)
+                        continue
+
                 if line.isdigit() and aligned < 4:
                     try:
                         newtextpage = int(line)
@@ -235,9 +242,36 @@ def get_books(pagelist):
                         else:
                             aligned = 0
                         textpage = newtextpage
-
                     except:
                         textpage += 1
+
+                elif len(line) > 12 and line[-2: ].isdigit() and aligned < 4:
+                    words = line.split()
+                    if words[-1].isdigit():
+                        pagenumpart = words[-1]
+                        try:
+                            newtextpage = int(pagenumpart)
+                            if textpage + 1 == newtextpage:
+                                aligned += 1
+                            else:
+                                aligned = 0
+                            textpage = newtextpage
+                        except:
+                            textpage += 1
+
+                elif len(line) > 12 and line[0: 2].isdigit() and aligned < 4:
+                    words = line.split()
+                    if words[0].isdigit():
+                        pagenumpart = words[0]
+                        try:
+                            newtextpage = int(pagenumpart)
+                            if textpage + 1 == newtextpage:
+                                aligned += 1
+                            else:
+                                aligned = 0
+                            textpage = newtextpage
+                        except:
+                            textpage += 1
 
             tokens = line.strip().split()
             if len(tokens) < 1:
