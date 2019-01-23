@@ -70,7 +70,7 @@ args = sys.argv
 infile = args[1]
 outfile = args[2]
 
-toget = pd.read_csv(infile, sep = '\t', index_col = 'seq')
+toget = pd.read_csv(infile, sep = '\t')
 bypath = toget.groupby('PathID')
 
 recordsfromallpaths = []
@@ -87,8 +87,8 @@ for pathid, group in bypath:
     records, errorlist = get_texts(zf, seqtuples)
 
     for rec in records:
-        seq = rec['seq']
-        recordsfromallpaths.append((seq, rec))
+        recordid = rec['RecordID']
+        recordsfromallpaths.append((recordid, rec))
 
 recordsfromallpaths.sort(key = lambda x: x[0])
 
