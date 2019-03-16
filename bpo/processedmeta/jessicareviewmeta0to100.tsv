@@ -1,0 +1,120 @@
+seq	PubYear	RecordID	RecordTitle	Title	bookauthor	bookdate	booktitle	isfiction	howpositive	genresnamed	comments
+0-0	1875	8705503	John Holdsworth, Chief Mate.	The Athenaeum	Russell, William Clark	1880	John Holdsworth, chief mate	y	4		
+0-1	1875	8705503			Cunninghame, Richard		In Bonds, but Fetterless	y	2		
+0-2	1875	8705503			Clarke, Marcus Andrew Hislop		For the Term of his Natural Life	y	3		
+1	1807	4962734	The Mountain Bard; Consisting of Ballads and so gs, founded on Facts and Le Tales.	Cabinet, or, monthly report of polite literature, 1807-1808	Hogg, James	1821	The mountain bard ; consisisting of legendary ballads and tales	n			
+2	1892	6018300	Book review	Novel review				n			
+3	1899	3174897	THE OPTIMIST.	The Bookman	Morrah, Herbert	1897	The optimist	y	2		
+4	1886	6725479	Our Home by the Adriatic.	The Academy, 1869-1902, 0269-333X	Collier, Margaret	1886	Our home by the Adriatic	n			
+5	1871	8569120	PEEPS AT THE FAR EAST.	Examiner				n			
+6	1817	8198637	79. Placide, a Spanish Tale. In Two Vols. Translated from Les Battuecas, of Madame de Genlis.	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833	comtesse de, Genlis, Stéphanie Félicité	1817	Placide : a Spanish tale	y	4		
+7	1880	8541999	Lady Laura.	Examiner	Christie, Mary Elizabeth	1880	Lady Laura	y	3	metaphysical novel	
+8-0	1878	8708033	CHRISTMAS BOOKS.	The Athenaeum	Bliss, Mrs. J. Worthington	1885	Every Inch a King	y	3	juvenile	
+8-1	1878	8708033	CHRISTMAS BOOKS.	The Athenaeum	anonymous		Clever Boys	y	3	novelette	
+8-2	1878	8708033	CHRISTMAS BOOKS.	The Athenaeum	Halifax, H. G.		Among the Welsh Hills	y	1		
+8-3	1878	8708033	CHRISTMAS BOOKS.	The Athenaeum	Marshall, Emma		Job Singleton's Heir, and other Stories	y	2	juvenile	
+8-4	1878	8708033	CHRISTMAS BOOKS.	The Athenaeum	Goddard, Julia		Kaspar and the Summer Fairies	y	5		
+8-5	1878	8708033	CHRISTMAS BOOKS.	The Athenaeum	Harris, L. P. Mohun		What the Swallows Told Me	y	4	juvenile	
+8-6	1878	8708033	CHRISTMAS BOOKS.	The Athenaeum	Ellis, Mary W.		Little Bess	y	4		
+8-7	1878	8708033	CHRISTMAS BOOKS.	The Athenaeum	anonymous		Master Bobby	y	4	juvenile	
+8-8	1878	8708033	CHRISTMAS BOOKS.	The Athenaeum	Guernsey, Lucy Ellen		Winifred; or, an English Maiden in the Seventeenth Century	y	2	historical	
+9	1913	2433881	THE OLD TIME BEFORE THEM.	The English review,  1908-1937	Phillpotts, Eden	1913	The old time before them	y		short stories	
+10	1819	5074377	Tales of My Landlord. New Series; containing Pontefract Castle.	The Literary chronicle and weekly review, May 22, 1819-Dec. 28, 1822	Fearman, William	1820	Tales of my Landlord, New Series, containing Pontefract Castle	y	3		
+11	1861	5309345	EVAN HARRINGTON.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Meredith, George	1887	Evan Harrington	y	5	higher class of fiction	
+12	1819	2705604	ART. I. A Narrative of the Expedition to the Rivers Orinoco and Apure in South America, which sailed from England in November 1817, and joined the Patriotic Forces in Venezuela and Caraccas.	The Edinburgh monthly review				n			
+13	1818	5099827	Ashford Rectory, or the Spoiled Child reformed.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Jamieson, Frances Thurtle	1820	Ashford rectory; or, The spoiled child reformed. Containing a short introduction to the sciences of architecture and heraldry; with a particular account of the Grecian and Roman games, etc. etc	y	5	juvenile	
+14	1819	8495667	29. Harold the Exile, pp. 919. 3 vols. (Concluded from p. 154.)	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833		1819	Harold the exile	y	4		
+15	1846	8394334	Sketches from Life; by the late Laman Blanchard.	Examiner	Blanchard, Laman	1846	Sketches from life	n			
+16	1826	5205144	Tales of a Voyager to the Arctic Ocean.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Gillies, R. P. (Robert Pearse)	1826	Tales of a voyager to the Arctic Ocean	n			
+17	1863	4837207	VERNER'S PRIDE.	The Reader,  1863-1867	Wood, Ellen	1872	Verner's pride	y	3		
+18	1911	9057271	The Poems of Percy Bysshe Shelley.	The Athenaeum	Shelley, Percy Bysshe	1906	The prose works of Percy Bysshe Shelley ... ed. ... by Richard Herne Shepherd	n			
+19	1906	8903336	The Voyage of the Arrow.	The Athenaeum	Hains, T. Jenkins (Thornton Jenkins)	1906	The voyage of the Arrow : to the China Seas ; its adventures and perils, including its capture by Sea Vultures from the Countess of Warwick, as set down by William Gore, Chief Mate	y	3	romantic tale|sea-story	
+20	1901	6810086	LOVE IDYLLS.	The Academy, 1869-1902, 0269-333X	Crockett, S. R. (Samuel Rutherford)	1901	Love idylls	y	2		
+21	1907	3165111	THE EIGHT GUESTS.	The Bookman	White, Percy	1907	The eight guests	y	4		
+22	1898	6770460	Pratt Portraits: Sketched in a New England Suburb.	The Academy, 1869-1902, 0269-333X	Fuller, Anna	1897	Pratt portraits, sketched in a New England suburb	y	3	short stories	
+23	1828	8919149	The Kuzzilbash; a Tale of Khorasan.	The Atheneaum. London literary and critical journal, Jan. 2, 1828-July 23, 1828	Fraser, James Baillie	1828	The Kuzzilbash. A tale of Khorasan	y	4		
+24	1826	5205297	Almack's; a Novel.	The Literary gazette : A weekly journal of literature, science, and the fine arts	White, Charles	1827	Almack's; a novel	y	nan		
+25	1897	6654441	They that Sit in Darkness.	The Academy, 1869-1902, 0269-333X	Mackie, John	1897	They that sit in darkness. A story of the Australian Never-Never	y	4	adventure	
+26	1897	3178982	HIGHWAYS AND BYWAYS IN DEVON AND CORNWALL.	The Bookman	Johnson, Clifton	1904	Highways and byways of the South	n			
+27	1865	9453297	Dunvarlick; or, Round about the Bush.	The Athenaeum	Macrae, David	1865	Dunvarlich; or, Round about the bush	y	1	temperance tale	
+28	1892	8952636	PASSING THE LOVE OF WOMEN.	The Athenaeum	Needell, J. H, Mrs	1892	Passing the love of women	y	5		
+29-0	1870	9194214	George Canterbury's Will.	The Athenaeum	Wood, Ellen	1870	George Canterbury's will	y	2		
+29-1	1870	9194214	George Canterbury's Will.	The Athenaeum	Jackson, Henry		A Dangerous Guest	y	1		
+29-2	1870	9194214	George Canterbury's Will.	The Athenaeum	Lake, Elleray		Longleaf	y	3		
+29-3	1870	9194214	George Canterbury's Will.	The Athenaeum	anonymous		Margarita, or the Queen of Night	y	2	sensation novel	
+29-4	1870	9194214	George Canterbury's Will.	The Athenaeum	Lee, Holme		For Richer, for Poorer	y	3		
+29-5	1870	9194214	George Canterbury's Will.	The Athenaeum	anonymous		Estelle Russell	y	4		
+30	1913	8968934	My Recollections and Reflections.	The Athenaeum	Makino, Yoshio	1913	My recollections and reflections	n			
+31	1899	3158382	THE BATTLE OF THE STRONG.	The Bookman	Parker, Gilbert, Sir	1898	The battle of the strong;	y	2	local color	
+32	1858	8450468	German Love, from the Papers of an Alien.	Examiner	Müller, F. Max (Friedrich Max)	1877	German love; from the papers of an alien	y	3		
+33	1889	5844317	EIGHTEENTH CENTURY LITERATURE.	The Scots observer, 1888-1890		1888	Eighteenth century essays	n			
+34	1869	8582856	The Ingoldsby Legends.	Examiner	Ingoldsby, Thomas	1848	The Ingoldsby legends	y	4		
+35	1849	4971272	The Puritan and his Daughter.	Critic of books, society, pictures, music and decorative art, 1848-1849	Paulding, James Kirke	1849	The Puritan & his daughter	y	3		
+36	1914	6877229	Outline Lecture on Herod's Temple of the New Testament.	The Academy, 1914				n			
+37	1899	6667732	THE SPLENDID PORSENNA.	The Academy, 1869-1902, 0269-333X	Fraser, Hugh, Mrs	1900	The splendid Porsenna;	y	3		
+38	1874	6671184	The Barber's Chair.	The Academy, 1869-1902, 0269-333X	Jerrold, Douglas William	1874	The barber's chair, and the hedgehog letters	y	2	anecdotes	
+39	1870	8676121	Starlight, &c.	The Athenaeum				n			
+40	1858	8771882	The Handwriting on the Wall: a Story.	The Athenaeum	Atherstone, Edwin	1858	The handwriting on the wall : a story	y	2		
+41	1804	4592855	Book review	The Critical review, or, Annals of literature	Castle, Agnes and Egerton		Rose of the world	y	4	novel | psychological	
+42	1846	9015794	Personal Recollections of a Ten Months' Residence in Berlin; also, Extracts from a Journal kept in Paris during the Crisis of 1839.	The Athenaeum	Charlotte Elizabeth	1845	Personal recollections. Osric, (a poem) The Rockite. The siege of Derry. Letters from Ireland. Miscellaneous poems				
+43	1859	9143557	Confessions of a Too Generous Young Lady; with a later continuation.	The Athenaeum		1859	Confessions of a too-generous young lady : with a later continuation	y	2		
+44	1836	6144746	Mr. Midshipman Easy.	The Metropolitan magazine,  1833-1840	Marryat, Frederick	1836	Mr. Midshipman Easy	y	5		
+45	1808	4604142	MISCELLANIES.	The Critical review, or, Annals of literature	Goldsmith, Oliver	1806	Miscellanies	n			
+46	1870	6641706	The Poetical Works of Percy Bysshe Shelley.	The Academy, 1869-1902, 0269-333X	Shelley, Percy Bysshe (W.M. Rossetti, ed.)	1897	The prose works of Percy Bysshe Shelley : from the original editions	y	4		
+47-0	1852	9432180		Examiner	Sutherland, Peter C.	1851	Observations on the Natural History and Physical Features of the Countries and Frozen Seas visited	n			
+47-1	1852	9432180	Journal of a Voyage in Baffin's Bay and Barrow's Straits in the Years 1850-51, performed by H. M.'s Ships Lady Franklin and Sophia, under the command of Mr William Penny in Search of the Missing Crews of H. M.'s Ships Erebus and Terror: with a Narrative of Sledge Excursions on the Ice of Wellington Channel; and Observations on the Natural History and Physical Features of the Countries and Frozen Seas visited.	Examiner	Fuller, Thomas	1851	Journal of a voyage to Liberia, and a visit to several of its settlements	n			
+48	1806	8192403	126. A Letter to the Right Hon. William Windham, Secretary at War, on the Subject of exercising Volunteers on a Sabbath-day.	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833	pseud. Fabius	1821	A letter to the Right Hon. Lord Byron, protesting against the immolation of Gray, Cowper, & Campbell, at the shrine of Pope	n			
+49	1803	5746585	7. A Short Account of Pelletier.	Literary journal, or, Universal review of literature, 1804-1806	Brayton, Patience Greene	1802	A short account of the life and religious labours of Patience Brayton, late of Swansey, in the state of Massachusetts	n			
+50	1870	8507096	A Voyage Round the World.	Examiner	Verne, Jules	1874	A voyage round the world. In search of the castaways: a romantic narratives of the loss of Captain Grant of the Brig Britannia and of the adventures of his children and friends in his discovery and rescue	y	5		
+51	1862	9446250	Owen: a Waif.	The Athenaeum	Robinson, F. W. (Frederick William)	1862	Owen: a waif	y	2		
+52	1861	8660460	Notice to Quit.	The Athenaeum	Wills, W. G	1861	Notice to quit	y	4		
+53	1848	4994321	Rienzi, the last of the Roman Tribunes.	Critic of books, society, pictures, music and decorative art, 1848-1849	Lytton, Edward Bulwer Lytton, Baron	1842	Rienzi, the last of the tribunes	y	4		
+54	1848	8993792	Harold, the Last of the Saxon Kings.	The Athenaeum	Lytton, Edward Bulwer Lytton, Baron	1848	Harold, the last of the Saxon kings;	y	3		
+55	1831	8252179	The Works of Lord Byron. Vols. V. and VI. 16mo. Murray.	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833	Barón, Byron, George Gordon Byron	1828	The works of Lord Byron	n			
+56	1913	6870044	The Power Behind.	The Academy and literature, 1910-1914	Willcocks, M. P. (Mary Patricia)	1913	The power behind	y	4		
+57	1833	5219115	Memoirs of the Court of Charles I.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Aikin, Lucy	1859	Memoirs of the court of Charles the Second	n			
+58	1905	9429894	Rose of the World.	The Athenaeum	Castle, Agnes and Egerton	1905	Rose of the world	y	5		
+59	1857	8964993	Tallangetta, the Squatter's Home: a Story of Australian Life.	The Athenaeum	Howitt, William	1857	Tallangetta, the squatter's home	y	3		
+60	1824	8191030	Book review	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833				n			
+61	1864	4368951	MARGARET DENZIL'S HISTORY.	The London review of politics, society, literature, art, and science	Greenwood, Frederick	1864	Margaret Denzil's history	y	5		
+62	1899	3160018	A DIPLOMATIST'S WIFE IN JAPAN.	The Bookman	Fraser, Hugh, Mrs Mary	1910	A diplomatist's wife in many lands	n		travel	
+63	1819	5071580	Tales of My Landlord. New Series; containing Pontefract Castle.	The Literary chronicle and weekly review, May 22, 1819-Dec. 28, 1822	Scott, Sir Walter	1820	Tales of my landlord	y	3	historical 	
+64	1816	6052304	England, and the English People.	The Literary panorama, 1806-1819	Lytton, Edward Bulwer Lytton, Baron	1833	England and the English People	n			
+65	1811	4683825	La Delixire delle Dame Filarmouiche, (No. IV.) a Divertimento for the Harp, with a Violin Accompaniment, (ad libi um.)	Monthly magazine, or, British regster, Feb. 1800-June 1836				n			
+66	1846	4973813	The Bushranger of Van Dieman's Land.	Critic, 1844-1847	Rowcroft, Charles	1855	The bush ranger of Van Diemen's Land	y	3		
+67-0	1860	4998874	Rubbing the gilt off; a West End book for all readers	The Critic	Hollingshead, John		Rubbing the gilt off; a West End book for all readers	n			
+67-1	1860	4998874	"Old Leaves Gathered from ""Household Words."""	The Critic	Wills, W. Henry (William Henry)	1860	Old leaves : gathered from Household words	n		essays	
+68	1915	3204793	PARABLES FROM NATURE.	The Bookman	Gatty, Alfred, Mrs	1893	Parables from nature	y	5	juvenile | short stories	
+69	1823	5166145	Memoirs of the Life and Writings of William Hayley, Esq., the Friend and Biographer of Cowper, written by himself.	The Literary chronicle	Cowper, William Haley, Esq	1833	Memoirs of the Life and Writings of William Hayley, Esq: The Friend and Biographer of Cowper	n			
+70	1910	3166978	THE LAME ENGLISHMAN.	The Bookman	Deeping, Warwick	1928	The lame Englishman	y	4		
+71	1912	8925959	Ross (Janet), THE FOURTH GENERATION: REMINISCENCES, 12/6 net.	The Athenaeum	Ross, Janet		The fourth generation: reminiscences	n			
+72	1907	8920232	The Shuttle.	The Athenaeum	Burnett, Frances (Hodgson)	1907	The shuttle	y	3		
+73	1800	4568367	Travels through the United States of North America, the Country of the Iroquois, and Upper Canada, in the Years 1795, 1796, and 1797; with an authentic Account of Lower Canada.	The Critical review, or, Annals of literature	Taurinius, Zacharias	1801	Travels through the United States of North America, the Country of the Iroquois, and Upper Canada, in the Years 1795, 1796, and 1797; with an authentic Account of Lower Canad	n			
+74	1831	8579988	The Rectory of Valehead, by the Rev. R. W. Evans.	Examiner	Evans, Robert Wilson	1832	The rectory of Valehead	n			
+75	1836	4693947	Sketches of Natural History.	Monthly magazine, or, British regster, Feb. 1800-June 1836	Howitt, Mary	1843	Glimpses of natural history	y	5	juvenile	
+76	1825	5195669	Narrative of a Journey across the Cordillera of the Andes, and of a Residence in Lima, and other parts of Peru, in 1823 and 24.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Proctor, Robert	1823	Narrative of a journey to Brussels and Coblentz, 1791	n			
+77	1803	5747611	3. Account of the Life and Writings of Thomas Reid, D.D.	Literary journal, or, Universal review of literature, 1804-1806	Sterne, Laurence	1804	Some account of the life and writings of Mr. Sterne. The life and opinions of Tristram Shandy, gentleman		nan		
+78	1905	3183525	THE REAPER.	The Bookman	Rickert, Edith	1904	The reaper		nan		
+79	1839	5261105	Goethe's Correspondence with a Child.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Arnim, Bettina von	1841	Goethe's correspondence with a child	y	4		
+80	1864	4852773	THE INTERRUPTED WEDDING.	The Reader,  1863-1867	Manning, Anne	1864	The interrupted wedding / a Hungarian tale	y	5		
+81	1812	5695898	The Scottish Adventurerers; or the Way to Rise; an Historical Tale, by Hector Macneill, Esq.	scots magazine and Edinburgh literary miscellany, Jan. 1804-July 1817	Macneill, Hector	1812	The Scottish adventurers, or, The way to rise; an historical tale	y	4		
+82	1848	8414615	The Last of the Fairies.	Examiner	James, G. P. R. (George Payne Rainsford)	1838	The last of the fairies	y	4		
+83	1852	9431742	The Writings of Thomas de Quincey.	Examiner	De Quincey, Thomas	1878	The writings of Thomas De Quincey	y	4		
+84	1870	8670993	Autobiography of an Indian Officer.	The Athenaeum		1854	Autobiography of an Indian Officer	n			
+85	1826	5150343	Synonyms of the Spanish Language Explained and Elucidated by copious Extracts from the most approved Spanish Pacts, intended as an Appendix to English Spanish Dictionaries.	The Literary chronicle			Synonyms of the Spanish Language Explained and Elucidated by copious Extracts from the most approved Spanish Pacts, intended as an Appendix to English Spanish Dictionaries	n			
+86	1840	8444697	Oliver Cromwell: an Historical Romance.	Examiner	Herbert, Henry William (Horace Smith, ed.)	1840	Oliver Cromwell : an historical romance	y	3	romance | historical fiction	
+87	1908	6689090	Beau Brocade: a Romance of the Road.	The Academy, 1905-1910	Orczy, Emmuska Orczy, Baroness	1907	Beau Brocade, a romance	y	3		
+88	1857	8629910	Barchester Towers.	The Athenaeum	Trollope, Anthony	1859	Barchester towers	y	4		
+89	1887	9136609	La Belle Nivernaise, and other Stories.	The Athenaeum	Daudet, Alphonse	1887	La Belle Nivernaise, and other Stories	y	4	juvenile | short stories	
+90	1809	4959991	Tales of Fashionable Life, by Miss Edgeworth, Author of Practical Education, Belinda, Castle Rackrent, Essay on Irish Bulls, &c.	Cabinet	Edgeworth, Maria	1809	Tales of fashionable life	y	5	short stories	
+91	1826	5112250	The Last Man.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Shelley, Mary Wollstonecraft	1826	The last man		nan		
+92	1915	3208708	MYTHS AND LEGENDS OF ANCIENT EGYPT.	The Bookman	Spence, Lewis	1912	Myths and legends of Ancient Egypt	n			
+93-0	1887	8759364	Sports and Anecdotes of Bygone Days.	The Athenaeum	Reynardson, C. T. S. Birch (Charles Thomas Samuel Birch)	1887	Doun the Road; or, Reminiscences of a Gentleman Coachman	n			
+93-1	1887	8759364	Sports and Anecdotes of Bygone Days.	The Athenaeum	Reynardson, C. T. S. Birch (Charles Thomas Samuel Birch)	1887	Sports & anecdotes of bygone days	n			
+94	1852	5034378	MEN AND WOMEN OF FRANCE.	Leader and Saturday analyst, Jan. 7-June 30, 1860	Houssaye, Arsène	1852	Men and women of France, during the last century		nan		
+95	1887	6698338	Chronicles and Memorials of Great Britain and Ireland during the Middle Ages.	The Academy, 1869-1902, 0269-333X	Wright, W. Aldis (ed.)  		Chronicles and Memorials of Great Britain and Ireland during the Middle Ages	n			
+96	1842	8974447	Missionary Labours and Scenes in Southern Africa.	The Athenaeum	Moffat, Robert	1846	Missionary labours and scenes in southern Africa	n			
+97	1861	5323749	EXETER HALL.	The Literary gazette : A weekly journal of literature, science, and the fine arts	McDonnell, William	1873	Exeter hall	n			
+98	1903	8878246	Roger Drake, Captain of Industry.	The Athenaeum	Webster, Henry Kitchell	1902	Roger Drake, captain of industry : [a novel]	y	4		
+99-0		8420430	Historical Sketches and Personal Recollections of Manchester.	Examiner	Prentice, Archibald		Historical sketches and personal recollections of Man-chester	n			
+99-1	1851	8420430	Historical Sketches and Personal Recollections of Manchester.	Examiner	Baines, Edward	1843	The Life of Edward Baines, late M.P. for the Borough of Leeds	n			
