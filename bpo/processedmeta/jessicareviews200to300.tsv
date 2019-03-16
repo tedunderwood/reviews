@@ -1,0 +1,118 @@
+seq	PubYear	RecordID	RecordTitle	Title	bookauthor	bookdate	booktitle	isfiction	howpositive	genresnamed	comments
+200	1908	3183464	THE HUMAN BOY AGAIN.	The Bookman	Phillpotts, Eden	1908	The human boy again	y	5	short stories	
+201	1913	2434197	FATHER RALPH.	The English review,  1908-1937	O'Donovan, Gerald	1913	Father Ralph	n			
+202	1895	3175652	THE HONOUR OF SAVELLI.	The Bookman	Levett-Yeats, S. (Sidney Kilner)	1895	The honour of Savelli	y	4	romance	
+203	1898	8867185	The Pecorone of Ser Giovanni.	The Athenaeum	Fiorentino, Giovanni	1901	The Pecorone of Ser Giovanni	y	5		
+204-1	1889	8922379	CHRISTMAS BOOKS.	The Athenaeum	Hope, Ascott R.	1896	The Romance of the Forests	y	4		
+204-2	1889	8922379	CHRISTMAS BOOKS.	The Athenaeum	Seymour, M.		Ada Norman	y	4		
+204-3	1889	8922379	CHRISTMAS BOOKS.	The Athenaeum	Roberts, Margaret		Banning and Blessing	y	2		
+204-4	1889	8922379	CHRISTMAS BOOKS.	The Athenaeum	Stuart, Esme		Cast Ashore	y	5		
+204-5	1889	8922379	CHRISTMAS BOOKS.	The Athenaeum	Ballantyne, R.M.		The Crew of the Water-wagtail	y	4	juvenile	
+204-6	1889	8922379	CHRISTMAS BOOKS.	The Athenaeum	Warner, Anna B.		Yours and Mine	y	3		
+204-7	1889	8922379	CHRISTMAS BOOKS.	The Athenaeum	Bramston, M.		A Pair of Cousins	y	4		
+204-8	1889	8922379	CHRISTMAS BOOKS.	The Athenaeum	Hutcheson, John C.		Afloat at Last 	y	3		
+204-9	1889	8922379	CHRISTMAS BOOKS.	The Athenaeum	Henty, G.A.		By Pike and Dyke	y	4	historical fiction	
+204-9	1889	8922379	CHRISTMAS BOOKS.	The Athenaeum	Moore, F. Frankfort		Highways and High Seas	y	4		
+205	1913	3191266	THE GOLDEN WOMAN.	The Bookman	Cullum, Ridgwell	1913	The golden woman	y	3		
+206	1829	5383316	HUNGARIAN TALES.	The London magazine	Gore, (Catherine Grace Frances), Mrs	1829	Hungarian tales	y	5	short stories	
+207	1918	3209646	THE LAW OF THE GUN.	The Bookman	Cullum, Ridgwell	1918	The law of the gun		nan		
+208-1	1897	8803684	Chun Ti-kung, his Life and Adventures.	The Athenaeum	Rees, Claude A	1897	Chun Ti-kung : his life and adventure	y	3		
+208-2	1897	8803684	A Marriage in China	The Athenaeum	Little, Mrs. Archibald		A Marriage in China	y	2		
+209	1834	4439301	The Farrers of Budge Row, No. 24, Miss Martineau's Illustrations of Political Economy.	Tait's Edinburgh magazine	Martineau, Harriet	1834	The Farrers of Budge-row, a tale	y	3		
+210	1837	8322607	Schloss Hainfeld; or a Winter in Lower Styria.	The Gentleman's Magazine: and historical review, July 1856-May 1868	Hall, Basil	1836	Schloss Hainfeld; or, A winter in lower Styria	y	4		
+211	1887	9336370	The Life and Letters of Charles Darwin, including an Autobiographical Chapter.	The Athenaeum	Darwin, Francis (ed.)	1901	The life and letters of Charles Darwin, including an Autobiographical Chapter	n			
+212	1904	9023663	John Chilcote, M.P.	The Athenaeum	Thurston, Katherine Cecil	1905	John Chilcote, M. P	y	5		
+213	1887	9134840	Imaginary Portraits.	The Athenaeum	Pater, Walter	1887	Imaginary portraits	n			
+214	1819	5514494	ON THE SPRING.	Edinburgh magazine and literary miscellany					nan		
+215	1842	9137363	Narrative of a Residence on the Mosquito Shore, during the Years 1839, 1810, and 1841; with an Account of Truxillo, and the adjacent Islands of Bonacca and Roatan.	The Athenaeum	Fraser, James Baillie	1838	Narrative of the residence of the Persian princes in London, in 1835 and 1836. With an account of their journey from Persia, and subsequent adventures		nan		
+216	1910	6737955	A Dreamer's Tales.	The Academy, 1905-1910	Dunsany, Edward John Moreton Drax Plunkett, Baron	1910	A dreamer's tales	y	5	short stories	
+217	1807	4955065	All the Blocks! Or, an Antidote to 'All the Talents,' a Satirical Poem.	Cabinet, or, monthly report of polite literature, 1807-1808	Ireland, W. H. (William Henry)	1807	All the blocks! : or, an antidote to 'All the talents'. A satirical poem in three dialogues		nan		
+218	1919	3219516	A BROKEN JOURNEY.	The Bookman	Gaunt, Mary	1919	A broken journey: Wanderings from the Hoang Ho to the Island of Saghalien and the Upper Reaches of the Aniur River	y	4	travel	
+219	1831	8236824	The Talba or Moor of Portugal, a Romance.	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833	Bray, Mrs. Anna Eliza	1830	The Talba, or, Moor of Portugal		nan		
+220	1821	5169002	WARWICK'S SPARE MINUT S.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Warwick, Arthur	1821	Warwick's Spare minutes		nan		
+221	1864	9447259	The Works of Oliver Goldsmith.	The Athenaeum	Goldsmith, Oliver	1854	The works of Oliver Goldsmith	y	3		
+222	1911	6822754	Passers-By.	The Academy and literature, 1910-1914	Oppenheim, E. Phillips (Edward Phillips)	1910	Passers-by		nan		
+223	1818	5086794	Narrative of my Captivity in Japan, during the years 1811, 1812, and 1813; with Observations on the Country and the People.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Rowlandson, Mary White	1828	Narrative of the captivity and removes of Mrs. Mary Rowlandson, who was taken by the Indians at the destruction of Lancaster, in 1676		nan		
+224	1824	5110155	Some Account of the Life of the late Gilbert Earl, Esq.	The Literary gazette : A weekly journal of literature, science, and the fine arts	St. Leger, Barry	1824	Some account of the life of the late Gilbert Earle, esq				
+225	1870	2715715	Passages from the English Note-Books of Nathaniel Hawthorne.	The Illustrated review : a fortnightly journal of literature, science and art	Hawthorne, Nathaniel	1871	Passages from the French and Italian note-books of Nathaniel Hawthorne	n			
+226	1877	6702845	JULIAN THE APOSTATE.	The Academy, 1869-1902, 0269-333X	Naville, H. Adrien	1899	Julian the Apostate	n			
+227	1851	8243708	The Mother's Recompense; a Sequel to Home Influence.	The Gentleman's Magazine: and historical review, July 1856-May 1868	Aguilar, Grace	1855	The mother's recompense : a sequel to Home influence / by Grace Aguilar	y	4		
+228	1856	8937978	The Sabbath, Sabbath Walks, and other Poems.	The Athenaeum	Grahame, James	1839	The Sabbath, Sabbath walks, and other poems	n		poetry	
+229	1880	8978909	INTERNATIONAL LAW.	Examiner	Hall, William Edward		International Law	n			
+230	1802	3912040	THE REFLECTOR.	The Monthly visitor, and new family magazine	Bloomfield, Robert		The Farmer’s Boy	n		poetry	
+231	1914	8950952	Book review	The Athenaeum	Barnett, John Francis		Wayside Sketches: Nos. 4, 5, and 6	n			
+232	1912	3197852	DARNELEY PLACE.	The Bookman	Bagot, Richard	1913	Darneley place	y	3		
+233	1832	4436640	Illustrations of Political EconomyNo. 2, the Hill and the Valley.	Tait's Edinburgh magazine	Martineau, Harriet	1832	Illustrations of political economy		nan		
+234	1903	3171943	THE SUBSTITUTE.	The Bookman	Harben, Will N. (William Nathaniel)	1903	The substitute	y	4	American story	
+235	1887	9137167	The Pleasures of Life.	The Athenaeum	Lubbock, John, Sir	1897	The pleasures of life	n			
+236	1913	6851286	Along the Road.	The Academy and literature, 1910-1914	Benson, A.C.	1924	Along the road	n		essays	
+237	1900	9228871	A Master of Craft.	The Athenaeum	Jacobs, W. W. (William Wymark)	1900	A master of craft	y	4		
+238	1818	5163295	A Statement of Matters relative to the King's Theatre.	The Literary gazette : A weekly journal of literature, science, and the fine arts		1824	Statement of facts, relative to the last will of the late Mrs. Badger of Natick : which was disallowed on the final hearing	n			
+239	1838	5130750	Peter Simple.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Marryat, Frederick	1837	Peter Simple		nan		
+240	1836	8780649	The Magician.	The Athenaeum	Ritchie, Leitch	1836	The magician	y	4	romance	
+241	1824	5189944	Memoir of the Life and Character of the Right Hon. Edmund Burke; with Specimens of his Poetry and Letters, and an Estimate of his Genius and Talents, compared with those of his great Contemporaries.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Prior, James	1833	Memoir of the Life and Character of the Right Hon. Edmund Burke; with Specimens of his Poetry and Letters, and an Estimate of his Genius and Talents, compared with those of his great Contemporaries.	n			
+242-1	1886	8754161	Transformed.	The Athenaeum	Montgomery, Florence	1886	Transformed	y	2		
+242-2		8754161	A Strong-minded Woman	The Athenaeum	Hammond, William A.		A Strong-minded Woman	y	3		
+243-3		8754161	The Lost Name	The Athenaeum	Dahlgren, Madeleine Vinton		The Lost Name	y	1		
+243	1813	4428803	THE OLD SCHOOL.	New review : or Monthly analysis of general literature	Smith, Julia Bernard	1813	The old school	y	3		
+244	1889	8785589	In an Enchanted Island; or, a Winter's Retreat in Cyprus.	The Athenaeum	Mallock, W. H. (William Hurrell)	1892	In an enchanted island, or A winter's retreat in Cyprus;	n			
+245	1833	8205503	A Topographical Dictionary of Great Britain and Ireland, by John Gorton; and the Irish and Welsh Articles by G. N. Wright, M.A. 3 vols. 8vo.	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833			A Topographical Dictionary of Great Britain and Ireland, by John Gorton; and the Irish and Welsh Articles by G. N. Wright, M.A. 3 vols. 8vo.	n			
+246	1846	5165585	BOUNDARIES OF EMPIRES: COLONISATION.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Finch, John, Esq		The Natural Boundaries of Empires; and a New View of Colonisation	n			
+247-1	1865	8567920	Charlie Thornhill; or, The Dunce of the Family.	Examiner	Clarke, Charles	1863	Charlie Thornhill; or, The Dunce of the Family	y	5		
+247-2		8567920	A Box for the Season	Examiner	Clarke, Charles		A Box for the Season	y	2		
+247-3		8567920	Which is the Winner? or, The First Gentleman of his Family	Examiner	Clarke, Charles		Which is the Winner? or, The First Gentleman of his Family	y	5		
+248	1818	8269632	19. A Letter to the Hon. and Right Rev. Henry Ryder, D.D. Lord Bishop of Gloucester, on the admission to Holy Orders of young Men, holding (what are commonly called) Evangelical Principles: to which is added, a Bio graphical Sketch of the late Rev. Archibald Maclaine, M. D.	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833	pseud. Fabius	1821	A letter to the Right Hon. Lord Byron, protesting against the immolation of Gray, Cowper, & Campbell, at the shrine of Pope	n			
+249	1821	5150040	Ballantyne's Novelist's Library.	The Literary chronicle and weekly review, May 22, 1819-Dec. 28, 1822		1821	Ballantyne's novelist's library	y	4		
+250	1907	6839544	A Woman Alone in the Heart of Japan.	The Academy, 1905-1910	Fisher, Gertrude Adams	1906	A woman alone in the heart of Japan	n			
+251	1871	8688582	Walks in Rome.	The Athenaeum				n			
+252	1831	5121242	Destiny; or, the Chief's Daughter.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Ferrier, Susan	1831	Destiny; or, The chief's daughter	y	4		
+253	1828	5216291	Chronicles of the Canongate.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Scott, Walter, Sir	1828	Chronicles of the Canongate	y	3	historical	
+254	1809	8136537	119. Tales of Fashionable Life.	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833	Edgeworth, Maria	1809	Tales of fashionable life	y	4		
+255	1896	6646505	THE METHODS OF MR. MORRISON.	The Academy, 1869-1902, 0269-333X	Carrel, Frederic	1908	The methods of Mr. Morrison	n			
+256	1855	5000709	The White Chief: a Legend of Northern Mexico.	The Critic	Reid, Mayne	1855	The white chief : a legend of northern Mexico	y	5		
+257	1838	4700487	Woman's Wit; or Love's Disguises.	The Monthly Magazine	Knowles, James Sheridan		Woman’s Wit; or Love’s Disguises	n		drama	
+258	1866	4857235	Lizzie Lorton of Grey Rigge. A Novel in 3 Vols.	The Reader,  1863-1867	Linton, E. Lynn (Elizabeth Lynn)	1866	Lizzie Lorton of Greyrigg. A novel	y	4		
+259	1840	4413453	MEMOIRS OF A STATE PRISONER.	New monthly magazine and humorist, Jan. 1837-Dec. 1852	Andryane, Alexandre Phillippe	1840	Memoirs of a prisoner of state in the fortess of Spielberg;	n			
+260	1864	4367166	THE BIGLOW PAPERS.	The London review of politics, society, literature, art, and science	Lowell, James Russell	1885	The Biglow papers	n		poetry	
+261	1847	4988858	VOYAGES AND TRAVELS.	Critic, 1844-1847	Dunlop, Robert Glabgow, Esq.	1838	Voyages and travels	n			
+262	1894	3164185	A CRUEL DILEMMA.	The Bookman	Tennyson, Mary H	1894	A cruel dilemma	y	3		
+263	1872	8516519	THE POET AT THE BREAKFAST TABLE.	Examiner	Holmes, Oliver Wendell	1872	The poet at the breakfast-table	n		essays	
+264	1818	5165867	WOMAN; or Minor Maxims.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Thomas, Elizabeth	1818	Woman; or, Minor maxims	y	2		
+265	1897	3185657	THE MAKING OF A PRIG,	The Bookman	Sharp, Evelyn	1897	The making of a prig	y	3		
+266	1842	5151341	Narrative of a Yacht-Voyage in the Mediterranean during the Years 1840, 1841.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Westminster, Elizabeth Mary Grosvenor		Narrative of a Yacht-Voyage in the Mediterranean during the Years 1840, 1841	n			
+267	1871	8671756	Mr. Pisistratus Brown, M.P., in the Highlands.	The Athenaeum	Black, William	1871	Mr. Pisistratus Brown, M.P., in the Highlands	y	4		
+268	1800	4573989	The Works of Robert Burns.	The Critical review, or, Annals of literature	Burns, Robert	1824	The works of Robert Burns ;	y	4		
+269	1820	8231328	88. Letter to the Right Honourable the Earl of Harrowby, President of the Council, &c. &c. &c. on the Discovery of the late Atrocious Conspiracy. 8vo. pp. 30. Simpkin.	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833	pseud. Fabius	1821	A letter to the Right Hon. Lord Byron, protesting against the immolation of Gray, Cowper, & Campbell, at the shrine of Pope	n			
+270	1827	5210279	The Youth and Manhood of Cyril Thornton.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Hamilton, Thomas	1827	The youth and manhood of Cyril Thornton		nan		
+271	1856	8425403	It is Never Too Late to Mend.	Examiner	Reade, Charles	1856	It is never too late to mend : a matter of fact romance	y	4		
+272	1820	5172631	A Voyage to Africa, with some account of the Manners and Customs of the Dahomian People.	The Literary gazette : A weekly journal of literature, science, and the fine arts	M’Leod, John		A Voyage to Africa, with some account of the Manners and Customs of the Dahomian People.	n			
+273	1880	6725887	Book review	The Academy, 1869-1902, 0269-333X			Journal of the Derbyshire Archaeological and Natural History Society	n			
+274	1837	5144978	Manuella, the Executioner's Daughter; a Story of Madrid.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Smallwood, Edward	1837	Manuella, the executioner's daughter. A story of Madrid		nan		
+275	1893	8921696	Mary Stuart.	The Athenaeum	Skelton, John	1895	Mary Stuart	n			
+276	1805	4655417	The Soldier's Return, or What can Beauty do? a comic Opera, in two Acts, as performed at the Theatre Royal, Drury-lane; the Music, with the Union Overture, entirely new.	Monthly magazine, or, British regster, Feb. 1800-June 1836	Opie, Amelia Alderson	1806	The soldier's return.  The brother and sister.  The revenge		nan		
+277	1913	2434561	THE REPENTANCE OF DESTINY.	The English review,  1908-1937	Dinga, Shway	1913	The repentance of destiny	y	4		
+278	1801	3911177	MEMOIRS OF THE LATE MRS. ROBINSON.	The Monthly visitor, and new family magazine	Robinson, Mary	1819	Memoirs of the late Mrs. King, (otherwise the Diamond Q---n!!) with interesting and authentic biographical anecdotes; containing some curious and instructive notices of political and family transactions, hitherto not generally known	n			
+279	1893	6165603	CHAPTERS FROM SOME UNWRITTEN MEMOIRS.	Macmillan's magazine,  1859-1907	Ritchie, Anne Thackeray	1895	Chapters from some unwritten memoirs		nan		
+280	1901	8985892	Only a Nigger.	The Athenaeum	Mitchell, Edmund	1901	Only a nigger	y	3		
+281	1800	4564753	The Rational Brutes; or, Talking Animals.	The Critical review, or, Annals of literature	Kilner, Dorothy [Pelham, M. pseud]	1803	The rational brutes, or, Talking animals	y	3		
+282	1837	9419296	Three Experiments on Living; Living within the Means, Living up to the Means, and Living beyond the Means.	The Athenaeum	Lee, Hannah Farnham Sawyer	1837	Three Experiments on Living; Living within the Means, Living up to the Means, and Living beyond the Means.	y	1		
+283	1856	8732130	The Crown Ward.	The Athenaeum	Boyd, Archibald	1856	The crown ward	y	3	historical novel	
+284	1818	5097391	TALES OF MY LANDLORD.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Scott, Sir Walter	1820	Tales of my landlord	y	3		
+285	1818	6097798	Narrative of my captivity in Japan, during the years 1811, 1812, and 1813; with Observations on the Country and the People, by Capt. Golow in, R.N. To which is added an Account of Voyages to the coasts of Japan, and of Negociations with the Japanese, for the release of the Author and his Companions.	The Literary panorama, 1806-1819	Rowlandson, Mary White	1828	Narrative of the captivity and removes of Mrs. Mary Rowlandson, who was taken by the Indians at the destruction of Lancaster, in 1676	n			
+286	1831	5496785	Historical Sketches of the United States, from the Peace of 1815 to 1830.	The Edinburgh literary journal, or, Weekly register of criticism and belles lettres	Perkins, Samuel	1838	Historical Sketches of the United States, from the Peace of 1815 to 1830.	n			
+287	1903	8886601	Samuel Richardson.	The Athenaeum	Dobson, Austin	1913	Samuel Richardson	n			
+288	1916	3200509	THE HEART OF A MAN.	The Bookman	Maher, Richard Aumerle	1915	The heart of a man	y	4		
+289	1804	2968918	ART. III. Cyclopedia; or a new Universal Dictionary of Arts and Sciences.	The Annual review and history of literature	Hall, William Henry	1797	ART. III. Cyclopedia; or a new Universal Dictionary of Arts and Sciences.	n			
+290	1834	6140319	Lays and Legends of various Nations, illustrative of their Traditions, popular Literature, Manners, Customs, and Superstitions.	The Metropolitan magazine,  1833-1840	Thoms, William John	1834	Lays and legends of various nations: illustrative of their traditions, popular literature, manners, customs, and superstitions	y	5		
+291	1809	4961152	A Journal of the Voyages and Travels of a Corps of Discovery; from the mouth of the river Missouri, through the interior parts of North America, to the Pacific Ocean.	Cabinet	Rees, Thomas	1822	A journal of voyages and travels		nan		
+292-1	1874	6653074	Two Little Wooden Shoes.	The Academy, 1869-1902, 0269-333X	Ouida	1874	Two little wooden shoes : a sketch	y	2		
+	1874	6653074	A Tale of Love and Conspiracy	The Academy, 1869-1902, 0269-333X	Cotton, Robert Turner		A Tale of Love and Conspiracy	y	2		
+292-2	1874	6653074	Transmigration	The Academy, 1869-1902, 0269-333X	Collins, Mortimer		Transmigration	y	2		
+	1874	6653074	A Chronicle of the Fermors: Horace Walpole in Love	The Academy, 1869-1902, 0269-333X	Mahony, Martin Francis		A Chronicle of the Fermors: Horace Walpole in Love	y	2		
+293	1831	8787063	Romance and Reality.	The Athenaeum	L. E. L. (Letitia Elizabeth Landon)	1831	Romance and reality	y	4		
+294	1815	6084200	The Descent of Liberty, a Mask; by Leigh Hunt.	The Literary panorama, 1806-1819	Hunt, Leigh	1815	The descent of liberty, a mask		nan		
+295	1825	5268184	TALES BY THE O'HARA FAMILY.	The London magazine	Banim, John	1826	Tales by the O'Hara family : second series : comprising the Nowlans, and Peter of the castle	y	3		
+296	1911	2445738	BROKEN ARCS.	The English review,  1908-1937	Figgis, Darrell	1911	Broken arcs	y	3		
+297	1834	5141426	VICTORIA.	The Literary gazette : A weekly journal of literature, science, and the fine arts	Sherwood, (Mary Martha), 1775-1851, Mrs	1833	Victoria	n			
+298	1815	8389512	111. The Soldier's Family, and other Tales. 12mo. pp. l78. Harris.	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833	Ormsby, Anne	1807	The soldier's family	y	4	juvenile	
+299	1815	8186256	"44. Ellen the Teacher, a Tale for Youth, by Mrs. Hofland; Author of ""The Officer's Widow, ""Son of a Genius,"" and other Works for young People. 2 vols. 12mo, pp 357. Harris."	The Gentleman's Magazine: and historical chronicle, Jan. 1736-Dec. 1833	Hofland, (Barbara), Mrs	1836	Ellen, the teacher : a tale for youth	y	4	juvenile	
