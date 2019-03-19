@@ -17,4 +17,8 @@ The pipeline represented here: **scrape_bpo_meta.py** works on the original coll
 
 ==> **match_reviews_2books.py** does fuzzy matching of **allreviews** to [**titlemeta.tsv**](https://github.com/tedunderwood/noveltmmeta/tree/master/metadata) in order to identify reviews that are likely to discuss a specific novel. Doing this creates a sequence of files, **matched_reviews_1800,** **matched_reviews_1810**, and so on. These are still a little bulky for the repo.
 
-==>  To get a sample for manual tagging, **count_reviews.py** randomly samples these matched-review tables. It supplements that with a small sample of more-random selections from the **allreviews.py.** This creates a subset called **selectedrows.tsv**, which is present here in the [**meta/**](https://github.com/tedunderwood/reviews/tree/master/bpo/meta) subfolder.
+==>  To get a sample for manual tagging, **scrape_review_sample1.py** and **..._sample2.py** randomly sample these matched-review tables, and create two different subsets. The first of the two scripts put its sample in the **meta/** folder. The second put its sample in the **newmeta/** folder.
+
+The difference between the two is first of all that the first sample was 1800-1919, and the second was 1830-1939. Also the first of the two scripts supplements its sample of matched fiction with a small sample of more-random selections from the **allreviews.py.** 
+
+**We actually used rows 0 to 299 from the first sample, and 300 forward from the second.**
