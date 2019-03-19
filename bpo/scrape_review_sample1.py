@@ -1,3 +1,8 @@
+# select_review_sample2.py
+
+# This version of the scraping script was used to generate
+# the files in /meta
+
 import glob
 import pandas as pd
 
