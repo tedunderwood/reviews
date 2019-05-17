@@ -1,0 +1,136 @@
+seq	RecordID	RecordTitle	PathID	Title	AlphaPubDate	PubYear	bookauthor	booktitle	bookdate	matchquality	isfiction	howpositive	genresnamed	comments
+300	8905181	The Life of John William Colenso, D.D., Bishop of Natal.	20160127191335_00001	The Athenaeum	Mar 3, 1888	1888	Cox, Sir George W.	The life of John William Colenso, D.D., Bishop of Natal	1902	2.59944482081719	n			
+301	5892969	The Bride of the Wilderness.	20160127231721_00006	The New quarterly review and digest of current literature, British, American, French, and German	Jan 1855	1855	Bennett, Emerson	The bride of the wilderness	1854	2.81833333333333	y	3		
+302	6895308	The Drummer of the Dawn.	20160127190516_00005	The Academy and literature, 1910-1914	Jul 19, 1913	1913	Paton, Raymond	The drummer of the dawn	1913	2.76928571428571	y	3		
+303	8986724	Lights and Shadows of Whigs and Tories.	20160127192510_00019	The Athenaeum	Mar 11, 1843	1843	Hall, S. C., Mrs	Lights and shadows of Irish life	1838	2.22903736263736		nan		
+304	3172664	THE MISSOURIAN.	20160127185249_00003	The Bookman	Feb 1906	1906	Lyle, Eugene P. (Eugene Percy)	The Missourian	1905	2.32	y	4		
+305	8922201	The Odyssey of Homer.	20160127192510_00019	The Athenaeum	Dec 25, 1886	1886	Homer (Earl of Carnarvon, tr.)	The Odyssey of Homer	1879	2.56340909090909	y	2		
+306	8728573	The House on the Moor.	20160127192053_00005	The Athenaeum	Dec 1, 1860	1860	Oliphant, Margaret	The house on the moor	1861	2.6520202020202	y	4		
+307	8425403	It is Never Too Late to Mend.	20160128002201_00008	Examiner	Aug 23, 1856	1856	Reade, Charles	It is never too late to mend : a matter of fact romance	1856	2.34558602841947	y	3		
+308	8830517	Pro Patria.	20160127193122_00012	The Athenaeum	Apr 27, 1901	1901	Pemberton, Max, Sir	Pro patria	1901	2.64333333333333	y	2	adventure	
+309	5241019	The Diary of a Desennuyee.	20160127234659_00002	The Literary gazette : A weekly journal of literature, science, and the fine arts	Jul 9, 1836	1836	Gore, (Catherine Grace Frances), Mrs	The diary of a désennuyée	1836	2.15211428571429		nan		
+310	2443156	East and West	20160127185757_00006	The English review,  1908-1937	Oct 1932	1932	Whyte, Sir Frederick	The future of East and West: an essay in surmise	1922	2.25179783950617	n			
+311	8849383	The Son of the Czar: an Historical Romance.	20160127191335_00001	The Athenaeum	Feb 12, 1898	1898	Graham, James M	The son of the czar. An historical romance	1897	2.58415313047093	y	2		
+312	8522823	The Italians.	20160128002408_00011	Examiner	Mar 6, 1875	1875	Elliot, Frances	The Italians	1875	2.32333333333333	y	3		
+313	4439336	Horse-Shoe Robinson.	20160127232936_00002	Tait's Edinburgh magazine	Aug 1835	1835	Kennedy, John Pendleton	Horse-shoe Robinson	1835	2.73612903225806		nan		
+314	5003408	Narrative of a Captivity, Escape, and Adventures in France and Flanders, during the War.	20160127230657_00008	The Critic	Dec 1863	1863	Kelly, Fanny	Narrative of my captivity among the Sioux Indians	1871	2.24787280770232		nan		
+315-1	8915440	The Crusade of the Excelsior.	20160127191542_00003	The Athenaeum	Jul 30, 1887	1887	Harte, Bret	The crusade of the 'Excelsior'	1887	2.3566	y	1		
+315-2	8915440	A Mere Accident	20160127191542_00003	The Athenaeum	Jul 30, 1887	1887	Moore, George	A Mere Accident		2.3566	y	1		
+315-3	8915440	Friend Sorrow	20160127191542_00003	The Athenaeum	Jul 30, 1887	1887	Austin, Mrs.	Friend Sorrow		2.3566	y	2		
+315-4	8915440	Walter Ellithorne	20160127191542_00003	The Athenaeum	Jul 30, 1887	1887	Melville, A.S.	Walter Ellithorne		2.3566	y	1		
+316	6770383	The Standard Bearer.	20160127190619_00006	The Academy, 1869-1902, 0269-333X	May 7, 1898	1898	Crockett, S. R. (Samuel Rutherford)	The standard bearer	1898	2.83666666666667	y	3	romance	
+317	5125652	The Outlaw.	20160127234700_00003	The Literary gazette : A weekly journal of literature, science, and the fine arts	Dec 5, 1835	1835	Hall, S. C., Mrs	The outlaw	1835	2.11	y	5		
+318	8689269	Arthur Coningsby, a Novel.	20160127192200_00007	The Athenaeum	Jan 26, 1833	1833	Sterling, John	Arthur Coningsby	1833	2.22110259790191		nan		
+319	3220152	HUNGRY HEARTS.	20160127183730_00010	The Bookman	Sep 1922	1922	Yezierska, Anzia	Hungry hearts	1920	2.36034188034188	y	3	short stories	
+320	3184714	THE FUGITIVE BLACKSMITH.	20160127185900_00007	The Bookman	May 1905	1905	Stewart, Charles D. (Charles David)	The fugitive blacksmith	1905	2.97285714285714	y	4		
+321	3237215	BEYOND LIFE.	20160127191129_00016	The Bookman	Nov 1925	1925	Cabell, James Branch	Beyond life	1927	2.16915676287493	n			
+322	3198556	THE MORE EXCELLENT WAY.	20160127185249_00003	The Bookman	May 1917	1917	Brady, Cyrus Townsend	The more excellent way : being the determinative episodes in the life of Chrissey De Sleden, hedonist	1916	2.67675818733826	y	3		
+323	5150535	Narrative of the Recent War in Affghanistan, &c.	20160128000123_00003	The Literary gazette : A weekly journal of literature, science, and the fine arts	Jun 25, 1842	1842	Scott, John L	Narrative of a recent imprisonment in China after the wreck of the Kite	1842	2.15144415584416		nan		
+324	5250810	Standard Novels.	20160128000328_00006	The Literary gazette : A weekly journal of literature, science, and the fine arts	Jun 26, 1841	1841		Standard novels	1839	2.51194931773879		nan		
+325	4846155	Reaping the Whirlwind.	20160127230555_00007	The Reader,  1863-1867	Dec 24, 1864	1864	Daniel, Mrs. McKenzie	Reaping the whirlwind. A novel	1864	2.45893824826717	y	2		
+326	8966924	Merry Andrew.	20160127190619_00006	The Athenaeum	Jul 10, 1915	1915	Howard, Keble	Merry Andrew	1918	2.20559139784946	y	3		
+327	9435979	Elementary Treatise on Physics (translated from Ganot).	20160127192508_00001	The Athenaeum	Jan 19, 1867	1867	Heather, John Fry	An elementary treatise on descriptive geometry	1851	2.37344761904762	n			
+328	5236106	The Life of the Rev. Rowland Hill, A.M.	20160127230454_00006	The Literary gazette : A weekly journal of literature, science, and the fine arts	Aug 2, 1834	1834		The life of the Rev. John Wesley / by Richard Watson.-- The life of William Cowper ... / by Thomas Taylor.-- The life of the Rev. Thomas Spencer ... / by Thomas Raffles.-- The life of Philip Melancthon ... / by Francis Augustus Cox.-- Memoirs of the late Rev. Samuel Pearce ... / by Andrew Fuller	1834	2.23739737072743	n			
+329	6368846	BETTER DEAD.	20160127231721_00006	Time	May 1888	1888	Barrie, J. M. (James Matthew)	Better dead	1888	2.26013986013986	y	5		
+330	9260796	The Dayspring.	20160127192713_00002	The Athenaeum	Sep 19, 1903	1903	Barry, William Francis	The Dayspring	1904	2.36333333333333	y	2		
+331	9017638	Charles Dickens.	20160127193122_00012	The Athenaeum	Sep 15, 1906	1906	Moses, Belle	Charles Dickens	1912	2.21519494538561	n			
+332	3317515	THE DARK ISLAND.	20160127182915_00001	The Bookman	Dec 1934	1934	Sackville-West, V. (Victoria)	The dark island	1936	2.32384497460956	y	3		
+333	5001123	Horatio Howard Brenton: a Naval Novel.	20160127230657_00008	The Critic	Aug 15, 1856	1856	Belcher, Edward, Sir	Horatio Howard Brenton	1856	2.46929207355192		nan		
+334	9141620	The Life of Benvenuto Cellini.	20160127191335_00001	The Athenaeum	Dec 31, 1887	1887	Cellini, Benvenuto (tr. Symonds, John Addington)	The life of Benvenuto Cellini	1888	3.52791666666667	n			
+335	5251527	Incidents of Travel in Central America, Chiapas, and Yucatan.	20160127230657_00008	The Literary gazette : A weekly journal of literature, science, and the fine arts	Jul 31, 1841	1841	Stephens, John L	Incidents of travel in Egypt, Arabia Petræa, and the Holy Land	1843	2.41941362007168		nan		
+336	3208814	THE PIRATES OF THE SKY.	20160127180954_00001	The Bookman	Dec 1916	1916	Gaillard, Stephen	The pirates of the sky ; a tale of modern adventure	1915	2.35012790438775	y	4		
+337	6432989	THE DEAN AND HIS DAUGHTER.	20160127233039_00003	Time	Nov 1887	1887	Philips, F. C	The dean and his daughter	1887	2.92003200148762	y	2		
+338	8436934	Margaret Ravenscroft, or Second Love.	20160127191130_00009	The Gentleman's Magazine: and historical review, July 1856-May 1868	Apr 1836	1836	St. John, James Augustus	Margaret Ravenscroft, or, Second love	1835	3.15799427500029	y	2		
+339	3331389	MEMOIRS OF THE MARQUISE DE LA ROCHEJAQUELEIN.	20160127190721_00014	The Bookman	Apr 1933	1933	marquise de, pseud. Keroubec, Yvonne	The memoirs of the Marquise de Keroubec (1785-1859): being extracts from her diaries now presented to English readers for the first time	1927	2.34408432055749	n			
+340	5253333	The Rhine; Legends, Traditions, History.	20160128000429_00007	The Literary gazette : A weekly journal of literature, science, and the fine arts	May 19, 1838	1838	Snowe, Joseph	The Rhine, legends, traditions, history, from Cologne to Mainz	1839	2.53949649193011	n			
+341	9427040	Sir Jasper's Tenant.	20160127192611_00010	The Athenaeum	Oct 21, 1865	1865	Braddon, M. E. (Mary Elizabeth)	Sir Jasper's tenant	1865	2.91218289085546	y	4		
+342	3223238	A HIGH WIND IN JAMAICA.	20160127190721_00014	The Bookman	Nov 1929	1929	Hughes, Richard Arthur Warren	A high wind in Jamaica	1929	2.9035108211282	y	5		
+343	6701481	Memories and Portraits.	20160127192405_00018	The Academy, 1869-1902, 0269-333X	Jan 7, 1888	1888	Stevenson, Robert Louis	Memories and portraits	1887	2.69	n			
+344	8905012	The Poacher's Wife.	20160127191542_00003	The Athenaeum	Nov 10, 1906	1906	Phillpotts, Eden	The poacher's wife	1906	2.76966244725738	y	3		
+345	9459883	Legends of Number Nip.	20160127193122_00012	The Athenaeum	Mar 4, 1865	1865	Lemon, Mark	Legends of Number Nip	1864	3.07539682539683	y	5		
+346	3224988	MOORDIUS & CO.	20160127190825_00015	The Bookman	Dec 1923	1923	Locke, William John	Moordius & Co	1923	2.18273015873016	y	4		
+347	3154620	MR. BAILEY-MARTIN.	20160127190105_00008	The Bookman	Feb 1894	1894	White, Percy	Mr. Bailey-Martin	1900	2.62885819521179	y	5		
+348	4965572	VOYAGES AND TRAVELS.	20160127235005_00006	Critic, 1844-1847	Aug 9, 1845	1845		Voyages and travels	1838	2.58051693404635	n			
+349	3172791	THE SIGNAL AND OTHER STORIES.	20160127190105_00008	The Bookman	Jun 1912	1912	Garshin, V. M. (Vsevolod Mikhaĭlovich)	The signal and other stories	1916	2.90412457677444	y	4	short stories	
+350	8871209	An Elementary Treatise on Musical Intervals and Temperament, with an Account of an Enharmonic Harmonium exhibited in the Loan Collection of Scientific Instruments, South Kensington, 1876; also of an Enharmonic Organ exhibited to the Musical Association of London, May, 1875.	20160127192157_00006	The Athenaeum	Mar 17, 1877	1877	Heather, John Fry	An elementary Treatise on Musical Intervals and Temperament	1851	2.74571428571429	n			
+351	9138160	THE HOUSE BY THE RIVER.	20160127191542_00003	The Athenaeum	Oct 8, 1920	1920	Herbert, A. P. Sir, (Alan Patrick)	The house by the river	1921	2.75266696113481	y	5		
+352	3230857	DAPHNE ADEANE.	20160127185757_00006	The Bookman	Dec 1926	1926	Baring, Maurice	Daphne Adeane	1927	2.65424242424242	y	4		
+353	9159928	The History and Pleasant Chronicle of Little Jehan de Saintre and the Lady of the Fair Cousins, without being otherwise named.	20160127192407_00009	The Athenaeum	Aug 15, 1868	1868	La Sale, Antoine de (tr. Alexander Vance)	The history and pleasant chronicle of little Jehan de Saintré, and of the lady of the Fair Cousins without being any otherwise named;	1868	3.49277023250615	y	2		
+354	4967627	The Wonder-Seeker; or, The History of Charles Douglas.	20160127230250_00003	Critic, 1844-1847	Nov 15, 1845	1845	Tytler, M. Fraser	The wonder-seeker, or, The history of Charles Douglas	1847	2.66137388465193	y		juvenile	
+355	3202537	T. TEMBAROM.	20160127190515_00012	The Bookman	Dec 1913	1913	Burnett, Frances (Hodgson)	T. Tembarom	1913	2.28333333333333		nan		
+356	4699031	The Linwoods, or Sixty Years since in America.	20160127230802_00010	Monthly magazine, or, British regster, Feb. 1800-June 1836	Oct 1835	1835	Sedgwick, Catharine Maria	"The Linwoods : or, ""Sixty years since"" in America"	1835	2.30353650793651	y	4		
+357	9152267	A Biographical Sketch of Emanuel Swedenborg, and an Account of his Works.	20160127191542_00003	The Athenaeum	Apr 13, 1850	1850	Rich, Elihu	Biographical sketch of Emmanuel Swedenborg, and an Account of his Works	1836	2.2111619047619	n			
+358	3281143	THE NEW JUNE.	20160127182915_00001	The Bookman	Apr 1909	1909	Newbolt, Henry John, Sir	The new June	1909	2.24789200415369	y	3		
+359	3173323	THE STRANGE ADVENTURES OF ROGER WILKINS.	20160127183425_00006	The Bookman	Jun 1895	1895	Andom, R. (Alfred Walter Barrett, pseud.)	The strange adventures of Roger Wilkins, and other stories	1888	2.55336627732854	y	3	short stories	
+360	3229853	RUDOLPH AND AMINA, Or the Black Crook.	20160127191441_00019	The Bookman	Apr 1931	1931	Morley, Christopher	Rudolph and Amina; or, The black crook	1930	2.86618354978355	n			
+361	3253580	THE WOMAN WHO HAD IMAGINATION.	20160127183526_00007	The Bookman	Apr 1934	1934	Bates, H. E. (Herbert Ernest)	The woman who had imagination and other stories	1934	3.03994876017106	y	3	short stories	
+362	5221115	The Mayor of Wind-gap and Canvassing.	20160127230759_00009	The Literary gazette : A weekly journal of literature, science, and the fine arts	Jan 3, 1835	1835	Banim, Michael	The mayor of Wind-Gap ; and Canvassing	1835	2.99259047619048	y	4		
+363	3150457	THE SAGHALIEN CONVICT.	20160127183934_00012	The Bookman	Oct 1892	1892	Korolenko, Vladimir Galaktionovich	The Saghalien convict, and other stories	1892	2.54465253398146	y	4	short stories	
+364	8762884	Nelly Carew.	20160127190003_00001	The Athenaeum	Feb 4, 1860	1860	Power, Marguerite A	Nelly Carew	1859	2.27132352941176	y	2		
+365	9379083	You Never Know Your Luck: being the Story of a Matrimonial Deserter.	20160127191542_00003	The Athenaeum	Apr 17, 1915	1915	Parker, Gilbert, Sir	You never know your luck; being the story of a matrimonial deserter	1914	2.88271274497689	y	3		
+366	3228128	THE AMAZING ADVENTURES OF LITTLE BROWN BEAR.	20160127184845_00001	The Bookman	Dec 1930	1930	Borroughes, Dorothy Mary	The amazing adventures of Little Brown Bear	1911	2.31596518177163	y	5	juvenile	
+367	6589573	Mary Lamb.	20160127190414_00004	The Academy, 1869-1902, 0269-333X	Aug 25, 1883	1883	Gilchrist, Anne Burrows	Mary Lamb	1883	2.11509803921569	n			
+368	8402234	Strife and Peace: or Scenes in Norway.	20160128005810_00002	Examiner	Nov 11, 1843	1843	Bremer, Fredrika	Strife and peace, or, scenes in Norway.  The H... family. The Bondmaid. Axel and Anna. The home, or, family cares and family joys. A diary	1843	2.79726253369272	y	4	short stories	
+369	9142942	The Crescent and the Cross; or, Romance and Realities of Eastern Travel.	20160127192407_00009	The Athenaeum	Nov 23, 1844	1844	Martyn, Sarah Towne (Smith), Mrs	The crescent and the cross. A story of the siege of Malta	1869	2.32666666666667		nan		
+370-1	8910572	Passages in the Life of a Lady.	20160127191439_00002	The Athenaeum	Feb 5, 1887	1887	Aide, Hamilton	Passages in the Life of a Lady	1893	2.58162037037037	y	4		
+370-2	8910572	Uncle Max	20160127191439_00002	The Athenaeum			Carey, Rosa Nouchette	Uncle Max		2.58162037037037	y	3		
+370-3	8910572	Miss Nancy Stocker	20160127191439_00002	The Athenaeum			Blatherwick, Charles	Miss Nancy Stocker		2.58162037037037	y	3		
+370-4	8910572	Brueton’s Bayou	20160127191439_00002	The Athenaeum			Habberton, John	Brueton’s Bayou		2.58162037037037	y	3		
+371	6823063	TOMASO'S FORTUNE.	20160127183730_00010	The Academy and literature, 1902-1905	May 7, 1904	1904	Merriman, Henry Seton	Tomaso's fortune	1914	2.51515151515152	y	4	short stories	
+372	4972419	The Life and Correspondence of Charles Lord Metcalfe, late Governor-General of India, Governor of Jamaica, and Governor-General of Canada; from unpublished Letters and Journals, &c.	20160127234700_00003	The Critic	Oct 16, 1854	1854	Southey, Robert	The life and correspondence of Charles Lord Metcalfe	1855	2.65278041528797	n			
+373	8859272	The Dowager: or, the New School for Scandal.	20160127192201_00017	The Athenaeum	Nov 14, 1840	1840	Gore, (Catherine Grace Frances), Mrs	The dowager : or, The new school for scandal	1840	2.43814908394859	y	2		
+374	8550579	Odds and Ends.	20160128010536_00016	Examiner	Jun 2, 1866	1866	Howe, Henry	Odds and ends	1868	2.50777777777778	n			
+375	8760747	In One Town.	20160127191848_00004	The Athenaeum	Aug 14, 1886	1886	Downey, Edmund	In one town	1886	2.16957653592503	y	4		
+376-0	8896602	The Gold of Fairnilee	20160127191949_00014	The Athenaeum	Dec 1, 1888	1888	Lang, Andrew	John Standish; Or, the Harrowing of London	1896	2.24515710832784	y	5	juvenile	
+376-1	8896602	John Standish; or, the Harrowing of London	20160127191949_00014	The Athenaeum	Dec 1, 1888	1888	Gilliat, Edward	John Standish; Or, the Harrowing of London	1896	2.24515710832784	y	4	juvenile	
+376-2	8896602	The Makers of British India	20160127191949_00014	The Athenaeum			Adams, W. H. Davenport (William Henry)	The Makers of British India		2.24515710832784	n			
+376-3	8896602	Blue Lights; or, Hot Work in the Sudan	20160127191949_00014	The Athenaeum			Ballantyne, R.M. (Robert Michael)	Blue Lights; or, Hot Work in the Sudan		2.24515710832784	y	3		
+376-4	8896602	Bryda: a Story of the Indian Mutiny	20160127191949_00014	The Athenaeum			Field, Mrs. E.M. (Louis Frances Field)	Bryda: a Story of the Indian Mutiny		2.24515710832784	y	3	juvenile	
+376-5	8896602	The Lion of St. Mark	20160127191949_00014	The Athenaeum			Henty, G.A. (George Alfred)	The Lion of St. Mark		2.24515710832784	y	5		
+376-6	8896602	Under False Colours	20160127191949_00014	The Athenaeum			Doudney, Sarah	Under False Colours		2.24515710832784	y	1		
+376-7	8896602	Little Lady Clare	20160127191949_00014	The Athenaeum			Everett-Green, Evelyn	Little Lady Clare		2.24515710832784	y	3		
+376-8	8896602	Storied Holidays	20160127191949_00014	The Athenaeum			Henty, G.A. (George Alfred)	Storied Holidays		2.24515710832784	y	3	short stories	
+376-9	8896602	The Battlefield Treasure	20160127191949_00014	The Athenaeum			Doudney, Sarah	The Battlefield Treasure		2.24515710832784	y	2		
+376-10	8896602	The Little Savage	20160127191949_00014	The Athenaeum			Everett-Green, Evelyn	The Little Savage		2.24515710832784	y	4		
+376-11	8896602	Harry Treverton	20160127191949_00014	The Athenaeum			Brooks, E.S.	Harry Treverton		2.24515710832784	y	4		
+376-12	8896602	Roses and Lilies of Christendom	20160127191949_00014	The Athenaeum			Burke, C.	Roses and Lilies of Christendom		2.24515710832784	y	1	juvenile	
+376-13	8896602	Hazell & Sons, Brewers	20160127191949_00014	The Athenaeum			Swan, Annie S.	Hazell & Sons, Brewers		2.24515710832784	y	1		
+376-14	8896602	Burnham Breaker	20160127191949_00014	The Athenaeum			Greene, Homer	Burnham Breaker		2.24515710832784	y	3		
+376-15	8896602	A Store of Stories	20160127191949_00014	The Athenaeum			Clare, Frances	A Store of Stories		2.24515710832784	y	4	short stories	
+376-16	8896602	Sunshine and Shadow	20160127191949_00014	The Athenaeum			Adams, William Henry Davenport	Sunshine and Shadow		2.24515710832784	y	1	short stories	
+376-17	8896602	Adam Dickson	20160127191949_00014	The Athenaeum			Mason, Thomas	Adam Dickson		2.24515710832784	y	3		
+376-18	8896602	Competitors	20160127191949_00014	The Athenaeum			Seymour, Mrs.	Competitors		2.24515710832784	y	2		
+377	9223020	The Individualist.	20160127191439_00002	The Athenaeum	Jun 24, 1899	1899	Mallock, W. H. (William Hurrell)	The individualist	1899	2.52333333333333	y	2		
+378	9027665	Caleb Field: a Tale of the Puritans.	20160127192611_00010	The Athenaeum	May 17, 1851	1851	Oliphant, Mrs. (Margaret)	Caleb Field. A tale of the Puritans	1851	2.88878655287183	y	4		
+379	9007514	Adventures of a Medical Student.	20160127191542_00003	The Athenaeum	Jan 5, 1850	1850	Douglas, Robert	Adventures of a medical student	1848	3.15488210075027	y	2		
+380	3222068	THE GARDEN OF ADONIS.	20160127183425_00006	The Bookman	Dec 1923	1923	Gordon, Caroline	The garden of Adonis	1937	2.6552380952381	n			
+381	3168976	CALEB WEST: MASTER DIVER.	20160127190413_00011	The Bookman	Oct 1898	1898	Smith, Francis Hopkinson	Caleb West, master diver	1898	2.69261887418137	y	4		
+382	2847179	Home Sketches and Foreign Recollections. By Lady Chatterton.	20160127190721_00014	The Mirror of literature, amusement, and instruction, Nov. 1822-June 1847	Mar 20, 1841	1841	Chatterton, Georgiana, Lady	Home sketches and foreign recollections	1841	3.37013348164627	y	5		
+383	6764955	Gloria Victis.	20160127183934_00012	The Academy, 1869-1902, 0269-333X	Mar 26, 1898	1898	Mitchell, John Ames	Gloria victis	1897	2.70619047619048	y	2		
+384	2486378	MAGNUS MERRIMAN,	20160127180954_00001	Fortnightly review, May 1865-June 1934	Feb 1934	1934	Linklater, Eric	Magnus Merriman	1934	2.67666666666667	y	3		
+385-1	2490460	GENTLEMEN: THE REGIMENT!	20160127190105_00008	Fortnightly review, May 1865-June 1934	Aug 1933	1933	Talbot, Hugh	Gentlemen - the regiment!	1933	2.46585728168819	y	4		
+385-2	2490460	Mr. Jiggins of Jigginstown	20160127190105_00008	Fortnightly review, May 1865-June 1934			Longford, Christine	Mr. Jiggins of Jigginstown		2.46585728168819	y	5		
+385-3	2490460	Saint on Holiday	20160127190105_00008	Fortnightly review, May 1865-June 1934			Geoffrey Dearmer	Saint on Holiday		2.46585728168819	y	2		
+386	2454237	PETRUCHIO.	20160127185454_00005	The English review,  1908-1937	Nov 1929	1929	Stern, G. B. (Gladys Bronwyn)	Petruchio	1929	2.20333333333333	y	3		
+387	4964777	Tales of a Lay Brother.	20160127234801_00004	Critic of literature, art, science, and the drama, 1843-1844	Jun 1844	1844		Tales of a lay-brother	1844	2.1529427390791	y	1		
+388	8595958	THE CITY OF SUNSHINE.	20160128012307_00010	Examiner	Mar 10, 1877	1877	Allardyce, Alexander	The city of sunshine	1877	2.57199677938808	y	4		
+389	6426325	THE CONQUEST OF PLASSANS.	20160127235207_00008	Time	Mar 1887	1887	Zola, Émile	The conquest of Plassans	1887	3.04878787878788	y	4		
+390	5152207	The Poetical Works of Thomas Moore.	20160127230250_00003	The Literary gazette : A weekly journal of literature, science, and the fine arts	Feb 13, 1841	1841	Moore, Thomas	The poetical works of Thomas Moore, collected by himself	1840	2.99187764217915	n			
+391	6163849	THE GENTLE ART OF CYCLING.	20160127231312_00003	Macmillan's magazine,  1859-1907	May 1898	1898	Worthington, Elizabeth Strong	The gentle art of cooking wives	1900	2.22596484215308	n			
+392-1	8833774	The Mystery of Mr. Bernard Brown.	20160127191545_00013	The Athenaeum	Mar 21, 1896	1896	Oppenheim, E. Phillips (Edward Phillips)	The mystery of Mr. Bernard Brown	1910	2.89820216940409	y	1		
+392-2	8833774	The Modern Prometheus	20160127191545_00013	The Athenaeum			Oppenheim, E. Phillips (Edward Phillips)	The Modern Prometheus		2.89820216940409	y	1		
+393	9436447	History of the United States, from the Discovery of the American Continent.	20160127192715_00011	The Athenaeum	Nov 24, 1866	1866	[Hawks, Francis Lister]	History of the United States: no. I	1844	2.35196428571429	n			
+394	4444462	Miscellanies is Prose and Verse.	20160127224021_00001	Tait's Edinburgh magazine	Mar 1843	1843	Smith, James	Comic miscellanies in prose and verse	1841	2.1388945054945	n			
+395	6771996	A PASSIONATE PILGRIM.	20160127191949_00014	The Academy, 1869-1902, 0269-333X	Nov 13, 1897	1897	White, Percy	A passionate pilgrim	1898	2.62666666666667	y	2		
+396	3221676	LEADING STRINGS	20160127183121_00003	The Bookman	Dec 1930	1930	Pulling, Joan King	In leading strings	1922	2.12586908041453	y	4	juvenile	
+397	5264160	The Man at Arms; or, Henri de Cerons.	20160127230802_00010	The Literary gazette : A weekly journal of literature, science, and the fine arts	Aug 29, 1840	1840	James, G. P. R. (George Payne Rainsford)	The man-at-arms, or, Henry de Cerons	1840	2.39648371246588	n			
+398	8812541	Life and Labours of Mr. Brassey, 1805-1870.	20160127191949_00014	The Athenaeum	Aug 3, 1872	1872	Helps, Arthur, Sir	Life and labours of Mr. Brassey	1874	3.57522487648232	n			
+399-1	8864565	Camiola: a Girl with a Fortune.	20160127191439_00002	The Athenaeum	Nov 21, 1885	1885	McCarthy, Justin H , (Justin Huntly)	Camiola: a Girl with a Fortune.	1885	2.43548669301713	y	3		
+399-2	8864565	Babylon	20160127191439_00002	The Athenaeum			Allen, Grant	Babylon		2.43548669301713	y	2		
+399-3	8864565	Arnold Robur	20160127191439_00002	The Athenaeum			Combe, Martin, and Duncan Lisle	Arnold Robur		2.43548669301713	y	3		
+399-4	8864565	The Beauty of the World	20160127191439_00002	The Athenaeum			Duffield, A.J.	The Beauty of the World		2.43548669301713	y	1		
+399-5	8864565	Chareombe Wells: a Tale of Country Life	20160127191439_00002	The Athenaeum			Werry, Eliza F.	Chareombe Wells: a Tale of Country Life		2.43548669301713	y	3		
+399-6	8864565	Rhoda	20160127191439_00002	The Athenaeum			Maitland, Agnes C.	Rhoda		2.43548669301713	y	4		
+399-7	8864565	Love, too, is Vanity	20160127191439_00002	The Athenaeum			Brewer, Emma	Love, too, is Vanity		2.43548669301713	y	4		
+399-8	8864565	The Life of a Prig	20160127191439_00002	The Athenaeum			Longueville, Thomas	The Life of a Prig		2.43548669301713	y	2		
+399-9	8864565	Criss-Cross	20160127191439_00002	The Athenaeum			Litchfield, Grace Denio	Criss-Cross		2.43548669301713	y	2		
