@@ -255,7 +255,6 @@ for pathid, group in bypath:
 
 		if prob < 0.5:
 			continue
-		seq = rec['seq']
 
 		if 'Title' in rec and rec['Title'] == 'The Athenaeum':
 			if meandate > 1870 and meandate < 1890:
@@ -273,7 +272,10 @@ for pathid, group in bypath:
 
 		# okay, it survived filtering
 		
-		recordsfromallpaths.append(seq, rec)
+		recordsfromallpaths.append(rec)
+
+print()
+print(len(recordsfromallpaths))
 
 def writerecord(rec, file):
 	global pubdates
@@ -284,7 +286,7 @@ def writerecord(rec, file):
 	file.write(rec['RecordID']) + '\t' + str(pubdate) + '\t' + outtext + '\n'
 
 
-with open(outfile, mode = 'w', encoding = 'utf-8') as f:
+with open(outfile, mode = 'a', encoding = 'utf-8') as f:
 
 	for rec in recordsfromallpaths:
 		for t in wanted:
