@@ -137,7 +137,7 @@ def line2words(line):
 	return outwords
 
 def words2vec(words, vocab, leximap, numfeatures):
-	vector = np.zeroes(numfeatures)
+	vector = np.zeros(numfeatures)
 	for w in words:
 		if w not in vocab:
 			w = '#rareword'
