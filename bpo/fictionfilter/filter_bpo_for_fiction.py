@@ -153,7 +153,7 @@ wanted = ['RecordID', 'RecordTitle', 'Title',
 	 'AlphaPubDate', 'SubjectTerms', 'Volume', 'Issue', 
 	 'StartPage', 'EndPage']
 
-def get_texts(zf, seqrecords):
+def get_texts(zf, recordIDs):
 	print(pathid)
 	global wanted
 	wantset = set(wanted)
@@ -162,7 +162,7 @@ def get_texts(zf, seqrecords):
 	allrecords = []
 	errorlist = []
 
-	for seq, record in seqrecords:
+	for record in recordIDs:
 		f = str(record) + '.xml'
 		if f not in files:
 			errorlist.append(f)
@@ -170,7 +170,6 @@ def get_texts(zf, seqrecords):
 
 		record = dict()
 		record['SubjectTerms'] = []
-		record['seq'] = seq
 
 		try:
 			data = zf.read(f)
@@ -216,7 +215,7 @@ args = sys.argv
 infile = args[1]
 outfile = args[2]
 
-toget = pd.read_csv(infile, sep = '\t', index_col = 'seq')
+toget = pd.read_csv(infile, sep = '\t')
 meandate = np.mean(toget.PubYear)
 bypath = toget.groupby('PathID')
 
@@ -224,17 +223,19 @@ suspicious = {'CHRISTMAS', 'BOOKS.', 'NOVELS', 'OF', 'OP', 'WEEK.'}
 
 recordsfromallpaths = []
 athenaeumcollectives = []
+pubdates = dict()
 
 for pathid, group in bypath:
-	seqtuples = []
+	recordIDs = []
 	for seq, row in group.iterrows():
-		seqtuples.append((seq, row['RecordID']))
+		recordIDs.append(row['RecordID'])
+		pubdates[row['RecordID']] = row['PubYear']
 
 	path = 'StanfordBP_' + pathid + '.zip'
 
 	zf = ZipFile(sourcedir + path)
 
-	records, errorlist = get_texts(zf, seqtuples)
+	records, errorlist = get_texts(zf, recordIDs)
 
 	for rec in records:
 		if 'reviewtext' in rec:
@@ -267,36 +268,39 @@ for pathid, group in bypath:
 				if checktext.count('(') > 1:
 					suspects += checktext.count('(')
 				if len(suspects) > 1:
-					athenaeumcollectives.append((seq, rec))
+					athenaeumcollectives.append(rec)
 					continue
 
 		# okay, it survived filtering
 		
-		recordsfromallpaths.append((seq, rec))
+		recordsfromallpaths.append(seq, rec)
 
-def writerecord(seq, rec, file):
-	outtext = rec['reviewtext'].replace("&apos;", "'").replace('&quot;', '"').replace('\t', '')
+def writerecord(rec, file):
+	global pubdates
+
+	outtext = rec['reviewtext'].replace("&apos;", "'").replace('&quot;', '"').replace('\t', ' ')
 	outtext = outtext.replace('&amp;', '&').replace('&pound;', '£').replace('&lt;', '<').replace('&gt;', '>')
-	file.write(str(seq) + '\t' + rec['RecordID']) + '\t' + outtext + '\n'
+	pubdate = pubdates[rec['RecordID']]
+	file.write(rec['RecordID']) + '\t' + str(pubdate) + '\t' + outtext + '\n'
 
 
 with open(outfile, mode = 'w', encoding = 'utf-8') as f:
 
-	for seq, rec in recordsfromallpaths:
+	for rec in recordsfromallpaths:
 		for t in wanted:
 			if t not in rec:
 				rec[t] = ''
 
-		writerecord(seq, rec, f)
+		writerecord(rec, f)
 
 with open('athenaeumcollectives.txt', mode = 'a', encoding = 'utf-8') as f:
 
-	for seq, rec in athenaeumcollectives:
+	for rec in athenaeumcollectives:
 		for t in wanted:
 			if t not in rec:
 				rec[t] = ''
 
-		writerecord(seq, rec, f)
+		writerecord(rec, f)
 
 
 
