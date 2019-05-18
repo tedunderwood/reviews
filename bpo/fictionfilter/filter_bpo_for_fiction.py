@@ -142,7 +142,7 @@ def words2vec(words, vocab, leximap, numfeatures):
 		if w not in vocab:
 			w = '#rareword'
 			# which is, itself, in the lexicon!
-		idx = lexicon[w]
+		idx = leximap[w]
 		vector[idx] += 1
 
 	vector = vector / np.sum(vector)
