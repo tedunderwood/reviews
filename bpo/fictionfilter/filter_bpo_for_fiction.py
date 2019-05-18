@@ -4,7 +4,7 @@
 # is likely a review of a work of fiction.
 
 import xml.etree.ElementTree as ET
-import os, csv, sys, re 
+import os, csv, sys, re
 from zipfile import ZipFile
 import pickle
 import pandas as pd
@@ -29,8 +29,8 @@ with open('model/fictionreview_vocab.txt', mode = 'r', encoding = 'utf-8') as f:
 	vocab = set()
 	for idx, line in enumerate(f):
 		word = line.strip()
+		vocab.add(word)
 		if idx < 210:
-			vocab.add(word)
 			leximap[word] = idx
 
 reg_constant = .0265
@@ -142,15 +142,19 @@ def words2vec(words, vocab, leximap, numfeatures):
 		if w not in vocab:
 			w = '#rareword'
 			# which is, itself, in the lexicon!
-		idx = leximap[w]
-		vector[idx] += 1
+		if w in leximap:
+			# note that words between 210 and 400
+			# are left out of the vector altogether,
+			# as also happened in our model
+			idx = leximap[w]
+			vector[idx] += 1
 
 	vector = vector / np.sum(vector)
 
 	return vector
 
-wanted = ['RecordID', 'RecordTitle', 'Title', 
-	 'AlphaPubDate', 'SubjectTerms', 'Volume', 'Issue', 
+wanted = ['RecordID', 'RecordTitle', 'Title',
+	 'AlphaPubDate', 'SubjectTerms', 'Volume', 'Issue',
 	 'StartPage', 'EndPage']
 
 def get_texts(zf, recordIDs):
@@ -246,7 +250,7 @@ for pathid, group in bypath:
 
 		if 'reviewtext' in rec:
 			words = line2words(rec['reviewtext'])
-		else: 
+		else:
 			continue
 
 		if 'RecordTitle' in rec:
@@ -280,7 +284,7 @@ for pathid, group in bypath:
 					continue
 
 		# okay, it survived filtering
-		
+
 		recordsfromallpaths.append(rec)
 
 print()
