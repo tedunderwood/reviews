@@ -29,8 +29,8 @@ with open('model/fictionreview_vocab.txt', mode = 'r', encoding = 'utf-8') as f:
 	vocab = set()
 	for idx, line in enumerate(f):
 		word = line.strip()
-		vocab.add(word)
 		if idx < 210:
+			vocab.add(word)
 			leximap[word] = idx
 
 reg_constant = .0265
