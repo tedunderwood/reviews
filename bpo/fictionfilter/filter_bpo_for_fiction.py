@@ -253,7 +253,6 @@ for pathid, group in bypath:
 		vector = words2vec(words, vocab, leximap, 210)
 		scaled = scaler.transform(vector.reshape(1, -1))
 		prob = model.predict_proba(scaled)[0][1]
-		print(prob)
 
 		probs.append(prob)
 
@@ -277,10 +276,6 @@ for pathid, group in bypath:
 		# okay, it survived filtering
 		
 		recordsfromallpaths.append(rec)
-
-	print(len(probs))
-	if len(probs) > 1:
-		print(sum(probs) / len(probs))
 
 print()
 print(len(recordsfromallpaths))
