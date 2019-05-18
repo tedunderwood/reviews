@@ -286,7 +286,7 @@ def writerecord(rec, file):
 	outtext = rec['reviewtext'].replace("&apos;", "'").replace('&quot;', '"').replace('\t', ' ')
 	outtext = outtext.replace('&amp;', '&').replace('&pound;', '£').replace('&lt;', '<').replace('&gt;', '>')
 	pubdate = pubdates[rec['RecordID']]
-	file.write(rec['RecordID']) + '\t' + str(pubdate) + '\t' + outtext + '\n'
+	file.write(str(rec['RecordID']) + '\t' + str(pubdate) + '\t' + outtext + '\n')
 
 
 with open(outfile, mode = 'a', encoding = 'utf-8') as f:
