@@ -225,6 +225,8 @@ recordsfromallpaths = []
 athenaeumcollectives = []
 pubdates = dict()
 
+recordsconsidered = 0
+
 for pathid, group in bypath:
 	recordIDs = []
 	for seq, row in group.iterrows():
@@ -240,6 +242,8 @@ for pathid, group in bypath:
 	probs = []
 
 	for rec in records:
+		recordsconsidered += 1
+
 		if 'reviewtext' in rec:
 			words = line2words(rec['reviewtext'])
 		else: 
@@ -278,7 +282,7 @@ for pathid, group in bypath:
 		recordsfromallpaths.append(rec)
 
 print()
-print(len(recordsfromallpaths))
+print(len(recordsfromallpaths) / recordsconsidered)
 
 def writerecord(rec, file):
 	global pubdates
