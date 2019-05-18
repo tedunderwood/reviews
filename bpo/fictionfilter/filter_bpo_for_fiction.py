@@ -236,7 +236,7 @@ for pathid, group in bypath:
 	zf = ZipFile(sourcedir + path)
 
 	records, errorlist = get_texts(zf, recordIDs)
-
+	print("Records: " , len(records))
 	probs = []
 
 	for rec in records:
