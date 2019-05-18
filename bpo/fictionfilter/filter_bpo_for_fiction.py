@@ -245,8 +245,8 @@ for pathid, group in bypath:
     	if 'RecordTitle' in rec:
         	words.extend(line2words(rec['RecordTitle']))
 
-        if len(words) <= 30:
-        	continue
+		if len(words) <= 30:
+			continue
 
         vector = words2vec(words, vocab, leximap, 210)
         scaled = scaler.transform(vector.reshape(1, -1))
