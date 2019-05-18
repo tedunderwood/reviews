@@ -134,7 +134,7 @@ def line2words(line):
 
 		outwords.append(w)
 
-		return outwords
+	return outwords
 
 def words2vec(words, vocab, leximap, numfeatures):
 	vector = np.zeroes(numfeatures)
@@ -236,7 +236,7 @@ for pathid, group in bypath:
 	zf = ZipFile(sourcedir + path)
 
 	records, errorlist = get_texts(zf, recordIDs)
-	print("Records: " , len(records))
+
 	probs = []
 
 	for rec in records:
@@ -247,8 +247,6 @@ for pathid, group in bypath:
 
 		if 'RecordTitle' in rec:
 			words.extend(line2words(rec['RecordTitle']))
-		probs.append(len(words))
-		print(words)
 		if len(words) <= 30:
 			continue
 
