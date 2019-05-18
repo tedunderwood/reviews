@@ -237,6 +237,8 @@ for pathid, group in bypath:
 
 	records, errorlist = get_texts(zf, recordIDs)
 
+	probs = []
+
 	for rec in records:
 		if 'reviewtext' in rec:
 			words = line2words(rec['reviewtext'])
@@ -252,6 +254,8 @@ for pathid, group in bypath:
 		vector = words2vec(words, vocab, leximap, 210)
 		scaled = scaler.transform(vector.reshape(1, -1))
 		prob = model.predict_proba(scaled[1])
+
+		probs.append(prob)
 
 		if prob < 0.5:
 			continue
@@ -273,6 +277,10 @@ for pathid, group in bypath:
 		# okay, it survived filtering
 		
 		recordsfromallpaths.append(rec)
+
+	print(len(probs))
+	if len(probs) > 1:
+		print(sum(probs) / len(probs))
 
 print()
 print(len(recordsfromallpaths))
