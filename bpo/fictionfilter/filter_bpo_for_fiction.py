@@ -252,7 +252,7 @@ for pathid, group in bypath:
 
 		vector = words2vec(words, vocab, leximap, 210)
 		scaled = scaler.transform(vector.reshape(1, -1))
-		prob = model.predict_proba(scaled[1])
+		prob = model.predict_proba(scaled)[1]
 
 		probs.append(prob)
 
