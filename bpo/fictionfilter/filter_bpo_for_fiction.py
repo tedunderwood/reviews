@@ -43,7 +43,7 @@ delchars = ''.join(c for c in map(chr, range(256)) if not c.isalpha())
 spaces = ' ' * len(delchars)
 punct2space = str.maketrans(delchars, spaces)
 
-rulepath = 'rulesets/'
+rulepath = '/projects/ischoolichass/ichass/usesofscale/rules/'
 delim = '\t'
 
 romannumerals = set()
