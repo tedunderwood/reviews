@@ -239,7 +239,7 @@ for pathid, group in bypath:
 
 	for rec in records:
 		if 'reviewtext' in rec:
-			words = line2words[rec['reviewtext']]
+			words = line2words(rec['reviewtext'])
 		else: 
 			continue
 
