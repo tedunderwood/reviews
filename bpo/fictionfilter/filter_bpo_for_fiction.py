@@ -48,93 +48,93 @@ delim = '\t'
 
 romannumerals = set()
 with open(rulepath + 'romannumerals.txt', encoding = 'utf-8') as file:
-    filelines = file.readlines()
+	filelines = file.readlines()
 
 for line in filelines:
-    line = line.rstrip()
-    romannumerals.add(line)
+	line = line.rstrip()
+	romannumerals.add(line)
 
 lexicon = dict()
 
 with open(rulepath + 'MainDictionary.txt', encoding = 'utf-8') as file:
-    filelines = file.readlines()
+	filelines = file.readlines()
 
 for line in filelines:
-    line = line.rstrip()
-    fields = line.split(delim)
-    englflag = int(fields[1])
-    lexicon[fields[0]] = englflag
+	line = line.rstrip()
+	fields = line.split(delim)
+	englflag = int(fields[1])
+	lexicon[fields[0]] = englflag
 
 personalnames = set()
 with open(rulepath + 'PersonalNames.txt', encoding = 'utf-8') as file:
-    filelines = file.readlines()
+	filelines = file.readlines()
 
 for line in filelines:
-    line = line.rstrip()
-    line = line.lower()
-    personalnames.add(line)
+	line = line.rstrip()
+	line = line.lower()
+	personalnames.add(line)
 
 placenames = set()
 with open(rulepath + 'PlaceNames.txt', encoding = 'utf-8') as file:
-    filelines = file.readlines()
+	filelines = file.readlines()
 
 for line in filelines:
-    line = line.rstrip()
-    line = line.lower()
-    placenames.add(line)
+	line = line.rstrip()
+	line = line.lower()
+	placenames.add(line)
 
 correctionrules = dict()
 
 with open(rulepath + 'CorrectionRules.txt', encoding = 'utf-8') as file:
-    filelines = file.readlines()
+	filelines = file.readlines()
 
 for line in filelines:
-    line = line.rstrip()
-    fields = line.split(delim)
-    correctionrules[fields[0]] = fields[1]
+	line = line.rstrip()
+	fields = line.split(delim)
+	correctionrules[fields[0]] = fields[1]
 
 variants = dict()
 with open(rulepath + 'VariantSpellings.txt', encoding = 'utf-8') as file:
-    filelines = file.readlines()
+	filelines = file.readlines()
 
 for line in filelines:
-    line = line.rstrip()
-    fields = line.split(delim)
-    variants[fields[0]] = fields[1]
+	line = line.rstrip()
+	fields = line.split(delim)
+	variants[fields[0]] = fields[1]
 
 def checkEqual3(lst):
    return lst[1:] == lst[:-1]
 
 def line2words(line):
-    global punct2space, romannumerals, lexicon, personalnames, placenames, correctionrules, variants
+	global punct2space, romannumerals, lexicon, personalnames, placenames, correctionrules, variants
 
-    if pd.isnull(line):
-        return []
-    line = line.strip().translate(punct2space).lower()
-    words = line.split()
-    outwords = []
-    for w in words:
-        if w in romannumerals:
-            w = '#romannumeral'
-        elif w in personalnames:
-            w = '#personalname'
-        elif w in placenames:
-            w = '#placename'
-        elif w.isdigit():
-            w = '#arabicnumeral'
+	if pd.isnull(line):
+		return []
+	line = line.strip().translate(punct2space).lower()
+	words = line.split()
+	outwords = []
+	for w in words:
+		if w in romannumerals:
+			w = '#romannumeral'
+		elif w in personalnames:
+			w = '#personalname'
+		elif w in placenames:
+			w = '#placename'
+		elif w.isdigit():
+			w = '#arabicnumeral'
 
-        if w in correctionrules:
-            w = correctionrules[w]
+		if w in correctionrules:
+			w = correctionrules[w]
 
-        if w in variants:
-            w = variants[w]
+		if w in variants:
+			w = variants[w]
 
-        if w not in lexicon and not w.startswith('#') and len(w) > 1:
-            w = '#notenglishword'
+		if w not in lexicon and not w.startswith('#') and len(w) > 1:
+			w = '#notenglishword'
 
-        outwords.append(w)
+		outwords.append(w)
 
-        return outwords
+		return outwords
 
 def words2vec(words, vocab, leximap, numfeatures):
 	vector = np.zeroes(numfeatures)
@@ -150,61 +150,61 @@ def words2vec(words, vocab, leximap, numfeatures):
 	return vector
 
 wanted = ['RecordID', 'RecordTitle', 'Title', 
-     'AlphaPubDate', 'SubjectTerms', 'Volume', 'Issue', 
-     'StartPage', 'EndPage']
+	 'AlphaPubDate', 'SubjectTerms', 'Volume', 'Issue', 
+	 'StartPage', 'EndPage']
 
 def get_texts(zf, seqrecords):
-    print(pathid)
-    global wanted
-    wantset = set(wanted)
+	print(pathid)
+	global wanted
+	wantset = set(wanted)
 
-    files = zf.namelist()
-    allrecords = []
-    errorlist = []
+	files = zf.namelist()
+	allrecords = []
+	errorlist = []
 
-    for seq, record in seqrecords:
-        f = str(record) + '.xml'
-        if f not in files:
-            errorlist.append(f)
-            continue
+	for seq, record in seqrecords:
+		f = str(record) + '.xml'
+		if f not in files:
+			errorlist.append(f)
+			continue
 
-        record = dict()
-        record['SubjectTerms'] = []
-        record['seq'] = seq
+		record = dict()
+		record['SubjectTerms'] = []
+		record['seq'] = seq
 
-        try:
-            data = zf.read(f)
-            root = ET.fromstring(data)
-        except:
-            errorlist.append(f)
-            continue
+		try:
+			data = zf.read(f)
+			root = ET.fromstring(data)
+		except:
+			errorlist.append(f)
+			continue
 
-        for child in root:
-            tag = child.tag
-            if tag in wantset and not tag in record:
-                record[tag] = child.text
-            elif tag in wantset:
-                record[tag] = record[tag] + '|' + child.text
-            elif tag == 'Publication':
-                for grandchild in child:
-                    record[grandchild.tag] = grandchild.text
-            elif tag == 'FullText':
-                record['reviewtext'] = child.text
-            elif tag == 'Terms':
-                for grandchild in child:
-                    FTname = 'ds'
-                    for ggc in grandchild:
-                        if ggc.tag == 'FlexTermValue' and FTname == 'ds':
-                            record['SubjectTerms'].append(ggc.text)
+		for child in root:
+			tag = child.tag
+			if tag in wantset and not tag in record:
+				record[tag] = child.text
+			elif tag in wantset:
+				record[tag] = record[tag] + '|' + child.text
+			elif tag == 'Publication':
+				for grandchild in child:
+					record[grandchild.tag] = grandchild.text
+			elif tag == 'FullText':
+				record['reviewtext'] = child.text
+			elif tag == 'Terms':
+				for grandchild in child:
+					FTname = 'ds'
+					for ggc in grandchild:
+						if ggc.tag == 'FlexTermValue' and FTname == 'ds':
+							record['SubjectTerms'].append(ggc.text)
 
-        if len(record['SubjectTerms']) > 0:
-            record['SubjectTerms'] = '|'.join(record['SubjectTerms'])
-        else:
-            record['SubjectTerms'] = ''
+		if len(record['SubjectTerms']) > 0:
+			record['SubjectTerms'] = '|'.join(record['SubjectTerms'])
+		else:
+			record['SubjectTerms'] = ''
 
-        allrecords.append(record)
+		allrecords.append(record)
 
-    return allrecords, errorlist
+	return allrecords, errorlist
 
 ## MAIN EXECUTION BEGINS HERE
 
@@ -226,53 +226,53 @@ recordsfromallpaths = []
 athenaeumcollectives = []
 
 for pathid, group in bypath:
-    seqtuples = []
-    for seq, row in group.iterrows():
-        seqtuples.append((seq, row['RecordID']))
+	seqtuples = []
+	for seq, row in group.iterrows():
+		seqtuples.append((seq, row['RecordID']))
 
-    path = 'StanfordBP_' + pathid + '.zip'
+	path = 'StanfordBP_' + pathid + '.zip'
 
-    zf = ZipFile(sourcedir + path)
+	zf = ZipFile(sourcedir + path)
 
-    records, errorlist = get_texts(zf, seqtuples)
+	records, errorlist = get_texts(zf, seqtuples)
 
-    for rec in records:
-    	if 'reviewtext' in rec:
-    		words = line2words[rec['reviewtext']]
-    	else: 
-    		continue
+	for rec in records:
+		if 'reviewtext' in rec:
+			words = line2words[rec['reviewtext']]
+		else: 
+			continue
 
-    	if 'RecordTitle' in rec:
-        	words.extend(line2words(rec['RecordTitle']))
+		if 'RecordTitle' in rec:
+			words.extend(line2words(rec['RecordTitle']))
 
 		if len(words) <= 30:
 			continue
 
-        vector = words2vec(words, vocab, leximap, 210)
-        scaled = scaler.transform(vector.reshape(1, -1))
-        prob = model.predict_proba(scaled[1])
+		vector = words2vec(words, vocab, leximap, 210)
+		scaled = scaler.transform(vector.reshape(1, -1))
+		prob = model.predict_proba(scaled[1])
 
-        if prob < 0.5:
-        	continue
-        seq = rec['seq']
+		if prob < 0.5:
+			continue
+		seq = rec['seq']
 
-        if 'Title' in rec and rec['Title'] == 'The Athenaeum':
-        	if meandate > 1870 and meandate < 1890:
-        		reviewtext = rec['reviewtext']
-        		textlen = len(reviewtext)
-        		cap = min(textlen, 300)
-        		checktext = rec['ReviewTitle'] + ' ' + reviewtext[0: cap]
-        		words2check = set(checktext.split())
-        		suspects = len(suspicious.intersection(words2check))
-        		if checktext.count('(') > 1:
-        			suspects += checktext.count('(')
-        		if len(suspects) > 1:
-        			athenaeumcollectives.append((seq, rec))
-        			continue
+		if 'Title' in rec and rec['Title'] == 'The Athenaeum':
+			if meandate > 1870 and meandate < 1890:
+				reviewtext = rec['reviewtext']
+				textlen = len(reviewtext)
+				cap = min(textlen, 300)
+				checktext = rec['ReviewTitle'] + ' ' + reviewtext[0: cap]
+				words2check = set(checktext.split())
+				suspects = len(suspicious.intersection(words2check))
+				if checktext.count('(') > 1:
+					suspects += checktext.count('(')
+				if len(suspects) > 1:
+					athenaeumcollectives.append((seq, rec))
+					continue
 
-        # okay, it survived filtering
-        
-        recordsfromallpaths.append((seq, rec))
+		# okay, it survived filtering
+		
+		recordsfromallpaths.append((seq, rec))
 
 def writerecord(seq, rec, file):
 	outtext = rec['reviewtext'].replace("&apos;", "'").replace('&quot;', '"').replace('\t', '')
@@ -282,21 +282,21 @@ def writerecord(seq, rec, file):
 
 with open(outfile, mode = 'w', encoding = 'utf-8') as f:
 
-    for seq, rec in recordsfromallpaths:
-        for t in wanted:
-            if t not in rec:
-                rec[t] = ''
+	for seq, rec in recordsfromallpaths:
+		for t in wanted:
+			if t not in rec:
+				rec[t] = ''
 
-        writerecord(seq, rec, f)
+		writerecord(seq, rec, f)
 
 with open('athenaeumcollectives.txt', mode = 'a', encoding = 'utf-8') as f:
 
 	for seq, rec in athenaeumcollectives:
-        for t in wanted:
-            if t not in rec:
-                rec[t] = ''
+		for t in wanted:
+			if t not in rec:
+				rec[t] = ''
 
-        writerecord(seq, rec, f)
+		writerecord(seq, rec, f)
 
 
 
