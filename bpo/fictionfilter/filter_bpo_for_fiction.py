@@ -229,7 +229,7 @@ for pathid, group in bypath:
 	recordIDs = []
 	for seq, row in group.iterrows():
 		recordIDs.append(row['RecordID'])
-		pubdates[row['RecordID']] = row['PubYear']
+		pubdates[str(row['RecordID'])] = str(row['PubYear'])
 
 	path = 'StanfordBP_' + pathid + '.zip'
 
