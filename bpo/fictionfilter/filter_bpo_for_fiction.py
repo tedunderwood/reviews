@@ -248,6 +248,7 @@ for pathid, group in bypath:
 		if 'RecordTitle' in rec:
 			words.extend(line2words(rec['RecordTitle']))
 		probs.append(len(words))
+		print(words)
 		if len(words) <= 30:
 			continue
 
