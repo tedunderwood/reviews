@@ -30,11 +30,11 @@ with open('model/fictionreview_vocab.txt', mode = 'r', encoding = 'utf-8') as f:
 	for idx, line in enumerate(f):
 		word = line.strip()
 		vocab.add(word)
-		if idx < 210:
+		if idx < 320:
 			leximap[word] = idx
 
-reg_constant = .0265
-numfeatures = 210
+reg_constant = .0170
+numfeatures = 320
 
 # these constants are copied directly from makemodel.ipynb
 # where the model is trained
@@ -228,14 +228,17 @@ suspicious = {'CHRISTMAS', 'BOOKS.', 'NOVELS', 'OF', 'OP', 'WEEK.'}
 recordsfromallpaths = []
 athenaeumcollectives = []
 pubdates = dict()
-
+matchqualities = dict()
 recordsconsidered = 0
 
 for pathid, group in bypath:
 	recordIDs = []
 	for seq, row in group.iterrows():
+		if float(row['matchquality']) < 2.1:
+			continue
 		recordIDs.append(row['RecordID'])
 		pubdates[str(row['RecordID'])] = str(row['PubYear'])
+		matchqualities[str(row['RecordID'])] = float(row['matchquality'])
 
 	path = 'StanfordBP_' + pathid + '.zip'
 
@@ -255,10 +258,15 @@ for pathid, group in bypath:
 
 		if 'RecordTitle' in rec:
 			words.extend(line2words(rec['RecordTitle']))
-		if len(words) <= 30:
+		if len(words) <= 40:
 			continue
 
-		vector = words2vec(words, vocab, leximap, 210)
+		vector = words2vec(words, vocab, leximap, 320)
+		if rec['RecordID'] in matchqualities:
+			vector[0] = matchqualities[rec['RecordID']]
+		else:
+			vector[0] = 2.1
+
 		scaled = scaler.transform(vector.reshape(1, -1))
 		prob = model.predict_proba(scaled)[0][1]
 
