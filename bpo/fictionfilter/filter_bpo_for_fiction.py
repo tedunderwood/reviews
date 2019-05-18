@@ -260,8 +260,10 @@ for pathid, group in bypath:
 
 		probs.append(prob)
 
-		if prob < 0.5:
+		if prob < 0.55:
 			continue
+		else:
+			rec['fictionprobability'] = '{:04.3f}'.format(prob)
 
 		if 'Title' in rec and rec['Title'] == 'The Athenaeum':
 			if meandate > 1870 and meandate < 1890:
@@ -289,8 +291,8 @@ def writerecord(rec, file):
 
 	outtext = rec['reviewtext'].replace("&apos;", "'").replace('&quot;', '"').replace('\t', ' ')
 	outtext = outtext.replace('&amp;', '&').replace('&pound;', '£').replace('&lt;', '<').replace('&gt;', '>')
-	pubdate = pubdates[rec['RecordID']]
-	file.write(str(rec['RecordID']) + '\t' + str(pubdate) + '\t' + outtext + '\n')
+	prob = rec['fictionprobability']
+	file.write(str(rec['RecordID']) + '\t' + prob + '\t' + outtext + '\n')
 
 
 with open(outfile, mode = 'a', encoding = 'utf-8') as f:
