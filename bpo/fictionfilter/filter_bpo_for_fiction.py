@@ -30,11 +30,11 @@ with open('model/fictionreview_vocab.txt', mode = 'r', encoding = 'utf-8') as f:
 	for idx, line in enumerate(f):
 		word = line.strip()
 		vocab.add(word)
-		if idx < 320:
+		if idx < 290:
 			leximap[word] = idx
 
 reg_constant = .0170
-numfeatures = 320
+numfeatures = 290
 
 # these constants are copied directly from makemodel.ipynb
 # where the model is trained
@@ -231,6 +231,8 @@ pubdates = dict()
 matchqualities = dict()
 recordsconsidered = 0
 
+notenglishidx = wordsequence['#notenglishword']
+
 for pathid, group in bypath:
 	recordIDs = []
 	for seq, row in group.iterrows():
@@ -258,10 +260,16 @@ for pathid, group in bypath:
 
 		if 'RecordTitle' in rec:
 			words.extend(line2words(rec['RecordTitle']))
+
 		if len(words) <= 40:
 			continue
 
-		vector = words2vec(words, vocab, leximap, 320)
+		vector = words2vec(words, vocab, leximap, 290)
+
+		if vector[notenglishidx] > 0.02:
+			continue
+			# this review probably has very bad OCR quality
+
 		if rec['RecordID'] in matchqualities:
 			vector[0] = matchqualities[rec['RecordID']]
 		else:
@@ -274,6 +282,9 @@ for pathid, group in bypath:
 
 		if prob < 0.55:
 			continue
+			# Notice that we're setting the threshold slightly higher than
+			# 0.5 because we want high precision.
+
 		else:
 			rec['fictionprobability'] = '{:04.3f}'.format(prob)
 
@@ -297,6 +308,9 @@ for pathid, group in bypath:
 
 print()
 print(len(recordsfromallpaths) / recordsconsidered)
+
+# That tells us what percentage of records with matchquality > 2.1
+# were identified as sufficiently long, with good OCR quality, and fiction.
 
 def writerecord(rec, file):
 	global pubdates
