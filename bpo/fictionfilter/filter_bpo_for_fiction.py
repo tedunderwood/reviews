@@ -302,7 +302,7 @@ for pathid, group in bypath:
 				suspects = len(suspicious.intersection(words2check))
 				if checktext.count('(') > 1:
 					suspects += checktext.count('(')
-				if len(suspects) > 1:
+				if suspects > 1:
 					athenaeumcollectives.append(rec)
 					continue
 
