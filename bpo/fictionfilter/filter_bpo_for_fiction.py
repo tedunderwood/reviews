@@ -30,11 +30,12 @@ with open('model/fictionreview_vocab.txt', mode = 'r', encoding = 'utf-8') as f:
 	for idx, line in enumerate(f):
 		word = line.strip()
 		vocab.add(word)
-		if idx < 290:
+		if idx < 110:
 			leximap[word] = idx
 
-reg_constant = .0170
-numfeatures = 290
+reg_constant = .04
+# not actually used here
+numfeatures = 110
 
 # these constants are copied directly from makemodel.ipynb
 # where the model is trained
@@ -230,6 +231,7 @@ athenaeumcollectives = []
 pubdates = dict()
 matchqualities = dict()
 recordsconsidered = 0
+missingquality = 0
 
 notenglishidx = leximap['#notenglishword']
 
@@ -261,12 +263,12 @@ for pathid, group in bypath:
 		if 'RecordTitle' in rec:
 			words.extend(line2words(rec['RecordTitle']))
 
-		if len(words) <= 40:
+		if len(words) < 50:
 			continue
 
-		vector = words2vec(words, vocab, leximap, 290)
+		vector = words2vec(words, vocab, leximap, 110)
 
-		if vector[notenglishidx] > 0.02:
+		if vector[notenglishidx] > 0.2:
 			continue
 			# this review probably has very bad OCR quality
 
@@ -274,6 +276,7 @@ for pathid, group in bypath:
 			vector[0] = matchqualities[rec['RecordID']]
 		else:
 			vector[0] = 2.1
+			missingquality += 1
 
 		scaled = scaler.transform(vector.reshape(1, -1))
 		prob = model.predict_proba(scaled)[0][1]
@@ -308,6 +311,7 @@ for pathid, group in bypath:
 
 print()
 print(len(recordsfromallpaths) / recordsconsidered)
+print(missingquality / recordsconsidered)
 
 # That tells us what percentage of records with matchquality > 2.1
 # were identified as sufficiently long, with good OCR quality, and fiction.
