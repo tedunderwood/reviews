@@ -57,14 +57,12 @@ for line in filelines:
 
 lexicon = dict()
 
-with open(rulepath + 'MainDictionary.txt', encoding = 'utf-8') as file:
+with open('model/modellexicon.txt', encoding = 'utf-8') as file:
 	filelines = file.readlines()
 
 for line in filelines:
 	line = line.rstrip()
-	fields = line.split(delim)
-	englflag = int(fields[1])
-	lexicon[fields[0]] = englflag
+	lexicon[fields[0]] = 1
 
 personalnames = set()
 with open(rulepath + 'PersonalNames.txt', encoding = 'utf-8') as file:
