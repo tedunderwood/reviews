@@ -55,14 +55,14 @@ for line in filelines:
 	line = line.rstrip()
 	romannumerals.add(line)
 
-lexicon = dict()
+lexicon = set()
 
 with open('model/modellexicon.txt', encoding = 'utf-8') as file:
 	filelines = file.readlines()
 
 for line in filelines:
-	line = line.rstrip()
-	lexicon[fields[0]] = 1
+	word = line.rstrip()
+	lexicon.add(word)
 
 personalnames = set()
 with open(rulepath + 'PersonalNames.txt', encoding = 'utf-8') as file:
@@ -140,7 +140,7 @@ def words2vec(words, vocab, leximap, numfeatures):
 	for w in words:
 		if w not in vocab:
 			w = '#rareword'
-			# which is, itself, in the lexicon!
+			# which is, itself, in the leximap!
 		if w in leximap:
 			# note that words between 210 and 400
 			# are left out of the vector altogether,
