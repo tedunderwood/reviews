@@ -231,7 +231,7 @@ pubdates = dict()
 matchqualities = dict()
 recordsconsidered = 0
 
-notenglishidx = wordsequence['#notenglishword']
+notenglishidx = leximap['#notenglishword']
 
 for pathid, group in bypath:
 	recordIDs = []
