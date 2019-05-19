@@ -294,7 +294,10 @@ for pathid, group in bypath:
 				reviewtext = rec['reviewtext']
 				textlen = len(reviewtext)
 				cap = min(textlen, 300)
-				checktext = rec['ReviewTitle'] + ' ' + reviewtext[0: cap]
+				if 'RecordTitle' in rec:
+					checktext = rec['RecordTitle'] + ' ' + reviewtext[0: cap]
+				else:
+					checktext = reviewtext[0: cap]
 				words2check = set(checktext.split())
 				suspects = len(suspicious.intersection(words2check))
 				if checktext.count('(') > 1:
