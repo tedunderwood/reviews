@@ -42,11 +42,15 @@ lexicon = dict()
 with open(rulepath + 'MainDictionary.txt', encoding = 'utf-8') as file:
     filelines = file.readlines()
 
+iterate = 0
 for line in filelines:
     line = line.rstrip()
     fields = line.split(delim)
-    englflag = int(fields[1])
-    lexicon[fields[0]] = englflag
+    if iterate < 100000:
+        lexicon[fields[0]] = 1
+        iterate += 1
+    else:
+        break
 
 personalnames = set()
 with open(rulepath + 'PersonalNames.txt', encoding = 'utf-8') as file:
@@ -293,14 +297,15 @@ leftout = 0
 # We identify the column of the matrix that records
 # words not found at all in our dictionary of English
 # words. When this number is high, it tends to indicate
-# severe OCR problems. We're going to set a 2% cap on it.
+# severe OCR problems. We're going to set a 25% cap on it.
 
 notenglishidx = wordsequence['#notenglishword']
 
 for seq, value in seqdict.items():
     valid, recordid, text = value
-    if valid and len(text) >= 40:
-        textlens.append(len(text))
+    textlens.append(len(text))
+
+    if valid and len(text) >= 50:
         wordcounts = np.zeros(400)
         for word, count in text.items():
             if word in wordsequence:
@@ -311,11 +316,11 @@ for seq, value in seqdict.items():
                 # words not in the top 398 into the
                 # #rareword column.
 
-            wordcounts[idx] = wordcounts[idx] + 1
+            wordcounts[idx] = wordcounts[idx] + count
 
         wordcounts = wordcounts / np.sum(wordcounts)
 
-        if wordcounts[notenglishidx] > 0.02:
+        if wordcounts[notenglishidx] > 0.2:
             continue
 
         if recordid in matchquality:
@@ -344,6 +349,9 @@ with open('fictionfilter/trainingdata.tsv', mode = 'w', encoding = 'utf-8') as f
         f.write(o)
 print()
 print(errors)
+with open('modellexicon.txt', mode = 'w', encoding = 'utf-8') as f:
+    for k, v in lexicon.items():
+        f.write(k + '\n')
 
 
 
