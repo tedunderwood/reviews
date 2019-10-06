@@ -14,14 +14,14 @@ Initial experiment: random pairs
 
 We will randomly select 1,000 pairs of books published within 1 year of each other (so we're not just measuring language change) and not by the same author (so we're not measuring authorship). We'll measure the Word Mover's Distance between book texts and review texts to see whether book-distance correlates with review-distance.
 
-Word Mover's Distance is a relatively recent distance metric that leverages word embeddings (word2vec or GloVe) to address the problem of synonymy. It is defined by [Kusner et al.](http://proceedings.mlr.press/v37/kusnerb15.pdf); our implementation will be modeled on [Vlad Niculae's Python implementation](https://vene.ro/blog/word-movers-distance-in-python.html), although we may use GloVe rather than word2vec. Briefly, WMD uses word embeddings to calculate "distances" between words and then finds the shortest transport distance to transform the probability mass in doc1 to the closest corresponding mass in doc2. A standard list of English-language stopwords is removed from both documents before their probability distribution is calculated.
+Word Mover's Distance is a relatively recent distance metric that leverages word embeddings (word2vec or GloVe) to address the problem of synonymy. It is defined by [Kusner et al.](http://proceedings.mlr.press/v37/kusnerb15.pdf); our implementation will probably be based on [Mohit Rathore's gensim tutorial](https://markroxor.github.io/gensim/static/notebooks/WMD_tutorial.html).  Briefly, WMD uses word embeddings to calculate "distances" between words and then finds the shortest transport distance to transform the probability mass in doc1 to the closest corresponding mass in doc2. A standard list of English-language stopwords is removed from both documents before their probability distribution is calculated.
 
 Our hypothesis is that there will be a (small) positive correlation between the distances measured between reviews and the distances measured between book texts. The sample will be large enough that we ought to see p < .05 in a one-tailed test if there is in reality any relationship.
 
 Second experiment: pairs within the same metadata category
 -------------------------------------------------------------
 
-We'll select pairs of books that share a specific genre or subject heading (but not an author), and measure the WMD/GloVe distance between their reviews and book texts. As a control, we will compare a randomly selected pair of books from the same two years. (So, for instance, if we were comparing a "Love story" from 1890 to a "Love story" from 1920, we would randomly select a control pair of books from 1890 and from 1920.) We will sort categories by the difference (mean-random-distance - mean-ingroup-distance), a quantity we'll call "review similarity" or "book similarity," depending on whether it's measured in reviews or in book texts.
+We'll select pairs of books that share a specific genre or subject heading (but not an author), and measure the WMD distance between their reviews and book texts. As a control, we will compare a randomly selected pair of books from the same two years. (So, for instance, if we were comparing a "Love story" from 1890 to a "Love story" from 1920, we would randomly select a control pair of books from 1890 and from 1920.) We will sort categories by the difference (mean-random-distance - mean-ingroup-distance), a quantity we'll call "review similarity" or "book similarity," depending on whether it's measured in reviews or in book texts.
 
 Our hypothesis is a) that similarities measured in reviews and in book texts will correlate positively with each other across the [87 genre/subject categories with 9 or more examples.](https://github.com/tedunderwood/reviews/blob/master/bpo/corexperiment/meta/common_book_genres.tsv) We further hypothesize b) that this correlation will hold even if we limit the list of categories to a set of 25 "form and genre categories" specified in [genre_categories_for_exp2.tsv.](https://github.com/tedunderwood/reviews/blob/master/bpo/corexperiment/meta/genre_categories_for_exp2.tsv)
 
@@ -61,3 +61,14 @@ Descriptive hypotheses:
  3. We expect the relations in A and B to hold both in fictional texts and in reviews.
 
  As we assess the value of different methods, we'll be interested in the relative strength of the correlations (mean *r* values) in the "second" and "third" experiments above. Do pairwise similarities correlate with predictive accuracy? Is the book-review correlation stronger using one method or the other?
+
+References
+-----------
+
+For WMD, we should cite
+
+Mohit Rathore, "Finding Similar Documents with Word2vec and WMD," https://markroxor.github.io/gensim/static/notebooks/WMD_tutorial.html
+Ofir Pele and Michael Werman, A linear time histogram metric for improved SIFT matching, 2008.
+Ofir Pele and Michael Werman, Fast and robust earth mover's distances, 2009.
+Matt Kusner et al. From Embeddings To Document Distances, 2015.
+Thomas Mikolov et al. Efficient Estimation of Word Representations in Vector Space, 2013.
