@@ -3,9 +3,11 @@ First registration
 
 We propose to use book reviews to pose questions about genre.
 
-In the long run, we are interested in a number of historical questions. Are the categories used by contemporary observers better at characterizing fiction than those assigned retrospectively? (For instance, do they group books in a clearer or more consistent way?) Why do new genre categories emerge, and why do old ones disappear? Are genre categories perceptible first in literary production (as a cluster of similarities between books) or in literary reception (as a cluster of similarities between reviews)?
+In the long run, we are interested in a number of historical questions. Are the categories used by contemporary observers better at characterizing fiction than those assigned retrospectively? Why do new genre categories emerge, and why do old ones disappear? Are genre categories perceptible first in literary production (as a cluster of similarities between books) or in literary reception (as a cluster of similarities between reviews)? Do genre categories generally become more crisply defined or more closely knit as we move from the late 19c, through the 20c, to the present?
 
 But the immediate goal of this first registration is simply to ask whether the verbal similarity between fictional texts does (or does not) map onto verbal similarity between reviews, and to test different methods of measuring that similarity.
+
+We may cast a bit of light on the question of whether genre categories are becoming more closely knit, but our conclusions there will be qualified by the fact that (for this first experiment) we are using genre categories assigned by late-20c librarians. At a later stage of the experiment, we will also test categories defined by contemporary observers.
 
 Initial experiment: random pairs
 -----------------------------------
