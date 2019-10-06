@@ -56,4 +56,4 @@ Descriptive hypotheses:
 
  3. We expect the relations in A and B to hold both in fictional texts and in reviews.
 
- As we assess the value of different methods, we'll be interested in the relative strength of the correlations (mean *r* values) in (2) and (3) above.
+ As we assess the value of different methods, we'll be interested in the relative strength of the correlations (mean *r* values) in the "second" and "third" experiments above. Do pairwise similarities correlate with predictive accuracy? Is the book-review correlation stronger using one method or the other?
