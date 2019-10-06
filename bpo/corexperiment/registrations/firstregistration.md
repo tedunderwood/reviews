@@ -65,10 +65,14 @@ Descriptive hypotheses:
 References
 -----------
 
-For WMD, we should cite
+For WMD using word2vec, we should cite
 
-Mohit Rathore, "Finding Similar Documents with Word2vec and WMD," https://markroxor.github.io/gensim/static/notebooks/WMD_tutorial.html
-Ofir Pele and Michael Werman, A linear time histogram metric for improved SIFT matching, 2008.
-Ofir Pele and Michael Werman, Fast and robust earth mover's distances, 2009.
-Matt Kusner et al. From Embeddings To Document Distances, 2015.
-Thomas Mikolov et al. Efficient Estimation of Word Representations in Vector Space, 2013.
+1. Mohit Rathore, "Finding Similar Documents with Word2vec and WMD," https://markroxor.github.io/gensim/static/notebooks/WMD_tutorial.html
+
+2. Ofir Pele and Michael Werman, A linear time histogram metric for improved SIFT matching, 2008.
+
+3. Ofir Pele and Michael Werman, Fast and robust earth mover's distances, 2009.
+
+4. Matt Kusner et al. From Embeddings To Document Distances, 2015.
+
+5. Thomas Mikolov et al. Efficient Estimation of Word Representations in Vector Space, 2013.
