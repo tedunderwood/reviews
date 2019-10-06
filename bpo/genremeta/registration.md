@@ -1,30 +1,57 @@
 First registration
-------------------------
+==================
 
-We are building a collection of reviews of English-language fiction that will stretch from the early nineteenth century to the early twenty-first. 
+We propose to use book reviews to pose questions about genre.
 
-This collection may ultimately cast light on many aspects of literary history, including literary judgment and gender bias. But in this project, we propose to use it to pose questions about genre. 
+In the long run, we are interested in a number of historical questions. Are the categories used by contemporary observers better at characterizing fiction than those assigned retrospectively? (For instance, do they group books in a clearer or more consistent way?) Why do new genre categories emerge, and why do old ones disappear? Are genre categories perceptible first in literary production (as a cluster of similarities between books) or in literary reception (as a cluster of similarities between reviews)?
 
-For instance, Why do new genre categories emerge, and why do old ones disappear? Are genre categories perceptible first in literary production (as a cluster of similarities between books) or in literary reception (as a cluster of similarities between reviews)? How firm are the boundaries between the things we call "subject categories", "market segments," "literary movements," and "genres"?
+But the immediate goal of this first registration is simply to ask whether the verbal similarity between fictional texts does (or does not) map onto verbal similarity between reviews, and to test different methods of measuring that similarity.
 
-The immediate goal of this first registration is simply to explore assumptions about the way the verbal similarity between fictional texts does (or doesn't) map onto verbal similarity between reviews.
+1) Initial experiment: random pairs
+-----------------------------------
 
-We will test this by comparing the predictive accuracy of models trained on groups of book-texts to the accuracy of models trained on groups of reviews (for those same books). We believe there will turn out to be some relationship, but we don't know how strong the relationship will be.
+We will randomly select 1,000 pairs of books published within 1 year of each other (so we're not just measuring language change) and not by the same author (so we're not measuring authorship). We'll measure the Word Mover's Distance between book texts and review texts to see whether book-distance correlates with review-distance.
 
-In each case a positive category (e.g. "folklore") will be contrasted to a contrast set that excludes the positive category (e.g. "folklore_contrast").
+Word Mover's Distance is a relatively recent distance metric that leverages word embeddings (word2vec or GloVe). It is defined by [Kusner et al.](http://proceedings.mlr.press/v37/kusnerb15.pdf); our implementation will be modeled on [Vlad Niculae's Python implementation](https://vene.ro/blog/word-movers-distance-in-python.html), although we may use GloVe rather than word2vec. Briefly, WMD uses word embeddings to calculate "distances" between words and then finds the shortest transport distance to transform the probability mass in doc1 to the closest corresponding mass in doc2. A standard list of English-language stopwords is removed from both documents before their probability distribution is calculated.
 
-We will compare the strength of the boundary between groups of fictional texts to the strength of the boundary between groups of reviews, to understand how closely readers' characterization of fiction is related to the linguistic differences in the texts.
+Our hypothesis is that there will be a (small) positive correlation between the distances measured between reviews and the distances measured between book texts. The sample will be large enough that we ought to see p < .05 in a one-tailed test if there is in reality any relationship.
 
-Three important caveats about the experiment:
+2) Second experiment: pairs within the same metadata category
+-------------------------------------------------------------
 
-1) First, we know the experiment is under-powered. We have at this point a relatively small sample of novels matched to reviews (9,140) and more importantly a very small sample of genre tags. So we can only create fourteen categories for this initial exploration. We are not necessarily expecting to see p < .05.
+We'll select pairs of books that share a specific genre or subject heading (but not an author), and measure the GloVe distance between their reviews and book texts. As a control, we will compare a randomly selected pair of books from the same two years. (So, for instance, if we were comparing a "Love story" from 1890 to a "Love story" from 1920, we would randomly select a control pair of books from 1890 and from 1920.) We will sort categories by the difference (mean-random-distance - mean-ingroup-distance), a quantity we'll call "review similarity" or "book similarity," depending on whether it's measured in reviews or in book texts.
 
-2) We know there is an admixture of 5-10% nonfiction in our collection, and we have not manually removed it for this experiment.
+Our hypothesis is a) that similarities measured in reviews and in book texts will correlate positively with each other across the 87 genre/subject categories with 9 or more examples. We further hypothesize b) that this correlation will hold even if we limit the list of categories to a set of 25 "form and genre categories" specified in genre_categories_for_exp2.tsv.
 
-3) We acknowledge that not all of the categories we are testing would normally be called "genres." Some would probably be called subject categories (e.g. books about North America), or audience categories (e.g. juvenile fiction). A couple of the categories are "controls," selected more or less randomly.
+We are also interested in identifying outliers--categories that are more closely bound in reviews than in book-texts, or vice-versa. We will graph our 25 form and genre categories on a two-dimensional plane where review similarity is one axis and book similarity is the other.
 
-This means that any conclusions we draw from the experiment will not apply with great force specifically to reasoning about "genre." 
+3) Third experiment: predictive modeling of categories
+------------------------------------------------------
 
-But then, the boundary between a genre and a subject is in reality quite blurry (which is why subject classifications could be used for so long as a stand-in for classification by genre). For instance, "historical fiction" and "war stories" are usually treated as genres, although they could just as well be understood as subjects. Even "Western stories" and "mysteries"--which are more stylized in form than the average historical novel--have a subject-like dimension. In any case, it makes sense to get an overview of this problem before zooming in on the subset of it that most readers would characterize as a question about genre proper.
+We have used subject and genre headings assigned by librarians to create 14 categories (each containing more than 100 books). We hypothesize that categories more clearly marked in reviews (described using distinctive language) will also be clearly marked in the fictional texts themselves. We will test this hypothesis by comparing the predictive accuracy of models trained on groups of book-texts to the accuracy of models trained on reviews *of those same books*.
 
-In place of a p < .05 criterion, we can offer a few descriptive hypotheses. A) We would expect relatively random categories ('random' and 'unmarked') to be harder to classify than generic categories like ('novel' and 'romance'). B) We also expect loose generic categories (like 'novel' and 'romance') to be harder to classify than more specialized categories (like 'war stories' and 'folklore'). C) We expect the relations in A and B to hold both in fictional texts and in reviews.
+In each case, we will train a binary model distinguishing a positive category (e.g. "folklore") from a contrast set that excludes the positive category (e.g. "folklore_contrast"). Our broad hypothesis is that the accuracy of review-models will correlate positively with the accuracy of book-models, across a set of fourteen categories.
+
+Models will use logistic regression. Features will be sorted using mutual information, and models will be optimized on the training/test set using grid search across the top n features and regularization constant C.
+
+Caveats about the third experiment:
+-----------------------------------
+
+a. First, we know this part of the experiment is under-powered. Predictive modeling needs a larger set of texts than pairwise distance measurement, and we only have a small sample of genre tags (generated by 20-21c librarians). So we can only create fourteen categories for this initial exploration. 14 data points is small even for a one-tailed test. We are not necessarily expecting to see p < .05.
+
+b. We know there is an admixture of 5-10% nonfiction in our collection, and we have not manually removed it for this experiment. It is probably distributed unequally across categories.
+
+c. We acknowledge that not all of the categories we are testing in this part of the experiment would normally be called "genres." Some would probably be called subject categories (e.g. books about North America). A couple of the categories are "controls," selected more or less randomly.
+
+This means that any conclusions we draw from this part of the experiment will not apply with great force specifically to reasoning about fictional genre. For that sort of conclusion, see the 25 categories in 2b above.
+
+Descriptive hypotheses:
+-----------------------
+
+ 1. We would expect relatively random categories ('random' and 'unmarked') to be harder to classify than generic categories like ('novel' and 'romance').
+
+ 2. We also expect loose generic categories (like 'novel' and 'romance') to be harder to classify than more specialized categories (like 'war stories' and 'folklore').
+
+ 3. We expect the relations in A and B to hold both in fictional texts and in reviews.
+
+ As we assess the value of different methods, we'll be interested in the relative strength of the correlations (mean *r* values) in (2) and (3) above.
