@@ -25,7 +25,9 @@ We'll select pairs of books that share a specific genre or subject heading (but 
 
 Our hypothesis is a) that similarities measured in reviews and in book texts will correlate positively with each other across the [87 genre/subject categories with 9 or more examples.](https://github.com/tedunderwood/reviews/blob/master/bpo/corexperiment/meta/common_book_genres.tsv) We will also test b) whether this correlation holds even if we limit the list of categories to a set of 25 "form and genre categories" specified in [genre_categories_for_exp2.tsv.](https://github.com/tedunderwood/reviews/blob/master/bpo/corexperiment/meta/genre_categories_for_exp2.tsv)
 
-But since 25 data points may not be enough to be confident about significance, here are some descriptive hypotheses: We expect that large categories ("novel", "romance", "historical fiction") will have weaker similarity (in both reviews and books) than smaller categories ("mystery", "western", "war stories"). We also expect that, across all categories, review similarity and book similarity will display a weak positive trend across time. (We believe are generally consolidating.)
+But since 25 data points may not be enough to be confident about significance, here are some descriptive hypotheses: We expect that large categories ("novel", "romance", "historical fiction") will have weaker similarity (in both reviews and books) than smaller categories ("mystery", "western", "war stories").
+
+We also expect that, across all categories, review similarity and book similarity will display a weak positive trend across time. (We believe genres are generally consolidating.) We will measure this by directly subtracting each control pair from each in-genre pair and aggregating the differences by year.
 
 Finally, we are interested in identifying outliers on either side of the central trend line--categories that are *more* closely bound in reviews than in book-texts, or vice-versa. We will graph our 25 form and genre categories on a two-dimensional plane where review similarity is one axis and book similarity is the other.
 
