@@ -3,7 +3,12 @@ metadata for first experiment on bpo reviews
 
 Several metadata tables for the experiment.
 
-**grouped_books.tsv** is the main one. Each row in this table points to a *group* of htrcids (books) and bpoids (reviews) that have been identified as referring to the same title and author. The book itself is identified by a bookid.
+**grouped_books.tsv** is the main one. Each row in this table points to a *set* of htrcids (books) and bpoids (reviews) that have been identified as referring to the same title and author. The book itself is identified by a bookid.
+
+To convert the strings in the table into Python sets I recommend ast.literal_eval:
+
+    import ast
+    idset = ast.literal_eval(pandastable['field'])
 
 For the review texts, see [**all_fic_reviews.txt**](https://github.com/tedunderwood/reviews/tree/master/bpo/filtered), where review texts that have been filtered by a fiction model are paired with bpoids.
 
