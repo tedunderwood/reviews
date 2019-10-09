@@ -1,8 +1,33 @@
 import string as st
 import pandas as pd
 import os
-
+from nltk.tokenize import word_tokenize
+from collections import Counter
 #tokenize and word count
+string = "hey you are great great great"
+tokens = word_tokenize(string)
+print(tokens)
+print(string.split())
+total_token = len(tokens)
+print(len(string.split()), total_token)
+
+    # review_length.append(total_token)
+    # token_counts = Counter(tokens).most_common()  # a list
+    # token_counts_output.append(token_counts)
+    # norm_list_per_review = []
+    # for cp in token_counts:
+    #     # print(cp[1])
+    #     norm_value = float(cp[1] / total_token)
+    #     norm_list = [cp[0], norm_value]
+    #     norm_list_per_review.append(norm_list)
+    # token_norm_output.append(norm_list_per_review)
+
+# for a in token_counts_output:
+#     print(a)
+# for b in token_norm_output:
+#     print(b)
+# add new list to df
+
 
 
 

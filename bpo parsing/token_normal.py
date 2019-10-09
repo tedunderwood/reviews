@@ -15,7 +15,7 @@ def token_norm(df):
         token_count = []
         string = row.selected_review
         tokens = word_tokenize(string)
-        total_token = len(tokens)
+        total_token = len(string.split())
         review_length.append(total_token)
         token_counts = Counter(tokens).most_common()  # a list
         token_counts_output.append(token_counts)
