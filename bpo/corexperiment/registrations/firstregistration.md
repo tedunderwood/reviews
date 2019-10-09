@@ -27,7 +27,7 @@ Our hypothesis is a) that similarities measured in reviews and in book texts wil
 
 But since 25 data points may not be enough to be confident about significance, here are some descriptive hypotheses: We expect that large categories ("novel", "romance", "historical fiction") will have weaker similarity (in both reviews and books) than smaller categories ("mystery", "western", "war stories").
 
-We also expect that, across all categories, review similarity and book similarity will display a weak positive trend across time. (We believe genres are generally consolidating.) We will measure this by directly subtracting each control pair from each in-genre pair and aggregating the differences by year.
+We also expect that, across all categories, review similarity and book similarity will display a weak positive trend across time. (We believe genres are generally consolidating.) We will measure this by directly subtracting each control pair from each in-genre pair and aggregating the differences by year (the average of the two years being compared).
 
 Finally, we are interested in identifying outliers on either side of the central trend line--categories that are *more* closely bound in reviews than in book-texts, or vice-versa. We will graph our 25 form and genre categories on a two-dimensional plane where review similarity is one axis and book similarity is the other.
 
