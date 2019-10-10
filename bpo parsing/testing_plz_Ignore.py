@@ -1,15 +1,17 @@
 import string as st
 import pandas as pd
+#print(pd.__version__)
 import os
-from nltk.tokenize import word_tokenize
-from collections import Counter
-#tokenize and word count
-string = "hey you are great great great"
-tokens = word_tokenize(string)
-print(tokens)
-print(string.split())
-total_token = len(tokens)
-print(len(string.split()), total_token)
+
+# from nltk.tokenize import word_tokenize
+# from collections import Counter
+# #tokenize and word count
+# string = "hey you are great great great"
+# tokens = word_tokenize(string)
+# print(tokens)
+# print(string.split())
+# total_token = len(tokens)
+# print(len(string.split()), total_token)
 
     # review_length.append(total_token)
     # token_counts = Counter(tokens).most_common()  # a list
@@ -28,15 +30,22 @@ print(len(string.split()), total_token)
 #     print(b)
 # add new list to df
 
-
-
-
-# str = "This &is [an] example? √¶ra's ,√¶sthetics erarie,eyrie √¶ra's,airy{of} string. with.? punctuation!!!!" # Sample string
-# str=str.lower()
-# print(str)
-# list1=["√¶sthetics"]
-# list2=['era']
-# # print(str.replace(list1[0], list2[0]))
+str = "This &is [an] example? √¶ ra's ,√¶sthetics erarie,eyrie √¶ra's,airy{of} string. with.? punctuation!!!!" # Sample string
+str=str.lower()
+print(str)
+list1=["√¶","hi","ye",'&is']
+list2=['xxxxx','y','z','hhhhh']
+str_list=str.split()
+newstr=' '
+for word in str_list:
+    print(word)
+    if word in list1:
+        print('_______')
+        num=list1.index(word)
+        print("---------",list2[num])
+        word=list2[num]
+    newstr=newstr+' '+word
+print(newstr)
 # import os
 # filenames = []
 # directory = os.walk("./testdata")
