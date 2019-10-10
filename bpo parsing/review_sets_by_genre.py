@@ -3,6 +3,7 @@ import pandas as pd
 import ast
 import string as st
 
+#print(len(st.punctuation))
 #two flles for all genremeta files
 colnames=['id', 'score','review']
 data=pd.read_csv('all_fic_reviews.txt',sep='\t',names=colnames, header=None)
@@ -18,10 +19,27 @@ def remove_punctuation(text):
     return no_punct
 
 def replace_words(text):
-    for i in range(len(words2r)):
-        text=text.replace(str(words2r[i]), str(words2s[i]))
-    return text
+    str_list =text.split()
+    newstr = ' '
+    for word in str_list:
+        #print(word)
+        if word in words2r:
+            num = words2r.index(word)
+            #print("---------", list2[num])
+            word = words2s[num]
+        newstr = newstr + ' ' + word
+    #print(newstr)
+    # for i in range(len(words2r)):
+    #     text=text.replace(str(words2r[i]), str(words2s[i]))
+    return newstr
 
+def remove_symbols(sentence):
+    import string
+    del_estr = string.punctuation #+ string.digits  # ASCII
+    replace = " " * len(del_estr)
+    tran_tab = str.maketrans(del_estr, replace)
+    sentence = sentence.translate(tran_tab)
+    return sentence
 
 def genremeta_processor(filename):
     #load file
@@ -68,7 +86,8 @@ def genremeta_processor(filename):
 
     selected = pd.DataFrame(list(zip(r_bpoid_list, r_review_list)),
                             columns=['selected_id', 'selected_review'])
-    genre_tag=filename.rstrip('.tsv').lstrip('./testdata/')
+    genre_tag=filename.rstrip('.tsv').lstrip('./genremeta/')
+    #genre_tag = filename.rstrip('.tsv').lstrip('./test2/')
     genre_tag_list = [genre_tag for i in range(len(r_review_list))]
     final_bpoid_list = []
     final_string_list = []
@@ -99,6 +118,7 @@ def genremeta_processor(filename):
 if __name__ == '__main__':
     # Load the genremeta files
     filenames = []
+    #directory = os.walk("./genremeta")
     directory = os.walk("./genremeta")
     for path, dir_list, file_list in directory:
         for file_name in file_list:
@@ -110,14 +130,18 @@ if __name__ == '__main__':
                     filenames.append(file_name)
                     file = os.path.join(path, file_name)
                 else:
-                    print("File format wrong: ",file_name)
+                    #print("File format wrong: ",file_name)
+                    pass
                     # raise TypeError("File format wrong")
     print(filenames)
     for filename in filenames:
+        #filepath = './genremeta/' + filename
         filepath = './genremeta/' + filename
         output = genremeta_processor(filepath)
         output_filename = filename.rstrip('.tsv') + "_output.tsv"
         print(output_filename)
+        #path = '/Users/hu/Desktop/BPO2019fall/parsingBPO/bpo parsing/results'
         path = '/Users/hu/Desktop/BPO2019fall/parsingBPO/bpo parsing/results'
         output_file = os.path.join(path, output_filename)
         output.to_csv(output_file, index=False)
+        print("done")
