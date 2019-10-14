@@ -61,20 +61,6 @@ if __name__ == '__main__':
         output_file = os.path.join(path, output_filename)
         output.to_csv(output_file, index=False)
 
-# df=pd.read_csv("/Users/hu/Desktop/BPO2019fall/parsingBPO/bpo parsing/results/biography_contra_output.tsv")
-# df.to_csv('test2-1.csv')
-#print(len(token_outputlist))
-# for each in token_outputlist:
-#     print(each)
-
-
-
-    ## check sum of count_num, should be close to 1,checking passed
-    # sum=0
-    # for i in norm_list:
-    #     sum=sum+i
-    # print(sum)
-
 
 
 
