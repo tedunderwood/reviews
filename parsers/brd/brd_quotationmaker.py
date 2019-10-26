@@ -176,7 +176,7 @@ def divide_into_quotations(booklist):
                     reviewwordyet = True
                 if 'plusorminus' in tags:
                     oddsofreview += 1
-                if 'somenumeric' in tags and not '-' in word:
+                if 'somenumeric' in tags and not '-' in word and not ',' in word:
                     oddsofreview += 1
 
             if (oddsofreview > 1 and linecount > 1) or oddsofreview > 2:
