@@ -21,6 +21,8 @@ publishers = ['Holt', 'Macmillan', 'Longmans', 'Harper', 'Doran', 'Stokes', 'Dod
 "Brentano's", 'Yale', 'Appleton', 'Doubleday', 'McGraw', 'Bobbs', 'Oxford', "Century",
 'Simmons', 'Stokes', 'Knopf', 'Liveright', ' Liverlght']
 
+valid_prices = {"81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35}
+
 def match_strings(stringA, stringB):
     m = SequenceMatcher(None, stringA, stringB)
 
@@ -145,7 +147,9 @@ class Citation:
         for word, tags in alltuples:
 
             if authorstop and not authordone:
-                if len(word) > 1 and numcaps(word) / len(word) < 1:
+                if word.startswith('eds.') or word.startswith('pseud.'):
+                    author.append(word)
+                elif len(word) > 1 and numcaps(word) / len(word) < 1:
                     authordone = True
                     if word[0].isupper():
                         titlestart = True
@@ -157,9 +161,8 @@ class Citation:
                 author.append(word)
                 if 'fullstop' in tags:
                     authorstop = True
-                if authorstop and len(word) > 1 and numcaps(word) / len(word) < 1:
-                    authordone = True
-                    # because that wasn't an initial
+                elif len(word) > 1 and numcaps(word) / len(word) < 0.6:
+                    authorstop = True
 
             elif not titledone:
                 title.append(word)
@@ -174,6 +177,8 @@ class Citation:
                     price = pricetranslate(word)
                 elif 'centprice' in tags:
                     price = pricetranslate(word)
+                elif word.strip("'‘’") in valid_prices:
+                    price = valid_prices[word.strip("'‘’")]
                 else:
                     publisher.append(word)
 
