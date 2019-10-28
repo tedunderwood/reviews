@@ -10,10 +10,21 @@ import brd_quotationmaker as quotationmaker
 import brd_extract_pagelist as extractor
 import hyphenjoiner
 
-vols2parse = [('30112013681652', 9)]
-outfile = '/media/secure_volume/brd/output/q' + vols2parse[0][0] + '.tsv'
 
-for vol, startpage in vols2parse:
+# I may eventually set up this loop to do multiple volumes
+# in one run. At present, we're just doing a single volume.
+# I'm also making a point of clearly labeling the parts
+# so this will be intelligible for readers.
+
+year = '1918'
+suffix = '30112013681652'
+startpage = 9
+
+year_suffix_startpage = [(year, suffix, startpage)]
+
+outfile = '/media/secure_volume/brd/output/' + year + '_' + suffix + '.tsv'
+
+for year, vol, startpage in year_suffix_startpage:
     pagelist = extractor.extract(vol, startpage)
     books, author_errors = bookmaker.get_books(pagelist)
     quotations = quotationmaker.divide_into_quotations(books)
