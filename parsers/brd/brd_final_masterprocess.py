@@ -8,10 +8,11 @@ quotefieldnames = ['bookauthor', 'booktitle', 'brdpage', 'price', 'publisher', '
 import brd_bookmaker as bookmaker
 import brd_quotationmaker as quotationmaker
 import brd_extract_pagelist as extractor
+import hyphenjoiner
 
 vols2parse = [('30112013681652', 9)]
 outfile = '/media/secure_volume/brd/output/q' + vols2parse[0][0] + '.tsv'
- 
+
 for vol, startpage in vols2parse:
     pagelist = extractor.extract(vol, startpage)
     books, author_errors = bookmaker.get_books(pagelist)
@@ -34,7 +35,7 @@ for vol, startpage in vols2parse:
             c['publication'] = quote.publication
             c['sentiment'] = quote.sentiment
             c['citation'] = quote.citation
-            c['quote'] = quote.thequote
+            c['quote'] = hyphenjoiner.join_hyphens(quote.thequote)
 
             writer.writerow(c)
 
