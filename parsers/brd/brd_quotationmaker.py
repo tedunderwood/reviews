@@ -39,9 +39,10 @@ class Quotation:
 def divide_into_quotations(booklist):
 
     all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed.tsv')
+    reviewnames = set(reviewdict.keys())
 
     lexical_patterns = [('numeric', '.?[0-9]{1,7}.?[0-9]*[,.:=]?'), \
-    ('reviewword', reviewwords),
+    ('reviewword', all_reviewwords),
     ('openparen', '\(.*'),
     ('closeparen', '.*\)'),
     ('fullstop', '.*\.'),
@@ -56,20 +57,31 @@ def divide_into_quotations(booklist):
     ('allcaps', '[A-Z\'\,]+'),
     ('dollarprice', '.*\$.?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
-    ('hyphennumber', '[0-9]*[-—]+[0-9]*[,.:=]?'),
-    ('openquote', '[\"\'“‘]+\S*)'),
+    ('hyphennumber', '[0-9]+[-—~]+[0-9]{3,6}[,.:=]?'),
+    ('openquote', '[\"\'“‘]+\S*'),
     ('plusorminus', '[\+\-\—]+'),
     ('reviewword', all_reviewwords)
     ]
 
+    rule_list = lexparse.patterns2rules(lexical_patterns)
+    allquotes = []
+
+    trailingbibs = []
+
     for book in booklist:
         lines = book.reviewlines
 
-        allquotes = []
         accumulated = []
         citationcount = 0
 
-        for line in lines:
+        for linecount, line in enumerate(lines):
+
+            # We keep track of linecount because there are
+            # characteristic kinds of noise early on, when trailing lines
+            # of a citation get treated as part of the review.
+
+
+
             # Most of the reviews in BRD are followed by a separate
             # citation line like this:
 
@@ -86,28 +98,28 @@ def divide_into_quotations(booklist):
 
             # That's a trickier situation and requires special care.
 
-            if "—" in line:
-                parts = line.split('—')
-                possiblename = parts[-1]
-                if len(possiblename) > 3:
-                    matched = False
+            # if "—" in line:
+            #     parts = line.split('—')
+            #     possiblename = parts[-1]
+            #     if len(possiblename) > 3:
+            #         matched = False
 
-                    for review in reviewnames:
-                        match = match_strings(possiblename, review)
-                        if match > 0.9:
-                            accumulated.append(parts[0])
-                            # add the part before the review name
-                            sentiment = ''
-                            cite = ''
-                            citationcount += 1
-                            quote = Quotation(book, review, sentiment, cite, accumulated)
-                            allquotes.append(quote)
-                            accumulated = []
-                            matched = True
-                            break
+            #         for review in reviewnames:
+            #             match = match_strings(possiblename, review)
+            #             if match > 0.9:
+            #                 accumulated.append(parts[0])
+            #                 # add the part before the review name
+            #                 sentiment = ''
+            #                 cite = ''
+            #                 citationcount += 1
+            #                 quote = Quotation(book, reviewdict[review], sentiment, cite, accumulated)
+            #                 allquotes.append(quote)
+            #                 accumulated = []
+            #                 matched = True
+            #                 break
 
-                    if matched:
-                        continue
+            #         if matched:
+            #             continue
 
 
             tokens = line.strip().split()
@@ -115,6 +127,23 @@ def divide_into_quotations(booklist):
                 continue
 
             taglist = lexparse.apply_rule_list(rule_list, tokens)
+
+            # in the first two lines we often have fragments
+            # left over from the book bibliographical entry
+
+            if linecount <= 3:
+                trailingbibline = False
+
+                for tags in taglist.tagseq:
+                    if 'hyphennumber' in tags or 'dollarprice' in tags or 'centprice' in tags:
+                        trailingbibline = True
+
+                if trailingbibline:
+                    for oldline in accumulated:
+                        trailingbibs.append(oldline)
+                    accumulated = []
+                    trailingbibs.append(line)
+                    continue
 
             # Sometimes a book is followed by a summary that
             # is not attributed to any particular review.
@@ -147,10 +176,10 @@ def divide_into_quotations(booklist):
                     reviewwordyet = True
                 if 'plusorminus' in tags:
                     oddsofreview += 1
-                if 'somenumeric' in tags:
+                if 'somenumeric' in tags and not '-' in word and not ',' in word:
                     oddsofreview += 1
 
-            if oddsofreview > 1:
+            if (oddsofreview > 1 and linecount > 1) or oddsofreview > 2:
                 sentimentbits = []
 
                 numericyet = False
@@ -164,11 +193,17 @@ def divide_into_quotations(booklist):
                     if not numericyet and (word == '-' or word == '—' or word == '—-'):
                         sentimentbits.append('-')
                         continue
-                    if not numericyet and (word == '+-' or word == '+—'):
+                    if not numericyet and (word == '=-' or word == '--' or word == '-—'):
+                        sentimentbits.append('-')
+                        continue
+                    if not numericyet and (word == '==' or word == '=--' or word == '—-'):
+                        sentimentbits.append('-')
+                        continue
+                    if not numericyet and (word == '+-' or word == '+—' or word == '+='):
                         sentimentbits.append('+')
                         sentimentbits.append('-')
                         continue
-                    if not numericyet and (word == '-+' or word == "—+"):
+                    if not numericyet and (word == '-+' or word == "—+" or word == '=+'):
                         sentimentbits.append('-')
                         sentimentbits.append('+')
                         continue
@@ -194,6 +229,7 @@ def divide_into_quotations(booklist):
                 # odds of review 1 or less
                 accumulated.append(line)
 
+    print(trailingbibs)
 
     return allquotes
 

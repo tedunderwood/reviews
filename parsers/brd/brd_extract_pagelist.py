@@ -29,6 +29,8 @@ def extract(suffix, startpage):
 
 		for p in pageinfo:
 			sequence = p.filename.split('/')[-1].replace('.txt', '')
+			if '_' in sequence:
+				sequence = sequence.split('_')[-1]
 			try:
 				sequence = int(sequence)
 			except:
