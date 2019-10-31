@@ -93,8 +93,11 @@ def main():
                     if(line[k]!=''):
                         text.append(line[k])
             linelength=len(text)
+            v=i+6 # volume id
             #print linelength
             if i>=6: # for well-organized fiction indexes
+                file1=open("D:\DH collaborative\\book review\data\\volume%i extract.txt" % v,'w',encoding='utf-8')
+                file2 = open("D:\DH collaborative\\book review\data\\volume%i discard.txt" % v, 'w',encoding='utf-8')
                 for j in list(range(linelength)): # begin to generate a list of headings within fiction
                     if (text[j] == "FICTION" ):
                         bookcount_fiction=0
@@ -136,14 +139,16 @@ def main():
                         fiction_titles = []  # to store the names of titles
                         fiction_time = []  # to store the time of books
                         dictionary=[] # generate a dictionary
+                        discard=[] # to store discarded lines
                         for k in list(range(length)): # make the four lists have k lists in each
                             fiction_authors.append([])
                             fiction_titles.append([])
                             fiction_time.append([])
                             dictionary.append([])
+                            discard.append([])
                         if (length > 0):
                             for k in list(range(length)):
-                                #print(fiction_headings[k], fiction_books[k]) # print headings and all the content of each heading
+                                print('<\heading "%s">'%fiction_headings[k]) # print headings and all the content of each heading
                                 count = -1
                                 for m in list(range(len(fiction_books[k]))):
                                     #print fiction_books[k][m]
@@ -184,6 +189,8 @@ def main():
                                             fiction_time[k][m] = fiction_titles[k][m][n:]
                                             for t in range(len(fiction_time[k][m])): # find where time ends
                                                 if(fiction_time[k][m][t]==')'):
+                                                    if(fiction_time[k][m][t + 1:]!=''):
+                                                        discard[k].append(fiction_time[k][m][t + 1:])
                                                     fiction_time[k][m]=fiction_time[k][m][:t+1]
                                                     break
                                             for l in range(n): # find where title ends
@@ -192,14 +199,27 @@ def main():
                                                     fiction_titles[k][m] = fiction_titles[k][m][:n - l + 1]
                                                     break
                                             break
-                                print(fiction_authors[k])
-                                print(fiction_titles[k])
-                                print(fiction_time[k])
+                                #print(fiction_authors[k])
+                                #print(fiction_titles[k])
+                                #print(fiction_time[k])
                                 dictionary[k] = dict(zip(fiction_authors[k], fiction_titles[k])) # zip to dictionary
                                 print(dictionary[k])
+                                print(discard[k])
+                                num = len(dictionary[k])
+                                file1.write('<\heading "%s">'%fiction_headings[k] + '\n')
+                                file2.write('<\heading "%s">'%fiction_headings[k] + '\n')
+                                for m in range(num):
+                                    file1.write(fiction_authors[k][m] + '$')
+                                    file1.write(fiction_titles[k][m] + '\n')
+                                for content in discard[k]:
+                                    file2.write(content+'\n')
+                file1.close()
+                file2.close()
                                 #print(fiction_headings[k],'~',len(dictionary[k])) # print number of each genre
-                        print(bookcount_fiction)
+                        #print(bookcount_fiction)
             else: # for early versions of indexes
+                file1=open("D:\DH collaborative\\book review\data\\volume%i extract.txt" % v,'w',encoding='utf-8')
+                file2 = open("D:\DH collaborative\\book review\data\\volume%i discard.txt" % v, 'w',encoding='utf-8')
                 for j in range(linelength):
                     if (text[j] == "Fiction." or text[j]=='Fiction'):
                         bookcount_fiction = 0
@@ -229,11 +249,13 @@ def main():
                         fiction_titles = []  # to store the names of titles
                         fiction_time=[] # to store the time of books
                         dictionary=[]
+                        discard=[] # to store discarded lines
                         for k in list(range(length)): # similar to the operations above
                             fiction_authors.append([])
                             fiction_titles.append([])
                             fiction_time.append([])
                             dictionary.append([])
+                            discard.append([])
                         count=-1
                         if(length>0):
                             for k in list(range(length)):
@@ -268,6 +290,8 @@ def main():
                                             fiction_time[k][m] = fiction_titles[k][m][n:]
                                             for t in range(len(fiction_time[k][m])): # find where time ends
                                                 if(fiction_time[k][m][t]==')'):
+                                                    if(fiction_time[k][m][t + 1:]!=''):
+                                                        discard[k].append(fiction_time[k][m][t + 1:])
                                                     fiction_time[k][m]=fiction_time[k][m][:t+1]
                                                     break
                                             for l in list(range(n)):
@@ -276,13 +300,24 @@ def main():
                                                     fiction_titles[k][m] = fiction_titles[k][m][:n - l + 1]
                                                     break
                                             break
-                                print(fiction_headings[k],fiction_books[k])
-                            print(fiction_authors[k])
-                            print(fiction_titles[k])
-                            print(fiction_time[k])
+                                print('<\heading "%s">'%fiction_headings[k]) # print headings and all the content of each heading
+                            #print(fiction_authors[k])
+                            #print(fiction_titles[k])
+                            #print(fiction_time[k])
                             dictionary[k] = dict(zip(fiction_authors[k], fiction_titles[k]))
                             print(dictionary[k])
-                            print(bookcount_fiction)
+                            print(discard[k])
+                            num=len(dictionary[k])
+                            file1.write('<\heading "%s">' % fiction_headings[k] + '\n')
+                            file2.write('<\heading "%s">' % fiction_headings[k] + '\n')
+                            for m in range(num):
+                                file1.write(fiction_authors[k][m]+'$')
+                                file1.write(fiction_titles[k][m]+'\n')
+                            for content in discard[k]:
+                                file2.write(content)
+                            file1.close()
+                            file2.close()
+                            #print(bookcount_fiction)
                         else:
                             length2=len(fiction_books)
                             for m in list(range(length2)):
@@ -317,6 +352,8 @@ def main():
                                         fiction_time[m]=fiction_titles[m][n:]
                                         for t in range(len(fiction_time[m])):  # find where time ends
                                             if (fiction_time[m][t] == ')'):
+                                                if (fiction_time[m][t + 1:] != ''):
+                                                    discard.append(fiction_time[m][t + 1:])
                                                 fiction_time[m] = fiction_time[m][:t + 1]
                                                 break
                                         for l in range(n):
@@ -324,14 +361,23 @@ def main():
                                                 fiction_titles[m] = fiction_titles[m][:n-l+1]
                                                 break
                                         break
-                            print(fiction_books)
-                            print(fiction_authors)
-                            print(fiction_titles)
-                            print(fiction_time)
+                            #print(fiction_books)
+                            #print(fiction_authors)
+                            #print(fiction_titles)
+                            #print(fiction_time)
                             dictionary=dict(zip(fiction_authors,fiction_titles))
                             print(dictionary)
-                            print(bookcount_fiction)
-        print(bookcount)
+                            print(discard)
+                            num = len(dictionary)
+                            for m in range(num):
+                                file1.write(fiction_authors[m] + '$')
+                                file1.write(fiction_titles[m] + '\n')
+                            for content in discard:
+                                file2.write(content)
+                            file1.close()
+                            file2.close()
+                            #print(bookcount_fiction)
+        #print(bookcount)
         if flag==0: # if the volume doesn't have an index, print it out and end
             print('Volume number %d: no index found in this volume' %(i+3))
             index_startpage[i]='N/A'
