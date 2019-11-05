@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
-import codecs, time, os, random, sys
-import brd_extract_pagelist as extractor
-import hyphenjoiner
+import codecs, time, os, random, sys, re
+import brd_index_extract_pagelist as extractor
 np.set_printoptions(threshold=np.inf)
 
 # a list of texts that wrongly attributed to headings. Keep updating
@@ -57,6 +56,7 @@ pattern2 = re.compile("[A-Z][a-z]+")
 pattern2_1 = re.compile(" [A-Z][a-z]+")
 pattern2_2 = re.compile("[.:]\s[A-Z][a-z]+")
 
+
 year = '1917'
 suffix = '32106019850327'
 
@@ -65,44 +65,77 @@ year_suffix=[]
 for i in range(length):
     volume=(year[i],suffix[i])
     year_suffix.append(volume)
-
+    
+"""
+year=1921
+def get_directory(dir): # get all documents' directories in the folder
+    lists = os.listdir(dir)  # traverse all subfolders in the folder
+    length = len(lists)
+    path = list(range(length))
+    for i in range(length):
+        lists.sort(key=lambda x: int(
+            x[:-4]))  # sort the arrangement of the volumepages, from 0, 1, 10, 11, 100... to 0, 1, 2, 3, 4...
+        path[i] = os.path.join(dir, lists[i])  # concatenate rootdir and this specific volume
+    return length,path
+def read(x): # read the document
+    f=open(x,'r', encoding='UTF-8')
+    r=f.read()
+    return r
+"""
+#def main():
 for year, suffix in year_suffix:
     volume_id = year - 1904  # volume id
-    file1 = open("/media/secure_volume/brd/index_output/volume%i extract.txt" % v, 'w', encoding='utf-8')
-    file2 = open("/media/secure_volume/brd/index_output/volume%i discard.txt" % v, 'w', encoding='utf-8')
-    pagelist = extractor.extract(suffix, startpage)
+    file1 = open("/media/secure_volume/brd/output_index/volume%i extract.txt" % volume_id, 'w', encoding='utf-8')
+    file2 = open("/media/secure_volume/brd/output_index/volume%i discard.txt" % volume_id, 'w', encoding='utf-8')
+    pagelist = extractor.extract(suffix)
     pagenumber=len(pagelist)
+
+    #file1 = open("D:\DH collaborative\\book review\data\\volume%i extract.txt" % volume_id, 'w', encoding='utf-8')
+    #file2 = open("D:\DH collaborative\\book review\data\\volume%i discard.txt" % volume_id, 'w', encoding='utf-8')
+    #pagenumber = get_directory(r'D:\DH collaborative\book review\Library\1921 v.17')[0]
+    #path = get_directory(r'D:\DH collaborative\book review\Library\1921 v.17')[1]
+    #pagelist=list(range(pagenumber))
+    #for i in range(pagenumber):
+    #    pagelist[i]=read(path[i])
+    #   pagelist[i]=pagelist[i].split('\n')
+
     bookcount = 0
+    bookcount_fiction_about = 0
+    bookcount_fiction_genre = 0
     flag = 0
-    count = -1
 
     for i in range(pagenumber):  # read all documents in all volumes
-        if pagelist[i][:34].lower() == 'subject, title and pseudonym index':  # case insensitive, and two different index titles
+        if pagelist[i][0][:34].lower() == 'subject, title and pseudonym index':  # case insensitive, and two different index titles
             print('Volume number %d: the index begins at page %d' % (
                 volume_id, i + 1))  # output is added by 1 to be consistent with the book-no page 0 there
             index_startpage = i
             flag = 1
             for k in range(i, pagenumber):
-                if pagelist[k][:23].lower() == 'directory of publishers' or len(pagelist[k]) == 0:  # case insensitive, and two different possible type of page after index: another directory, or empty
+                if pagelist[k][0][:23].lower() == 'directory of publishers' or len(pagelist[k]) == 0:  # case insensitive, and two different possible type of page after index: another directory, or empty
                     print('Volume number %d: the index ends at page %d' % (
                         volume_id, k))  # no 1 added, since that page is no longer index
-                    index_endpage[i] = k
+                    index_endpage = k
                     break
 
     if flag == 1:  # if the volume has an index, do the following steps
         text = []
-        fiction_headings = []  # to store the headings
-        fiction_books = []  # to store the lines under the heading
         for i in range(index_startpage, index_endpage):
-            bookcount += pagelist[i].count('(')  # how many books are there in the index in total
             for j in range(len(pagelist[i])):
+                bookcount += pagelist[i][j].count('(')  # how many books are there in the index in total
                 if (pagelist[i][j] != ''):
                     text.append(pagelist[i][j])
             linelength=len(text)
 
+        print("Fiction (books about)")
+        file1.write("***Fiction (books about)***" + '\n')
+        file2.write("***Fiction (books about)***" + '\n')
+
         for j in range(linelength):  # begin to generate a list of headings within fiction
+            fiction_headings = []  # to store the headings
+            fiction_books = []  # to store the lines under the heading
+            count = -1
+
             if (text[j] == "Fiction (books about)"):
-                bookcount_fiction_about = 0
                 for k in list(range(1, linelength - j)):
                     if (text[j + k] == "Fiction (classified by subject)"):  # if fiction section_about ends
                         break
@@ -120,7 +153,7 @@ for year, suffix in year_suffix:
                                 if (text[k + j][:4] in ['See ', 'Sec ', 'Sac ']):
                                     continue
                             if len(text[j + k]) >= 9:  # not "xxx-Continued"
-                                if (text[j + k][-9:] in ['Continued', 'Continucd']):
+                                if (text[j + k][-9:] in ['Continued', 'Continucd','Uontinued',]):
                                     continue
                             if (text[k + j] in subheadings or text[
                                 k + j] in wrong_headings):  # For wrong headings, ignore them
@@ -136,6 +169,8 @@ for year, suffix in year_suffix:
                             count >= 0):  # if there is already a list in the book list (which means there is already list in headings)
                         fiction_books[count].append(text[j + k])  # add texts into the booklist
                 length = len(fiction_headings)
+                print(fiction_headings)
+
                 fiction_authors = []  # to store the names of authors
                 fiction_titles = []  # to store the names of titles
                 fiction_time = []  # to store the time of books
@@ -202,6 +237,7 @@ for year, suffix in year_suffix:
                                                                    m]  # deal with regular lines
                                 else:
                                     continue
+
                         for m in list(range(len(fiction_titles[k]))):
                             for n in list(range(len(fiction_titles[k][m]))):
                                 if (fiction_titles[k][m][
@@ -219,6 +255,7 @@ for year, suffix in year_suffix:
                                             fiction_titles[k][m] = fiction_titles[k][m][:n - l + 1]
                                             break
                                     break
+
                         dictionary[k] = dict(zip(fiction_authors[k], fiction_titles[k]))  # zip to dictionary
                         print(dictionary[k])
                         print(discard[k])
@@ -231,9 +268,15 @@ for year, suffix in year_suffix:
                         for content in discard[k]:
                             file2.write(content + '\n')
 
+        print("Fiction (classified by genre)")
+        file1.write('\n'+"***Fiction (classified by genre)***" + '\n')
+        file2.write('\n'+"***Fiction (classified by genre)***" + '\n')
+
         for j in range(linelength):  # begin to generate a list of headings within fiction
+            fiction_headings = []  # to store the headings
+            fiction_books = []  # to store the lines under the heading
+            count = -1
             if (text[j] == "Fiction (classified by subject)"):
-                bookcount_fiction_genre = 0
                 for k in list(range(1, linelength - j)):
                     if (text[j + k] in nextheadings):  # if fiction section ends
                         break
@@ -251,7 +294,7 @@ for year, suffix in year_suffix:
                                 if (text[k + j][:4] in ['See ', 'Sec ', 'Sac ']):
                                     continue
                             if len(text[j + k]) >= 9:  # not "xxx-Continued"
-                                if (text[j + k][-9:] in ['Continued', 'Continucd']):
+                                if (text[j + k][-9:] in ['Continued', 'Continucd','Uontinued']):
                                     continue
                             if (text[k + j] in subheadings or text[
                                 k + j] in wrong_headings):  # For wrong headings, ignore them
@@ -266,7 +309,9 @@ for year, suffix in year_suffix:
                     elif (
                             count >= 0):  # if there is already a list in the book list (which means there is already list in headings)
                         fiction_books[count].append(text[j + k])  # add texts into the booklist
+                print(fiction_headings)
                 length = len(fiction_headings)
+
                 fiction_authors = []  # to store the names of authors
                 fiction_titles = []  # to store the names of titles
                 fiction_time = []  # to store the time of books
@@ -333,6 +378,7 @@ for year, suffix in year_suffix:
                                                                    m]  # deal with regular lines
                                 else:
                                     continue
+
                         for m in list(range(len(fiction_titles[k]))):
                             for n in list(range(len(fiction_titles[k][m]))):
                                 if (fiction_titles[k][m][
@@ -350,6 +396,7 @@ for year, suffix in year_suffix:
                                             fiction_titles[k][m] = fiction_titles[k][m][:n - l + 1]
                                             break
                                     break
+
                         dictionary[k] = dict(zip(fiction_authors[k], fiction_titles[k]))  # zip to dictionary
                         print(dictionary[k])
                         print(discard[k])
@@ -373,3 +420,6 @@ for year, suffix in year_suffix:
         print('Volume number %d: no index found in this volume' % (volume_id))
         index_startpage[i] = 'N/A'
         index_endpage[i] = 'N/A'
+
+#if __name__ == '__main__':
+#    main()

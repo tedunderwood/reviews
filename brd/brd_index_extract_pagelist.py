@@ -11,7 +11,7 @@
 from zipfile import ZipFile
 import os, sys
 
-def extract(suffix, startpage):
+def extract(suffix):
 	''' Reads pages in the zipfile named by suffix.
 	First it sorts the pages to put them in integer order.
 	It only reads pages after startpage.
@@ -40,8 +40,6 @@ def extract(suffix, startpage):
 		pagetuples.sort()
 
 		for sequence, filename in pagetuples:
-			if sequence < startpage:
-				continue
 
 			pg = str(z.read(filename), 'utf-8')
 			lines = pg.split('\n')
