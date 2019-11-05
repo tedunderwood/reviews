@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import codecs, time, os, random, sys, re
-import brd_extract_pagelist as extractor
+import brd_index_extract_pagelist as extractor
 np.set_printoptions(threshold=np.inf)
 
 # a list of texts that wrongly attributed to headings. Keep updating
