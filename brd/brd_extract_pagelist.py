@@ -40,8 +40,6 @@ def extract(suffix, startpage):
 		pagetuples.sort()
 
 		for sequence, filename in pagetuples:
-			if sequence < startpage:
-				continue
 
 			pg = str(z.read(filename), 'utf-8')
 			lines = pg.split('\n')
