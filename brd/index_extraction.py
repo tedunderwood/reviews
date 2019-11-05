@@ -1,0 +1,375 @@
+import numpy as np
+import pandas as pd
+import codecs, time, os, random, sys
+import brd_extract_pagelist as extractor
+import hyphenjoiner
+np.set_printoptions(threshold=np.inf)
+
+# a list of texts that wrongly attributed to headings. Keep updating
+wrong_headings = ['Brgggn, A. Wind between the', 'Underngian. F. B. On a passing', 'Richardson, H: H. Fortunes of',
+                  'Military servitude and', 'Humphrey, Z. Home', 'Mr', 'States in war-time', 'Strange story of William',
+                  'Son of', 'Island of', 'Nathan. it', 'Adventures in', 'When the king losses his',
+                  'Short stories from', 'Famous detective']
+headings_with_subheading = ['European war', 'Historical novels', 'Locality, Novels of', 'Legends and folktale']
+# a list of subheadings, ususally name of places. Keep updating
+subheadings = ['Balkan', 'Itoumunian', 'New Mexico', 'Philippine Islands', 'Imeden', 'Syracuse', 'Algeria', 'Baltimore',
+               'BroOklyn', 'Detroit', 'Hawaiian Islands', 'Long Island', 'Heeico', 'Michigan', 'Flem\xef\xac\x82h',
+               'Prussia', 'Austria', 'Balkans', 'Hungary', 'Poland', 'Asiatic Turkey', 'Austrla-Hungary', 'Brazll',
+               'Richard', 'Georgla', 'Great Lakes', 'Clammer and', 'Newport', 'South Sea Islands', 'Turkey', 'Bohemia',
+               'Portugal', 'Rome under Nero', 'Labrador', 'Latin Amerth', 'Malay peninsula', 'North Carolina',
+               'South America', 'South Sea islands', 'Sweden', 'Afrtoa', 'Arabian coast', 'Asia Minor',
+               'Constantinople', 'Cuba', 'Greece', 'Untted smm', 'Early Christiane', 'Netherlands', 'Palestine',
+               'New Memo', 'Bohemian', 'Greek', 'Hebrew', 'Norwegian', 'Polish', 'Portuguese', 'Yiddish', 'Germany',
+               'Great Britain', 'United States', 'Babylon', 'Crimean war', 'Denmark', 'England', 'France', 'Iceland',
+               'India', 'Napoleonic era', 'Rome', 'Russia', 'Scotland', 'Spain', 'Alaska', 'Australia',
+               'Bahama islands', 'California', 'Canada', 'Chile', 'Egypt', 'Georgia', 'Holland', 'Indiana', 'Ireland',
+               'Japan', 'Kansas', 'Kentucky', 'Lorraine', 'Missouri', 'Nebraska', 'New England', 'New Orleans',
+               'Oregon', 'Pennsylvania', 'Philadelphia', 'South A lrlca', 'Venice', 'Wales', 'West Virginia',
+               'Wisconsin', 'Danish', 'Dutch', 'French', 'German', 'Italian', 'Japanese', 'Russian', 'Sanskrit',
+               'Spanish', 'Swedish', 'Belgium', 'Cnnurla', 'Cape Colony', 'Emmi', 'Italy', 'Jerusalem', 'Middle ages',
+               'Flemish', 'Irish', 'Adirondacks', 'Africa', 'Arizona', 'Armenia', 'Boston', 'Email', 'Cape Cod',
+               'Chicago', 'China', 'Connecticut', 'Far East', 'Florida', 'Louisiana', 'Mexico', 'Minnesota',
+               'Mississippi river', 'New chlmul', 'Ohio', 'Paris', 'Philippine islandn', 'San Francisco',
+               'South Africa', 'South Carolina', 'South seas', 'Switzerland', 'Virginia']
+subheadings = sorted(list(set(subheadings)))
+print(subheadings)
+# a list of headings that follows the fiction section. Need to add manually each time
+nextheadings = ['Fiddler\'s luck. Schauﬂier, R. H. (Jl \'20)','Fiddier\'s luck. _ Schauﬂ\'ler, R. H. (.11 \'20)', 'Field ambulance sketches. (N \'19',
+                'Field book of insects. Lutz. . E.', 'Fielchrtlips for the cotton-belt. Morgan. J. O.',
+                'Fifth wheel. Prouty, 0. H. (Ap \'16)', 'Fifteens thousand miles by stage. Strahorn, C.',
+                'Fifty years in Oregon. Geer, T. T. (Jl. \'12.)', 'Field-days in California. Torrey. B. (Ap \'18)',
+                'Fiddling girl. Cam bell, D. R. (Jl \'14)', 'Fidelity. Glaspell, S. (My \'15)']  # to be changed
+nextheadings = sorted(list(set(nextheadings)))
+print(nextheadings)
+
+pattern1 = re.compile(
+    "[A-Z]['‘]*[a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*[,.:]*\s[A-Z]*\s*[A-Za-z01][,.:]+\s")  # regular author name, "0" for mistakenly recognized "O", "1" for mistankenly recognized "l", "a-z" for initials for wrongly recognized capitla letters
+pattern1_1 = re.compile(
+    "[A-Z]['‘]*[a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*[-][A-Z][a-zé§¢ﬂﬁ]+[']*[a-zé§¢ﬂﬁ]*[,.:]*\s[A-Z]*\s*[A-Za-z01][,.:]+\s")  # names like "Kaye-Smith"
+pattern1_2 = re.compile(
+    "[A-Z]['‘]*[a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*[A-Z][a-zé§¢ﬂﬁ]+[']*[a-zé§¢ﬂﬁ]*[,.:]*\s[A-Z]*\s*[A-Za-z01][,.:]+\s")  # names like "McArthur"
+pattern1_3 = re.compile(
+    "[A-Z]['‘]*[a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*[,.:]*\spseud.")  # names with only a family name and with pseud.
+pattern1_4 = re.compile("[A-Z]['‘]*[a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*[,.:]*\sSir\s[A-Za-z01][,.:]+\s")  # names with "Sir"
+pattern1_5 = re.compile(
+    "[A-Z]['‘]*[a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*\s[A-Z][a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*[,.:]*\s[A-Z]*\s*[A-Za-z01][,.:]+\s")  # family names with two words "Du Puy"
+pattern2 = re.compile("[A-Z][a-z]+")
+pattern2_1 = re.compile(" [A-Z][a-z]+")
+pattern2_2 = re.compile("[.:]\s[A-Z][a-z]+")
+
+year = '1917'
+suffix = '32106019850327'
+
+length=len(year)
+year_suffix=[]
+for i in range(length):
+    volume=(year[i],suffix[i])
+    year_suffix.append(volume)
+
+for year, suffix in year_suffix:
+    volume_id = year - 1904  # volume id
+    file1 = open("/media/secure_volume/brd/index_output/volume%i extract.txt" % v, 'w', encoding='utf-8')
+    file2 = open("/media/secure_volume/brd/index_output/volume%i discard.txt" % v, 'w', encoding='utf-8')
+    pagelist = extractor.extract(suffix, startpage)
+    pagenumber=len(pagelist)
+    bookcount = 0
+    flag = 0
+    count = -1
+
+    for i in range(pagenumber):  # read all documents in all volumes
+        if pagelist[i][:34].lower() == 'subject, title and pseudonym index':  # case insensitive, and two different index titles
+            print('Volume number %d: the index begins at page %d' % (
+                volume_id, i + 1))  # output is added by 1 to be consistent with the book-no page 0 there
+            index_startpage = i
+            flag = 1
+            for k in range(i, pagenumber):
+                if pagelist[k][:23].lower() == 'directory of publishers' or len(pagelist[k]) == 0:  # case insensitive, and two different possible type of page after index: another directory, or empty
+                    print('Volume number %d: the index ends at page %d' % (
+                        volume_id, k))  # no 1 added, since that page is no longer index
+                    index_endpage[i] = k
+                    break
+
+    if flag == 1:  # if the volume has an index, do the following steps
+        text = []
+        fiction_headings = []  # to store the headings
+        fiction_books = []  # to store the lines under the heading
+        for i in range(index_startpage, index_endpage):
+            bookcount += pagelist[i].count('(')  # how many books are there in the index in total
+            for j in range(len(pagelist[i])):
+                if (pagelist[i][j] != ''):
+                    text.append(pagelist[i][j])
+            linelength=len(text)
+
+        for j in range(linelength):  # begin to generate a list of headings within fiction
+            if (text[j] == "Fiction (books about)"):
+                bookcount_fiction_about = 0
+                for k in list(range(1, linelength - j)):
+                    if (text[j + k] == "Fiction (classified by subject)"):  # if fiction section_about ends
+                        break
+                    if '(' in text[j + k]:
+                        bookcount_fiction_about += 1
+                    if len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
+                        k + j] and '\'' not in text[
+                        k + j]:  # must be at least 2 characters, no more than 25 characters (avoiding titles not finished in a line to be included, not including '(' to avoid OCR error) # next line beginning with non-characterized character
+                        if (text[k + j][0] >= 'A' and text[k + j][0] <= 'Z' and text[k + j][1] >= 'a' and
+                                text[k + j][1] <= 'z' and (
+                                        text[k + j][-1] >= 'a' and text[k + j][-1] <= 'z' or text[
+                                    k + j] == ':')):  # first character A-Z, second a-z (avoiding "BOOK REVIEW DIGEST"), last a-z or 0-9 (eg "Adams, Henry, 1838-1918")
+                            if (len(text[
+                                        k + j]) >= 4):  # Sometimes a heading contains no books, but direct to "See other sections"
+                                if (text[k + j][:4] in ['See ', 'Sec ', 'Sac ']):
+                                    continue
+                            if len(text[j + k]) >= 9:  # not "xxx-Continued"
+                                if (text[j + k][-9:] in ['Continued', 'Continucd']):
+                                    continue
+                            if (text[k + j] in subheadings or text[
+                                k + j] in wrong_headings):  # For wrong headings, ignore them
+                                continue
+                            fiction_headings.append(text[k + j])  # Otherwise, add that heading into the list
+                            fiction_books.append(
+                                [])  # add an empty list to the booklist, to match the headinglist
+                            count += 1  # to count the number of lists in the booklist
+                    if (text[
+                        j + k] in fiction_headings):  # begin to add lines to book list, skip the lines that already in heading list
+                        continue
+                    elif (
+                            count >= 0):  # if there is already a list in the book list (which means there is already list in headings)
+                        fiction_books[count].append(text[j + k])  # add texts into the booklist
+                length = len(fiction_headings)
+                fiction_authors = []  # to store the names of authors
+                fiction_titles = []  # to store the names of titles
+                fiction_time = []  # to store the time of books
+                dictionary = []  # generate a dictionary
+                discard = []  # to store discarded lines
+                for k in list(range(length)):  # make the four lists have k lists in each
+                    fiction_authors.append([])
+                    fiction_titles.append([])
+                    fiction_time.append([])
+                    dictionary.append([])
+                    discard.append([])
+                if (length > 0):
+                    for k in list(range(length)):
+                        print('<\heading "%s">' % fiction_headings[
+                            k])  # print headings and all the content of each heading
+                        count = -1
+                        for m in list(range(len(fiction_books[k]))):
+                            if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
+                                                                                               fiction_books[k][
+                                                                                                   m]) != None)):  # if the line matches with the regular pattern of "author"
+                                if (re.search(pattern2, fiction_books[k][m][
+                                                        1:]) != None):  # the line must contains contents other than author information
+                                    flag = re.search(pattern2, fiction_books[k][m][
+                                                               1:]).start()  # find where author ends and title starts
+                                    fiction_authors[k].append(fiction_books[k][m][:flag])
+                                    fiction_titles[k].append(fiction_books[k][m][flag + 1:])
+                                    fiction_time[k].append([])
+                                    count += 1
+                            elif ((re.match(pattern1_1, fiction_books[k][m]) != None) or (re.match(pattern1_2,
+                                                                                                   fiction_books[
+                                                                                                       k][
+                                                                                                       m]) != None)):  # if the line matches with the pattern of "author" with dash (e.g. "Kaye-Smith") or with a prefix (e.g. "McArthur")
+                                if (re.search(pattern2_1, fiction_books[k][m][
+                                                          1:]) != None):  # a new pattern to match this case, begin with space, then [A-Z][a-z]+, for titles
+                                    flag = re.search(pattern2_1, fiction_books[k][m][
+                                                                 1:]).start()  # find where author ends and title starts
+                                    fiction_authors[k].append(fiction_books[k][m][:flag + 1])
+                                    fiction_titles[k].append(fiction_books[k][m][flag + 2:])
+                                    fiction_time[k].append([])
+                                    count += 1
+                            elif ((re.match(pattern1_4, fiction_books[k][m]) != None) or (re.match(pattern1_5,
+                                                                                                   fiction_books[
+                                                                                                       k][
+                                                                                                       m]) != None)):  # if the line matches with the pattern of "author" with dash (e.g. "Kaye-Smith") or with a prefix (e.g. "McArthur")
+                                if (re.search(pattern2_2, fiction_books[k][m][
+                                                          1:]) != None):  # a new pattern to match this case, begin with comma or colon, then space, then [A-Z][a-z]+, for titles
+                                    flag = re.search(pattern2_2, fiction_books[k][m][
+                                                                 1:]).start()  # find where author ends and title starts
+                                    fiction_authors[k].append(fiction_books[k][m][:flag + 2])
+                                    fiction_titles[k].append(fiction_books[k][m][flag + 3:])
+                                    fiction_time[k].append([])
+                                    count += 1
+                            elif fiction_books[k][m - 1][
+                                -1] == '-':  # if not matches with the pattern of "author", if last line ends with run-on line signals
+                                if count != -1:  # avoid index out of range
+                                    fiction_titles[k][count] = fiction_titles[k][count][:-1] + fiction_books[k][
+                                        m]  # deal with run-on lines
+                                else:
+                                    continue
+                            else:
+                                if count != -1:  # if not matches with the pattern of "author", and last line not ends with run-on line signal
+                                    fiction_titles[k][count] = fiction_titles[k][count] + ' ' + \
+                                                               fiction_books[k][
+                                                                   m]  # deal with regular lines
+                                else:
+                                    continue
+                        for m in list(range(len(fiction_titles[k]))):
+                            for n in list(range(len(fiction_titles[k][m]))):
+                                if (fiction_titles[k][m][
+                                    n] == '('):  # separate title and time, find where time starts
+                                    fiction_time[k][m] = fiction_titles[k][m][n:]
+                                    for t in range(len(fiction_time[k][m])):  # find where time ends
+                                        if (fiction_time[k][m][t] == ')'):
+                                            if (fiction_time[k][m][t + 1:] != ''):
+                                                discard[k].append(fiction_time[k][m][t + 1:])
+                                            fiction_time[k][m] = fiction_time[k][m][:t + 1]
+                                            break
+                                    for l in range(n):  # find where title ends
+                                        if (fiction_titles[k][m][n - l] >= 'a' and fiction_titles[k][m][
+                                            n - l] <= 'z'):
+                                            fiction_titles[k][m] = fiction_titles[k][m][:n - l + 1]
+                                            break
+                                    break
+                        dictionary[k] = dict(zip(fiction_authors[k], fiction_titles[k]))  # zip to dictionary
+                        print(dictionary[k])
+                        print(discard[k])
+                        num = len(dictionary[k])
+                        file1.write('<\heading "%s">' % fiction_headings[k] + '\n')
+                        file2.write('<\heading "%s">' % fiction_headings[k] + '\n')
+                        for m in range(num):
+                            file1.write(fiction_authors[k][m] + '$')
+                            file1.write(fiction_titles[k][m] + '\n')
+                        for content in discard[k]:
+                            file2.write(content + '\n')
+
+        for j in range(linelength):  # begin to generate a list of headings within fiction
+            if (text[j] == "Fiction (classified by subject)"):
+                bookcount_fiction_genre = 0
+                for k in list(range(1, linelength - j)):
+                    if (text[j + k] in nextheadings):  # if fiction section ends
+                        break
+                    if '(' in text[j + k]:
+                        bookcount_fiction_genre += 1
+                    if len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
+                        k + j] and '\'' not in text[
+                        k + j]:  # must be at least 2 characters, no more than 25 characters (avoiding titles not finished in a line to be included, not including '(' to avoid OCR error) # next line beginning with non-characterized character
+                        if (text[k + j][0] >= 'A' and text[k + j][0] <= 'Z' and text[k + j][1] >= 'a' and
+                                text[k + j][1] <= 'z' and (
+                                        text[k + j][-1] >= 'a' and text[k + j][-1] <= 'z' or text[
+                                    k + j] == ':')):  # first character A-Z, second a-z (avoiding "BOOK REVIEW DIGEST"), last a-z or 0-9 (eg "Adams, Henry, 1838-1918")
+                            if (len(text[
+                                        k + j]) >= 4):  # Sometimes a heading contains no books, but direct to "See other sections"
+                                if (text[k + j][:4] in ['See ', 'Sec ', 'Sac ']):
+                                    continue
+                            if len(text[j + k]) >= 9:  # not "xxx-Continued"
+                                if (text[j + k][-9:] in ['Continued', 'Continucd']):
+                                    continue
+                            if (text[k + j] in subheadings or text[
+                                k + j] in wrong_headings):  # For wrong headings, ignore them
+                                continue
+                            fiction_headings.append(text[k + j])  # Otherwise, add that heading into the list
+                            fiction_books.append(
+                                [])  # add an empty list to the booklist, to match the headinglist
+                            count += 1  # to count the number of lists in the booklist
+                    if (text[
+                        j + k] in fiction_headings):  # begin to add lines to book list, skip the lines that already in heading list
+                        continue
+                    elif (
+                            count >= 0):  # if there is already a list in the book list (which means there is already list in headings)
+                        fiction_books[count].append(text[j + k])  # add texts into the booklist
+                length = len(fiction_headings)
+                fiction_authors = []  # to store the names of authors
+                fiction_titles = []  # to store the names of titles
+                fiction_time = []  # to store the time of books
+                dictionary = []  # generate a dictionary
+                discard = []  # to store discarded lines
+                for k in list(range(length)):  # make the four lists have k lists in each
+                    fiction_authors.append([])
+                    fiction_titles.append([])
+                    fiction_time.append([])
+                    dictionary.append([])
+                    discard.append([])
+                if (length > 0):
+                    for k in list(range(length)):
+                        print('<\heading "%s">' % fiction_headings[
+                            k])  # print headings and all the content of each heading
+                        count = -1
+                        for m in list(range(len(fiction_books[k]))):
+                            if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
+                                                                                               fiction_books[k][
+                                                                                                   m]) != None)):  # if the line matches with the regular pattern of "author"
+                                if (re.search(pattern2, fiction_books[k][m][
+                                                        1:]) != None):  # the line must contains contents other than author information
+                                    flag = re.search(pattern2, fiction_books[k][m][
+                                                               1:]).start()  # find where author ends and title starts
+                                    fiction_authors[k].append(fiction_books[k][m][:flag])
+                                    fiction_titles[k].append(fiction_books[k][m][flag + 1:])
+                                    fiction_time[k].append([])
+                                    count += 1
+                            elif ((re.match(pattern1_1, fiction_books[k][m]) != None) or (re.match(pattern1_2,
+                                                                                                   fiction_books[
+                                                                                                       k][
+                                                                                                       m]) != None)):  # if the line matches with the pattern of "author" with dash (e.g. "Kaye-Smith") or with a prefix (e.g. "McArthur")
+                                if (re.search(pattern2_1, fiction_books[k][m][
+                                                          1:]) != None):  # a new pattern to match this case, begin with space, then [A-Z][a-z]+, for titles
+                                    flag = re.search(pattern2_1, fiction_books[k][m][
+                                                                 1:]).start()  # find where author ends and title starts
+                                    fiction_authors[k].append(fiction_books[k][m][:flag + 1])
+                                    fiction_titles[k].append(fiction_books[k][m][flag + 2:])
+                                    fiction_time[k].append([])
+                                    count += 1
+                            elif ((re.match(pattern1_4, fiction_books[k][m]) != None) or (re.match(pattern1_5,
+                                                                                                   fiction_books[
+                                                                                                       k][
+                                                                                                       m]) != None)):  # if the line matches with the pattern of "author" with dash (e.g. "Kaye-Smith") or with a prefix (e.g. "McArthur")
+                                if (re.search(pattern2_2, fiction_books[k][m][
+                                                          1:]) != None):  # a new pattern to match this case, begin with comma or colon, then space, then [A-Z][a-z]+, for titles
+                                    flag = re.search(pattern2_2, fiction_books[k][m][
+                                                                 1:]).start()  # find where author ends and title starts
+                                    fiction_authors[k].append(fiction_books[k][m][:flag + 2])
+                                    fiction_titles[k].append(fiction_books[k][m][flag + 3:])
+                                    fiction_time[k].append([])
+                                    count += 1
+                            elif fiction_books[k][m - 1][
+                                -1] == '-':  # if not matches with the pattern of "author", if last line ends with run-on line signals
+                                if count != -1:  # avoid index out of range
+                                    fiction_titles[k][count] = fiction_titles[k][count][:-1] + fiction_books[k][
+                                        m]  # deal with run-on lines
+                                else:
+                                    continue
+                            else:
+                                if count != -1:  # if not matches with the pattern of "author", and last line not ends with run-on line signal
+                                    fiction_titles[k][count] = fiction_titles[k][count] + ' ' + \
+                                                               fiction_books[k][
+                                                                   m]  # deal with regular lines
+                                else:
+                                    continue
+                        for m in list(range(len(fiction_titles[k]))):
+                            for n in list(range(len(fiction_titles[k][m]))):
+                                if (fiction_titles[k][m][
+                                    n] == '('):  # separate title and time, find where time starts
+                                    fiction_time[k][m] = fiction_titles[k][m][n:]
+                                    for t in range(len(fiction_time[k][m])):  # find where time ends
+                                        if (fiction_time[k][m][t] == ')'):
+                                            if (fiction_time[k][m][t + 1:] != ''):
+                                                discard[k].append(fiction_time[k][m][t + 1:])
+                                            fiction_time[k][m] = fiction_time[k][m][:t + 1]
+                                            break
+                                    for l in range(n):  # find where title ends
+                                        if (fiction_titles[k][m][n - l] >= 'a' and fiction_titles[k][m][
+                                            n - l] <= 'z'):
+                                            fiction_titles[k][m] = fiction_titles[k][m][:n - l + 1]
+                                            break
+                                    break
+                        dictionary[k] = dict(zip(fiction_authors[k], fiction_titles[k]))  # zip to dictionary
+                        print(dictionary[k])
+                        print(discard[k])
+                        num = len(dictionary[k])
+                        file1.write('<\heading "%s">' % fiction_headings[k] + '\n')
+                        file2.write('<\heading "%s">' % fiction_headings[k] + '\n')
+                        for m in range(num):
+                            file1.write(fiction_authors[k][m] + '$')
+                            file1.write(fiction_titles[k][m] + '\n')
+                        for content in discard[k]:
+                            file2.write(content + '\n')
+
+        file1.close()
+        file2.close()
+        # print(fiction_headings[k],'~',len(dictionary[k])) # print number of each genre
+        print(bookcount)
+        print(bookcount_fiction_about)
+        print(bookcount_fiction_genre)
+
+    if flag == 0:  # if the volume doesn't have an index, print it out and end
+        print('Volume number %d: no index found in this volume' % (volume_id))
+        index_startpage[i] = 'N/A'
+        index_endpage[i] = 'N/A'
