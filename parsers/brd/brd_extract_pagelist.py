@@ -11,7 +11,7 @@
 from zipfile import ZipFile
 import os, sys
 
-def extract(suffix):
+def extract(suffix,startpage):
 	''' Reads pages in the zipfile named by suffix.
 	First it sorts the pages to put them in integer order.
 	It only reads pages after startpage.
