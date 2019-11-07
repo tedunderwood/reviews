@@ -85,7 +85,7 @@ def read(x): # read the document
 """
 #def main():
 for year, suffix in year_suffix:
-    volume_id = year - 1904  # volume id
+    volume_id = int(year) - 1904  # volume id
     file1 = open("/media/secure_volume/brd/output_index/volume%i extract.txt" % volume_id, 'w', encoding='utf-8')
     file2 = open("/media/secure_volume/brd/output_index/volume%i discard.txt" % volume_id, 'w', encoding='utf-8')
     pagelist = extractor.extract(suffix)
