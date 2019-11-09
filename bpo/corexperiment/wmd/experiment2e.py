@@ -227,9 +227,6 @@ def get_two_distances(id1, id2, masked_word, reviewcolnames, bookcolnames):
 
 ctr = 0
 
-with open('exp2cprime2.tsv', mode = 'w', encoding = 'utf-8') as f:
-    f.write('category\tbook1\tbook2\tdate1\tdate2\trandombpo\tingroupbpo\tbpodiff\trandomhtrc\tingrouphtrc\thtrcdiff\n')
-
 def get_date_match(date):
     global books_by_date, book_vectors
 
