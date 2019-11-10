@@ -17,3 +17,5 @@ Experiment 2b addresses the second part of experiment 2: 25 categories selected 
 This is important because some genres may be located in a very sparse and spacious portion of the feature space. Everything could be distant from everything. So if we compare in-genre distances to average random distances, we'll get a misleading impression that these works aren't close to each other, when in reality they are *closer* to each other than they are to anything else.
 
 Experiment 2c shifted from word mover's distance to ordinary cosine distance. Although our wmd experiment successfully produced a strong correlation between books and reviews, we didn't feel confident about interpreting the results. Cosine distance proved easier to interpret, both because it's simpler and because the results were more parallel to predictive modeling results.
+
+Experiment 2e uses cosine distance on disjoint sets: i.e., review distance and book-text distance are measured in non-overlapping subsets of books from the genre.
