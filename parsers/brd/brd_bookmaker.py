@@ -16,10 +16,7 @@ import os, sys
 from difflib import SequenceMatcher
 import lexparse
 
-publishers = ['Holt', 'Macmillan', 'Longmans', 'Harper', 'Doran', 'Stokes', 'Dodd',
-'Scribner', 'Dutton', 'Lane', 'Lippincott', 'Putnam', 'Houghton', 'Ginn', 'Little',
-"Brentano's", 'Yale', 'Appleton', 'Doubleday', 'McGraw', 'Bobbs', 'Oxford', "Century",
-'Simmons', 'Stokes', 'Knopf', 'Liveright', ' Liverlght']
+publishers = ['Liverlght', 'Appleton', 'Baker', 'Barnes', 'Benziger', 'Bobbs', "Brentano's", 'Cassell', 'Century', 'Collier-Fox', 'Crowell', 'Ditson', 'Dodd', 'Doran', 'Doubleday', 'Dutton', 'Elder', 'Estes', 'Ginn', 'Goodspeed', 'Harper', 'Heath', 'Holt', 'Houghton', 'Knopf', 'Lane', 'Lippincott', 'Little', 'Liveright', 'Longmans', 'Macmillan', 'McClure', 'McGraw', 'Moffat', 'Oxford', 'Page', 'Pott', 'Putnam', 'Scribner', 'Simmons', 'Stokes', 'Walton', 'Warne', 'Wessels', 'Wilde', 'Wiley', 'Winston', 'Yale']
 
 valid_prices = {"81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35, '81.85': 1.85, '81.95': 1.95, '81.45': 1.45, '83.50': 3.50, '85': 5.0, '84': 4.0}
 
@@ -208,7 +205,7 @@ def get_books(pagelist):
     ('allcaps', '[A-Z\'\,\‘\.\-]+'),
     ('dollarprice', '.?[$\"\“].?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
-    ('hyphennumber', '[0-9]*[-—~]+[0-9]+[,.:=)]?'),
+    ('hyphennumber', '[0-9]{1,3}[-—~]+[0-9]{3,7}[,.:=)]?'),
     ('openquote', '[\"\'“‘]+\S*'),
     ('deweydecimal', '[0-9]{3}[.][0-9-]+')
     ]
@@ -369,7 +366,9 @@ def get_books(pagelist):
                     citationlines = []
 
                     for string, tags in zip(taglist.stringseq, taglist.tagseq):
-                        if 'dollarprice' in tags or 'centprice' in tags or 'hyphennumber' in tags or 'deweydecimal' in tags:
+                        if 'dollarprice' in tags or 'centprice' in tags:
+                            # note that our conditions for ending a citation with the first
+                            # line are more stringent than they will be from the second onward
                             citation_finished = True
                             break
 
@@ -378,10 +377,13 @@ def get_books(pagelist):
 
                 for string, tags in zip(taglist.stringseq, taglist.tagseq):
                     if 'dollarprice' in tags or 'centprice' in tags or 'hyphennumber' in tags or 'deweydecimal' in tags:
+                        # more conditions can end a citation now
                         citation_finished = True
                         break
 
-                if len(taglist.stringseq) > 1 and taglist.stringseq[-1] in publishers:
+                if len(taglist.stringseq) > 1 and taglist.stringseq[-1].strip('.') in publishers:
+                    # sometimes there's no price and the publisher's name is the only clue
+                    # that the citation is finished
                     citation_finished = True
 
             if this_line_is_new_citation or citation_started:

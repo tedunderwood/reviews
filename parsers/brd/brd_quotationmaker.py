@@ -57,7 +57,7 @@ def divide_into_quotations(booklist):
     ('allcaps', '[A-Z\'\,]+'),
     ('dollarprice', '.*\$.?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
-    ('hyphennumber', '[0-9]+[-—~]+[0-9]{3,6}[,.:=]?'),
+    ('hyphennumber', '[0-9]{1,3}[-—~]+[0-9]{3,7}[,.:=)]?'),
     ('openquote', '[\"\'“‘]+\S*'),
     ('plusorminus', '[\+\-\—]+'),
     ('reviewword', all_reviewwords)
