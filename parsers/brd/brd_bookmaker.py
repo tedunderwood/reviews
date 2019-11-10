@@ -21,7 +21,7 @@ publishers = ['Holt', 'Macmillan', 'Longmans', 'Harper', 'Doran', 'Stokes', 'Dod
 "Brentano's", 'Yale', 'Appleton', 'Doubleday', 'McGraw', 'Bobbs', 'Oxford', "Century",
 'Simmons', 'Stokes', 'Knopf', 'Liveright', ' Liverlght']
 
-valid_prices = {"81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35}
+valid_prices = {"81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35, '81.85': 1.85, '81.95': 1.95, '81.45': 1.45, '83.50': 3.50, '85': 5.0, '84': 4.0}
 
 def match_strings(stringA, stringB):
     m = SequenceMatcher(None, stringA, stringB)
@@ -177,8 +177,8 @@ class Citation:
                     price = pricetranslate(word)
                 elif 'centprice' in tags:
                     price = pricetranslate(word)
-                elif word.strip("'‘’") in valid_prices:
-                    price = valid_prices[word.strip("'‘’")]
+                elif word.strip("'‘’*t") in valid_prices:
+                    price = valid_prices[word.strip("'‘’*t")]
                 else:
                     publisher.append(word)
 

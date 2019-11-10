@@ -206,6 +206,17 @@ def divide_into_quotations(booklist):
                     if not numericyet and (word == '-+' or word == "—+" or word == '=+'):
                         sentimentbits.append('-')
                         sentimentbits.append('+')
+                    if not numericyet and (word == '++-' or word == '++—' or word == "++="):
+                        sentimentbits.append('+')
+                        sentimentbits.append('+')
+                        sentimentbits.append('-')
+                    if not numericyet and (word == '++'):
+                        sentimentbits.append('+')
+                        sentimentbits.append('+')
+                    if not numericyet and (word == '+++'):
+                        sentimentbits.append('+')
+                        sentimentbits.append('+')
+                        sentimentbits.append('+')
                         continue
 
                     if 'somenumeric' in tags:
