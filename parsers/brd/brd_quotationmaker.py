@@ -6,7 +6,7 @@
 # As often with Python, it may make sense to start reading from the
 # bottom of the script, and move up.
 
-import lexparse
+import lexparse, re
 import read_pubnames
 from difflib import SequenceMatcher
 
@@ -64,6 +64,8 @@ def divide_into_quotations(booklist):
     ('wordcount', '\d*0w[.]?')
     ]
 
+    wordcountregex = re.compile(lexical_patterns['wordcount'])
+
     rule_list = lexparse.patterns2rules(lexical_patterns)
     allquotes = []
 
@@ -79,6 +81,7 @@ def divide_into_quotations(booklist):
         citationcount = 0
 
         addtonext = ''
+        skipnext = False
 
         for linecount, line in enumerate(lines):
 
@@ -130,6 +133,10 @@ def divide_into_quotations(booklist):
             if len(addtonext) > 0:
                 line = addtonext + ' ' + line
                 addtonext = ''
+
+            if skipnext:
+                skipnext = False
+                continue
 
             tokens = line.strip().split()
             if len(tokens) < 1:
@@ -258,6 +265,16 @@ def divide_into_quotations(booklist):
                         addtonext = ' '.join(taglist.stringseq[nextwordctr : ])
                         break
 
+
+                # if this line doesn't end with a word count, and the next one does?
+                # probably a continuation
+
+                if len(citationbits) > 0 and not wordcountregex.fullmatch(citationbits[-1]):
+                    if linecount < (len(lines) - 1):
+                        wordsinnextline = lines[linecount + 1].strip().split()
+                        if len(wordsinnextline) > 0 and wordcountregex.fullmatch(wordsinnextline[-1]):
+                            citationbits.extend(wordsinnextline)
+                            skipnext = True
 
                 sentiment = ' '.join(sentimentbits)
                 review = ' '.join(publisherbits)
