@@ -16,9 +16,9 @@ import hyphenjoiner
 # I'm also making a point of clearly labeling the parts
 # so this will be intelligible for readers.
 
-year = '1917'
-suffix = '32106019850327'
-startpage = 35
+year = '1912'
+suffix = '39015078260992'
+startpage = 11
 
 year_suffix_startpage = [(year, suffix, startpage)]
 
