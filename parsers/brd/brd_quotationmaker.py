@@ -198,7 +198,8 @@ def divide_into_quotations(booklist):
 
                     nextwordctr += 1
 
-                    if not numericyet and word == '+':
+                    if not numericyet and word == '+'or word == '4-':
+                        # '4-' is a fairly common ocr misread for +
                         sentimentbits.append('+')
                         continue
                     if not numericyet and (word == '-' or word == '—' or word == '—-'):
@@ -230,7 +231,8 @@ def divide_into_quotations(booklist):
                         sentimentbits.append('+')
                         continue
 
-                    if 'somenumeric' in tags:
+                    if 'somenumeric' in tags and not word == '4-':
+                        # '4-' is a common ocr misread for +
                         numericyet = True
 
                     if not numericyet:
