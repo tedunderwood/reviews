@@ -243,7 +243,7 @@ def divide_into_quotations(booklist):
                         # this is a weird but common misread; however, it's risky
                         # enough that we should only do it in first position
                         sentimentbits.append('+')
-                        sentimentbit.append('-')
+                        sentimentbits.append('-')
                         continue
 
                     if 'somenumeric' in tags:
