@@ -238,7 +238,7 @@ def divide_into_quotations(booklist):
                     else:
                         citationbits.append(word)
 
-                    if numericyet and 'wordcount' in tags and (nextwordctr < len(taglist.stringseq):
+                    if numericyet and 'wordcount' in tags and (nextwordctr < len(taglist.stringseq)):
                         addtonext = ' '.join(taglist.stringseq[nextwordctr : ])
                         break
 
