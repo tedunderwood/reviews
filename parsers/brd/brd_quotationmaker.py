@@ -69,6 +69,8 @@ def divide_into_quotations(booklist):
 
     trailingbibs = []
 
+    plusmisreads = {'-4-', '4-', '1-', '-1-', '4—', '1—'}
+
     for book in booklist:
         lines = book.reviewlines
 
@@ -198,8 +200,11 @@ def divide_into_quotations(booklist):
 
                     nextwordctr += 1
 
-                    if not numericyet and word == '+'or word == '4-':
-                        # '4-' is a fairly common ocr misread for +
+                    if not numericyet and word == '+':
+                        sentimentbits.append('+')
+                        continue
+                    if not numericyet and word in plusmisreads:
+                        # e.g. '4-' is a fairly common ocr misread for +
                         sentimentbits.append('+')
                         continue
                     if not numericyet and (word == '-' or word == '—' or word == '—-'):
@@ -218,21 +223,23 @@ def divide_into_quotations(booklist):
                     if not numericyet and (word == '-+' or word == "—+" or word == '=+'):
                         sentimentbits.append('-')
                         sentimentbits.append('+')
+                        continue
                     if not numericyet and (word == '++-' or word == '++—' or word == "++="):
                         sentimentbits.append('+')
                         sentimentbits.append('+')
+                        continue
                         sentimentbits.append('-')
                     if not numericyet and (word == '++'):
                         sentimentbits.append('+')
                         sentimentbits.append('+')
+                        continue
                     if not numericyet and (word == '+++'):
                         sentimentbits.append('+')
                         sentimentbits.append('+')
                         sentimentbits.append('+')
                         continue
 
-                    if 'somenumeric' in tags and not word == '4-':
-                        # '4-' is a common ocr misread for +
+                    if 'somenumeric' in tags:
                         numericyet = True
 
                     if not numericyet:
