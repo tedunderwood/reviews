@@ -40,6 +40,7 @@ for k, v in bookdict.items():
     year_suffix_startpage.append(v)
 
 for year, vol, startpage in year_suffix_startpage:
+    print(year, vol, startpage)
     outfile = '/media/secure_volume/brd/output/' + year + '_' + vol + '.tsv'
     pagelist = extractor.extract(vol, startpage)
     books, author_errors = bookmaker.get_books(pagelist)
