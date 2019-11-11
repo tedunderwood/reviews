@@ -16,28 +16,28 @@ import hyphenjoiner
 # I'm also making a point of clearly labeling the parts
 # so this will be intelligible for readers.
 
-year = '1918'
-suffix = '30112013681652'
-startpage = 9
+# year = '1918'
+# suffix = '30112013681652'
+# startpage = 9
 
-year_suffix_startpage = [(year, suffix, startpage)]
+# year_suffix_startpage = [(year, suffix, startpage)]
 
-with open('/media/secure_volume/brd/output/processed_files.tsv', mode = 'a', encoding = 'utf-8') as f:
-    for y, v, s in year_suffix_startpage:
-        f.write(y + '\t' + v + '\t' + str(s) + '\n')
+# with open('/media/secure_volume/brd/output/processed_files.tsv', mode = 'a', encoding = 'utf-8') as f:
+#     for y, v, s in year_suffix_startpage:
+#         f.write(y + '\t' + v + '\t' + str(s) + '\n')
 
-# bookdict = dict()
+bookdict = dict()
 
-# with open('/media/secure_volume/brd/output/processed_files.tsv', encoding = 'utf-8') as f:
-#     for line in f:
-#         fields = line.strip().split('\t')
-#         triplet = (fields[0], fields[1], int(fields[2]))
-#         bookdict[fields[1]] = triplet
+with open('/media/secure_volume/brd/output/processed_files.tsv', encoding = 'utf-8') as f:
+    for line in f:
+        fields = line.strip().split('\t')
+        triplet = (fields[0], fields[1], int(fields[2]))
+        bookdict[fields[1]] = triplet
 
-# year_suffix_startpage = []
+year_suffix_startpage = []
 
-# for k, v in bookdict.items():
-#     year_suffix_startpage.append(v)
+for k, v in bookdict.items():
+    year_suffix_startpage.append(v)
 
 for year, vol, startpage in year_suffix_startpage:
     print(year, vol, startpage)
