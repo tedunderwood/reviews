@@ -60,7 +60,8 @@ def divide_into_quotations(booklist):
     ('hyphennumber', '[0-9]{1,3}[-—~]+[0-9]{3,7}[,.:=)]?'),
     ('openquote', '[\"\'“‘]+\S*'),
     ('plusorminus', '[\+\-\—]+'),
-    ('reviewword', all_reviewwords)
+    ('reviewword', all_reviewwords),
+    ('wordcount', '\d*0w[.]?')
     ]
 
     rule_list = lexparse.patterns2rules(lexical_patterns)
@@ -73,6 +74,8 @@ def divide_into_quotations(booklist):
 
         accumulated = []
         citationcount = 0
+
+        addtonext = ''
 
         for linecount, line in enumerate(lines):
 
@@ -121,6 +124,9 @@ def divide_into_quotations(booklist):
             #         if matched:
             #             continue
 
+            if len(addtonext) > 0:
+                line = addtonext + ' ' + line
+                addtonext = ''
 
             tokens = line.strip().split()
             if len(tokens) < 1:
@@ -186,7 +192,12 @@ def divide_into_quotations(booklist):
                 publisherbits = []
                 citationbits = []
 
+                nextwordctr = 0
+
                 for word, tags in zip(taglist.stringseq, taglist.tagseq):
+
+                    nextwordctr += 1
+
                     if not numericyet and word == '+':
                         sentimentbits.append('+')
                         continue
@@ -226,6 +237,11 @@ def divide_into_quotations(booklist):
                         publisherbits.append(word)
                     else:
                         citationbits.append(word)
+
+                    if numericyet and 'wordcount' in tags and (nextwordctr < len(taglist.stringseq):
+                        addtonext = ' '.join(taglist.stringseq[nextwordctr : ])
+                        break
+
 
                 sentiment = ' '.join(sentimentbits)
                 review = ' '.join(publisherbits)
