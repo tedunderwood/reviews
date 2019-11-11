@@ -64,7 +64,7 @@ def divide_into_quotations(booklist):
     ('wordcount', '\d*0w[.]?')
     ]
 
-    wordcountregex = re.compile(lexical_patterns['wordcount'])
+    wordcountregex = re.compile(lexical_patterns['\d*0w[.]?'])
 
     rule_list = lexparse.patterns2rules(lexical_patterns)
     allquotes = []
