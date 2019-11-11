@@ -31,7 +31,7 @@ bookdict = dict()
 with open('/media/secure_volume/brd/output/processed_files.tsv', encoding = 'utf-8') as f:
     for line in f:
         fields = line.strip().split('\t')
-        triplet = (fields[0], fields[1], fields[2])
+        triplet = (fields[0], fields[1], int(fields[2]))
         bookdict[fields[1]] = triplet
 
 year_suffix_startpage = []
