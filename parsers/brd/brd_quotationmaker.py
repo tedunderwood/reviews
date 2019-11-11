@@ -69,7 +69,8 @@ def divide_into_quotations(booklist):
 
     trailingbibs = []
 
-    plusmisreads = {'-4-', '4-', '1-', '-1-', '4—', '1—'}
+    plusmisreads = {'-4-', '4-', '1-', '-1-', '4—', '1—', '-|-',
+        '-l-', '-)-', '—|—', '-I-', '-(-', '-f'}
 
     for book in booklist:
         lines = book.reviewlines
@@ -237,6 +238,12 @@ def divide_into_quotations(booklist):
                         sentimentbits.append('+')
                         sentimentbits.append('+')
                         sentimentbits.append('+')
+                        continue
+                    if not numericyet and nextwordctr == 1 and word == "H":
+                        # this is a weird but common misread; however, it's risky
+                        # enough that we should only do it in first position
+                        sentimentbits.append('+')
+                        sentimentbit.append('-')
                         continue
 
                     if 'somenumeric' in tags:
