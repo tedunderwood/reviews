@@ -169,7 +169,6 @@ for year, suffix in year_suffix:
                             count >= 0):  # if there is already a list in the book list (which means there is already list in headings)
                         fiction_books[count].append(text[j + k])  # add texts into the booklist
                 length = len(fiction_headings)
-                print(fiction_headings)
 
                 fiction_authors = []  # to store the names of authors
                 fiction_titles = []  # to store the names of titles
@@ -257,9 +256,10 @@ for year, suffix in year_suffix:
                                     break
 
                         dictionary[k] = dict(zip(fiction_authors[k], fiction_titles[k]))  # zip to dictionary
-                        print(dictionary[k])
-                        print(discard[k])
+                        #print(dictionary[k])
+                        #print(discard[k])
                         num = len(dictionary[k])
+                        print(fiction_headings[k])
                         file1.write('<\heading "%s">' % fiction_headings[k] + '\n')
                         file2.write('<\heading "%s">' % fiction_headings[k] + '\n')
                         for m in range(num):
@@ -309,7 +309,6 @@ for year, suffix in year_suffix:
                     elif (
                             count >= 0):  # if there is already a list in the book list (which means there is already list in headings)
                         fiction_books[count].append(text[j + k])  # add texts into the booklist
-                print(fiction_headings)
                 length = len(fiction_headings)
 
                 fiction_authors = []  # to store the names of authors
@@ -398,9 +397,10 @@ for year, suffix in year_suffix:
                                     break
 
                         dictionary[k] = dict(zip(fiction_authors[k], fiction_titles[k]))  # zip to dictionary
-                        print(dictionary[k])
-                        print(discard[k])
+                        #print(dictionary[k])
+                        #print(discard[k])
                         num = len(dictionary[k])
+                        print(fiction_headings[k])
                         file1.write('<\heading "%s">' % fiction_headings[k] + '\n')
                         file2.write('<\heading "%s">' % fiction_headings[k] + '\n')
                         for m in range(num):
