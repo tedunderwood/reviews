@@ -6,7 +6,7 @@
 # As often with Python, it may make sense to start reading from the
 # bottom of the script, and move up.
 
-import lexparse
+import lexparse, re
 import read_pubnames
 from difflib import SequenceMatcher
 
@@ -57,22 +57,31 @@ def divide_into_quotations(booklist):
     ('allcaps', '[A-Z\'\,]+'),
     ('dollarprice', '.*\$.?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
-    ('hyphennumber', '[0-9]+[-—~]+[0-9]{3,6}[,.:=]?'),
+    ('hyphennumber', '[0-9]{1,3}[-—~]+[0-9]{3,7}[,.:=)]?'),
     ('openquote', '[\"\'“‘]+\S*'),
     ('plusorminus', '[\+\-\—]+'),
-    ('reviewword', all_reviewwords)
+    ('reviewword', all_reviewwords),
+    ('wordcount', '\d*0w[.]?')
     ]
+
+    wordcountregex = re.compile('\d*0w[.]?')
 
     rule_list = lexparse.patterns2rules(lexical_patterns)
     allquotes = []
 
     trailingbibs = []
 
+    plusmisreads = {'-4-', '4-', '1-', '-1-', '4—', '1—', '-|-',
+        '-l-', '-)-', '—|—', '-I-', '-(-', '-f'}
+
     for book in booklist:
         lines = book.reviewlines
 
         accumulated = []
         citationcount = 0
+
+        addtonext = ''
+        skipnext = False
 
         for linecount, line in enumerate(lines):
 
@@ -121,6 +130,13 @@ def divide_into_quotations(booklist):
             #         if matched:
             #             continue
 
+            if len(addtonext) > 0:
+                line = addtonext + ' ' + line
+                addtonext = ''
+
+            if skipnext:
+                skipnext = False
+                continue
 
             tokens = line.strip().split()
             if len(tokens) < 1:
@@ -186,8 +202,17 @@ def divide_into_quotations(booklist):
                 publisherbits = []
                 citationbits = []
 
+                nextwordctr = 0
+
                 for word, tags in zip(taglist.stringseq, taglist.tagseq):
+
+                    nextwordctr += 1
+
                     if not numericyet and word == '+':
+                        sentimentbits.append('+')
+                        continue
+                    if not numericyet and word in plusmisreads:
+                        # e.g. '4-' is a fairly common ocr misread for +
                         sentimentbits.append('+')
                         continue
                     if not numericyet and (word == '-' or word == '—' or word == '—-'):
@@ -207,6 +232,26 @@ def divide_into_quotations(booklist):
                         sentimentbits.append('-')
                         sentimentbits.append('+')
                         continue
+                    if not numericyet and (word == '++-' or word == '++—' or word == "++="):
+                        sentimentbits.append('+')
+                        sentimentbits.append('+')
+                        continue
+                        sentimentbits.append('-')
+                    if not numericyet and (word == '++'):
+                        sentimentbits.append('+')
+                        sentimentbits.append('+')
+                        continue
+                    if not numericyet and (word == '+++'):
+                        sentimentbits.append('+')
+                        sentimentbits.append('+')
+                        sentimentbits.append('+')
+                        continue
+                    if not numericyet and nextwordctr == 1 and word == "H":
+                        # this is a weird but common misread; however, it's risky
+                        # enough that we should only do it in first position
+                        sentimentbits.append('+')
+                        sentimentbits.append('-')
+                        continue
 
                     if 'somenumeric' in tags:
                         numericyet = True
@@ -215,6 +260,21 @@ def divide_into_quotations(booklist):
                         publisherbits.append(word)
                     else:
                         citationbits.append(word)
+
+                    if numericyet and 'wordcount' in tags and (nextwordctr < len(taglist.stringseq)):
+                        addtonext = ' '.join(taglist.stringseq[nextwordctr : ])
+                        break
+
+
+                # if this line doesn't end with a word count, and the next one does?
+                # probably a continuation
+
+                if len(citationbits) > 0 and not wordcountregex.fullmatch(citationbits[-1]):
+                    if linecount < (len(lines) - 1):
+                        wordsinnextline = lines[linecount + 1].strip().split()
+                        if len(wordsinnextline) > 0 and wordcountregex.fullmatch(wordsinnextline[-1]):
+                            citationbits.extend(wordsinnextline)
+                            skipnext = True
 
                 sentiment = ' '.join(sentimentbits)
                 review = ' '.join(publisherbits)
