@@ -5,13 +5,13 @@ import brd_index_extract_pagelist as extractor
 np.set_printoptions(threshold=np.inf)
 
 # a list of texts that wrongly attributed to headings. Keep updating
-wrong_headings = ['Brgggn, A. Wind between the', 'Underngian. F. B. On a passing', 'Richardson, H: H. Fortunes of',
+wrong_headings = ['Collections','Brgggn, A. Wind between the', 'Underngian. F. B. On a passing', 'Richardson, H: H. Fortunes of',
                   'Military servitude and', 'Humphrey, Z. Home', 'Mr', 'States in war-time', 'Strange story of William',
                   'Son of', 'Island of', 'Nathan. it', 'Adventures in', 'When the king losses his',
                   'Short stories from', 'Famous detective']
 headings_with_subheading = ['European war', 'Historical novels', 'Locality, Novels of', 'Legends and folktale']
 # a list of subheadings, ususally name of places. Keep updating
-subheadings = ['Balkan', 'Itoumunian', 'New Mexico', 'Philippine Islands', 'Imeden', 'Syracuse', 'Algeria', 'Baltimore',
+subheadings = ['Danith','Finnish','Roumanian','Kussian','Vermont','Wett Virginia','Wiscontin','Son Francisco','Siberia','Bovth Africa','Snain','Tat mania','Tennessee','Venezuela','Mississippi','Montana','Weie Orleani','New Zealand','Norway','Porte','Rangoon','BraMil','Brooklyn','Colorado','Corsica','Dakota','Epvft','Par Bait','Finland','Java','Maine','Hussion','United State t','Hunyary','Parit','Byzantium','Mii/ille aget','Ultt0vri','Netli erlandt','Portuyal','Balkan', 'Itoumunian', 'New Mexico', 'Philippine Islands', 'Imeden', 'Syracuse', 'Algeria', 'Baltimore',
                'BroOklyn', 'Detroit', 'Hawaiian Islands', 'Long Island', 'Heeico', 'Michigan', 'Flem\xef\xac\x82h',
                'Prussia', 'Austria', 'Balkans', 'Hungary', 'Poland', 'Asiatic Turkey', 'Austrla-Hungary', 'Brazll',
                'Richard', 'Georgla', 'Great Lakes', 'Clammer and', 'Newport', 'South Sea Islands', 'Turkey', 'Bohemia',
@@ -259,7 +259,6 @@ for year, suffix in year_suffix:
                         #print(dictionary[k])
                         #print(discard[k])
                         num = len(dictionary[k])
-                        print(fiction_headings[k])
                         file1.write('<\heading "%s">' % fiction_headings[k] + '\n')
                         file2.write('<\heading "%s">' % fiction_headings[k] + '\n')
                         for m in range(num):
@@ -328,6 +327,8 @@ for year, suffix in year_suffix:
                             k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
+                            if(fiction_headings[k]=='Young people'):
+                                print(fiction_books[k][m])
                             if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
                                                                                                fiction_books[k][
                                                                                                    m]) != None)):  # if the line matches with the regular pattern of "author"
@@ -400,7 +401,6 @@ for year, suffix in year_suffix:
                         #print(dictionary[k])
                         #print(discard[k])
                         num = len(dictionary[k])
-                        print(fiction_headings[k])
                         file1.write('<\heading "%s">' % fiction_headings[k] + '\n')
                         file2.write('<\heading "%s">' % fiction_headings[k] + '\n')
                         for m in range(num):
