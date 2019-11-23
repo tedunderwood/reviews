@@ -33,7 +33,7 @@ subheadings = ['Danith','Finnish','Roumanian','Kussian','Vermont','Wett Virginia
 subheadings = sorted(list(set(subheadings)))
 print(subheadings)
 # a list of headings that follows the fiction section. Need to add manually each time
-nextheadings = ['Fiddler\'s luck. Schauﬂier, R. H. (Jl \'20)','Fiddier\'s luck. _ Schauﬂ\'ler, R. H. (.11 \'20)', 'Field ambulance sketches. (N \'19',
+nextheadings = ['Fiddler\'s luck. Schauffler, R. H. (Jl J0)','Fiddler\'s luck. Schauﬂier, R. H. (Jl \'20)','Fiddier\'s luck. _ Schauﬂ\'ler, R. H. (.11 \'20)', 'Field ambulance sketches. (N \'19',
                 'Field book of insects. Lutz. . E.', 'Fielchrtlips for the cotton-belt. Morgan. J. O.',
                 'Fifth wheel. Prouty, 0. H. (Ap \'16)', 'Fifteens thousand miles by stage. Strahorn, C.',
                 'Fifty years in Oregon. Geer, T. T. (Jl. \'12.)', 'Field-days in California. Torrey. B. (Ap \'18)',
