@@ -11,7 +11,7 @@ wrong_headings = ['Collections','Brgggn, A. Wind between the', 'Underngian. F. B
                   'Short stories from', 'Famous detective']
 headings_with_subheading = ['European war', 'Historical novels', 'Locality, Novels of', 'Legends and folktale']
 # a list of subheadings, ususally name of places. Keep updating
-subheadings = ['Danith','Finnish','Roumanian','Kussian','Vermont','Wett Virginia','Wiscontin','Son Francisco','Siberia','Bovth Africa','Snain','Tat mania','Tennessee','Venezuela','Mississippi','Montana','Weie Orleani','New Zealand','Norway','Porte','Rangoon','BraMil','Brooklyn','Colorado','Corsica','Dakota','Epvft','Par Bait','Finland','Java','Maine','Hussion','United State t','Hunyary','Parit','Byzantium','Mii/ille aget','Ultt0vri','Netli erlandt','Portuyal','Balkan', 'Itoumunian', 'New Mexico', 'Philippine Islands', 'Imeden', 'Syracuse', 'Algeria', 'Baltimore',
+subheadings = ['Hungarian','Portuguete','Servian','Nor wan','Quebec','San Francitco','Texas','Watts','Ceylon','Ituly','Uaryland','Massachusetts','Nevada','New Knylunil','Xortli Carolina','America','Danith','Finnish','Roumanian','Kussian','Vermont','Wett Virginia','Wiscontin','Son Francisco','Siberia','Bovth Africa','Snain','Tat mania','Tennessee','Venezuela','Mississippi','Montana','Weie Orleani','New Zealand','Norway','Porte','Rangoon','BraMil','Brooklyn','Colorado','Corsica','Dakota','Epvft','Par Bait','Finland','Java','Maine','Hussion','United State t','Hunyary','Parit','Byzantium','Mii/ille aget','Ultt0vri','Netli erlandt','Portuyal','Balkan', 'Itoumunian', 'New Mexico', 'Philippine Islands', 'Imeden', 'Syracuse', 'Algeria', 'Baltimore',
                'BroOklyn', 'Detroit', 'Hawaiian Islands', 'Long Island', 'Heeico', 'Michigan', 'Flem\xef\xac\x82h',
                'Prussia', 'Austria', 'Balkans', 'Hungary', 'Poland', 'Asiatic Turkey', 'Austrla-Hungary', 'Brazll',
                'Richard', 'Georgla', 'Great Lakes', 'Clammer and', 'Newport', 'South Sea Islands', 'Turkey', 'Bohemia',
@@ -327,7 +327,7 @@ for year, suffix in year_suffix:
                             k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
-                            if(fiction_headings[k]=='Young people'):
+                            if(fiction_headings[k]=='Young people' or fiction_headings[k]=='Field, Eugene'):
                                 print(fiction_books[k][m])
                             if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
                                                                                                fiction_books[k][
