@@ -57,8 +57,8 @@ pattern2_1 = re.compile(" [A-Z][a-z]+")
 pattern2_2 = re.compile("[.:]\s[A-Z][a-z]+")
 
 
-year = ['1921']
-suffix = ['32106019850368']
+year = ['1921','1922']
+suffix = ['32106019850368','32106019610374']
 
 length=len(year)
 year_suffix=[]
