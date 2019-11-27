@@ -5,19 +5,19 @@ from difflib import SequenceMatcher
 
 wordcountregex = re.compile('\d*0w[.]?')
 
-extract_files = ['../data/volume8 extract.txt', '../data/volume9 extract.txt',
-    '../data/volume10 extract.txt', '../data/volume11 extract.txt',
-    '../data/volume12 extract.txt', '../data/volume13 extract.txt']
+# extract_files = ['../data/volume8 extract.txt', '../data/volume9 extract.txt',
+#     '../data/volume10 extract.txt', '../data/volume11 extract.txt',
+#     '../data/volume12 extract.txt', '../data/volume13 extract.txt']
 
-review_files = ['/media/secure_volume/brd/output/1912_39015078260992.tsv',
-'/media/secure_volume/brd/output/1913_33433082016522.tsv',
-'/media/secure_volume/brd/output/1914_32106019850293.tsv',
-'/media/secure_volume/brd/output/1915_30112013681629.tsv',
-'/media/secure_volume/brd/output/1916_33433082016555.tsv',
-'/media/secure_volume/brd/output/1917_39015078261040.tsv']
+# review_files = ['/media/secure_volume/brd/output/1912_39015078260992.tsv',
+# '/media/secure_volume/brd/output/1913_33433082016522.tsv',
+# '/media/secure_volume/brd/output/1914_32106019850293.tsv',
+# '/media/secure_volume/brd/output/1915_30112013681629.tsv',
+# '/media/secure_volume/brd/output/1916_33433082016555.tsv',
+# '/media/secure_volume/brd/output/1917_39015078261040.tsv']
 
-# extract_files = ['../data/volume14 extract.txt']
-# review_files = ['/Users/tunder/Dropbox/python/reviews/output/brd_quotes.tsv']
+extract_files = ['../data/volume14 extract.txt']
+review_files = ['/Users/tunder/Dropbox/python/reviews/output/brd_quotes.tsv']
 
 def get_ratio(stringA, stringB):
 
@@ -67,6 +67,7 @@ def specialsplit(author):
 
 yearctr = 0
 bookdata = dict()
+bookmeta = dict()
 
 for ef, rf in zip(extract_files, review_files):
 
@@ -133,7 +134,7 @@ for ef, rf in zip(extract_files, review_files):
                 if len(bookauthor) < 5 or len(booktitle) < 4:
                     continue
 
-                authnames = bookauthor.split(',')
+                authnames = specialsplit(bookauthor)
                 book_initials = ''
                 if len(authnames) > 1:
                     book_last = authnames[0].lower()
@@ -145,7 +146,7 @@ for ef, rf in zip(extract_files, review_files):
 
                 lastratio = get_ratio(lastname, book_last)
 
-                if lastratio > 0.8:
+                if lastratio > 0.75:
                     initialratio = get_ratio(first_initials, book_initials)
                     titleratio = get_ratio(title, booktitle.lower())
 
@@ -157,6 +158,10 @@ for ef, rf in zip(extract_files, review_files):
 
             if closeness > 0.5:
                 matchedindexes.append(closestmatch)
+                masterindex = str(yearctr) + '+' + str(closestmatch)
+                bookmeta[masterindex] = dict()
+                bookmeta[masterindex]['closeness'] = closeness
+                bookmeta[masterindex]['target'] = lastname + ' + ' + first_initials + ' + ' + title
 
     allsentiments = []
 
@@ -204,6 +209,7 @@ for ef, rf in zip(extract_files, review_files):
         masterindex = str(yearctr) + '+' + str(idx)
         bookdata[masterindex] = [author, title, price, wordcount, idx2, sentiments]
 
+
     average_sentiment = np.nanmean(allsentiments)
 
     for idx, data in bookdata.items():
@@ -213,10 +219,11 @@ for ef, rf in zip(extract_files, review_files):
         data[5] = sentiment
 
 with open('outdata.tsv', mode = 'w', encoding = 'utf-8') as f:
-    f.write('index\tauthor\ttitle\tprice\twordcount\trows\tavgsent\n')
+    f.write('index\tauthor\ttitle\tprice\twordcount\trows\tavgsent\tcloseness\ttarget\n')
     for idx, data in bookdata.items():
         outrow = [idx]
         outrow.extend([str(x) for x in data])
+        outrow.extend([str(bookmeta[idx]['closeness']), bookmeta[idx]['target']])
         f.write('\t'.join(outrow) + '\n')
 
 
