@@ -5,13 +5,13 @@ import brd_index_extract_pagelist as extractor
 np.set_printoptions(threshold=np.inf)
 
 # a list of texts that wrongly attributed to headings. Keep updating
-wrong_headings = ['Collections','Brgggn, A. Wind between the', 'Underngian. F. B. On a passing', 'Richardson, H: H. Fortunes of',
+wrong_headings = ['Fiction-Adventure-Continual','Collections','Brgggn, A. Wind between the', 'Underngian. F. B. On a passing', 'Richardson, H: H. Fortunes of',
                   'Military servitude and', 'Humphrey, Z. Home', 'Mr', 'States in war-time', 'Strange story of William',
                   'Son of', 'Island of', 'Nathan. it', 'Adventures in', 'When the king losses his',
                   'Short stories from', 'Famous detective']
 headings_with_subheading = ['European war', 'Historical novels', 'Locality, Novels of', 'Legends and folktale']
 # a list of subheadings, ususally name of places. Keep updating
-subheadings = ['Poltoh','Stoediih','Metrico','New York','Borne','Vienna','Wala','West Indiei','Indo-CMna','Iowa','Lapand','London','Manitoba','Xew Enuland','New Guinea','New Jersey','Balkan states','Went Indies','Algiers','Berlin','Burma','Esthonia','Ethiopia','Hawaii','Ktissian','West Indies','Louisville','Hear East','Hew England','Salem','Singapore','Koutlt Africa','South Dakota','Gaul','Argentina','British Columbia','Brittany','Budapest','Crotia','Glasgow','Isle of Man','Hungarian','Portuguete','Servian','Nor wan','Quebec','San Francitco','Texas','Watts','Ceylon','Ituly','Uaryland','Massachusetts','Nevada','Hew Knylunil','Xortli Carolina','America','Danith','Finnish','Roumanian','Kussian','Vermont','Wett Virginia','Wiscontin','Son Francisco','Siberia','Bovth Africa','Snain','Tat mania','Tennessee','Venezuela','Mississippi','Montana','Weie Orleani','New Zealand','Norway','Porte','Rangoon','BraMil','Brooklyn','Colorado','Corsica','Dakota','Epvft','Par Bait','Finland','Java','Maine','Hussion','United State t','Hunyary','Parit','Byzantium','Mii/ille aget','Ultt0vri','Netli erlandt','Portuyal','Balkan', 'Itoumunian', 'New Mexico', 'Philippine Islands', 'Imeden', 'Syracuse', 'Algeria', 'Baltimore',
+subheadings = ['Ciechoslovakian','Sicily','South sens','Syria','Viri/inia','Cambridge','Cave Cod','Florence','Illinois','InAo China','Koine','New Enylanil','Rtusia','Acadia','Poltoh','Stoediih','Metrico','New York','Borne','Vienna','Wala','West Indiei','Indo-CMna','Iowa','Lapand','London','Manitoba','Xew Enuland','New Guinea','New Jersey','Balkan states','Went Indies','Algiers','Berlin','Burma','Esthonia','Ethiopia','Hawaii','Ktissian','West Indies','Louisville','Hear East','Hew England','Salem','Singapore','Koutlt Africa','South Dakota','Gaul','Argentina','British Columbia','Brittany','Budapest','Crotia','Glasgow','Isle of Man','Hungarian','Portuguete','Servian','Nor wan','Quebec','San Francitco','Texas','Watts','Ceylon','Ituly','Uaryland','Massachusetts','Nevada','Hew Knylunil','Xortli Carolina','America','Danith','Finnish','Roumanian','Kussian','Vermont','Wett Virginia','Wiscontin','Son Francisco','Siberia','Bovth Africa','Snain','Tat mania','Tennessee','Venezuela','Mississippi','Montana','Weie Orleani','New Zealand','Norway','Porte','Rangoon','BraMil','Brooklyn','Colorado','Corsica','Dakota','Epvft','Par Bait','Finland','Java','Maine','Hussion','United State t','Hunyary','Parit','Byzantium','Mii/ille aget','Ultt0vri','Netli erlandt','Portuyal','Balkan', 'Itoumunian', 'New Mexico', 'Philippine Islands', 'Imeden', 'Syracuse', 'Algeria', 'Baltimore',
                'BroOklyn', 'Detroit', 'Hawaiian Islands', 'Long Island', 'Heeico', 'Michigan', 'Flem\xef\xac\x82h',
                'Prussia', 'Austria', 'Balkans', 'Hungary', 'Poland', 'Asiatic Turkey', 'Austrla-Hungary', 'Brazll',
                'Richard', 'Georgla', 'Great Lakes', 'Clammer and', 'Newport', 'South Sea Islands', 'Turkey', 'Bohemia',
@@ -57,8 +57,8 @@ pattern2_1 = re.compile(" [A-Z][a-z]+")
 pattern2_2 = re.compile("[.:]\s[A-Z][a-z]+")
 
 
-year = ['1921','1922','1923','1924','1925']
-suffix = ['32106019850368','32106019610374','32106019610382','32106019610390','32106019610408']
+year = ['1921','1922','1923','1924','1925','1926']
+suffix = ['32106019850368','32106019610374','32106019610382','32106019610390','32106019610408','32106019610416']
 
 length=len(year)
 year_suffix=[]
