@@ -285,7 +285,7 @@ for year, suffix in year_suffix:
             fiction_headings = []  # to store the headings
             fiction_books = []  # to store the lines under the heading
             count = -1
-            if (text[j] == "Fiction (classified by subject)" or text[j+k]=='Fiction (classified according to subject)'):
+            if (text[j] == "Fiction (classified by subject)" or text[j]=='Fiction (classified according to subject)'):
                 for k in list(range(1, linelength - j)):
                     if (text[j + k] in nextheadings):  # if fiction section ends
                         break
