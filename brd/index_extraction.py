@@ -141,6 +141,8 @@ for year, suffix in year_suffix:
             count = -1
 
             if (text[j] == "Fiction (books about)"):
+                for k in range(10):
+                    print(text[j+k])
                 for k in list(range(1, linelength - j)):
                     if (text[j + k] == "Fiction (classified by subject)"):  # if fiction section_about ends
                         break
