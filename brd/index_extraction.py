@@ -140,7 +140,8 @@ for year, suffix in year_suffix:
                     if (text[j + k] == "Fiction (classified by subject)"):  # if fiction section_about ends
                         break
                     if (text[j + k] == "Fiction"):
-                        text[j+k] =="Fiction (classified by subject)"
+                        text[j+k] = "Fiction (classified by subject)"
+                        print('!')
                         break
                     if '(' in text[j + k]:
                         bookcount_fiction_about += 1
