@@ -11,7 +11,7 @@ wrong_headings = ['Collections','Brgggn, A. Wind between the', 'Underngian. F. B
                   'Short stories from', 'Famous detective']
 headings_with_subheading = ['European war', 'Historical novels', 'Locality, Novels of', 'Legends and folktale']
 # a list of subheadings, ususally name of places. Keep updating
-subheadings = ['Ktissian','West Indies','Louisville','Hear East','Hew England','Salem','Singapore','Koutlt Africa','South Dakota','Gaul','Argentina','British Columbia','Brittany','Budapest','Crotia','Glasgow','Isle of Man','Hungarian','Portuguete','Servian','Nor wan','Quebec','San Francitco','Texas','Watts','Ceylon','Ituly','Uaryland','Massachusetts','Nevada','Hew Knylunil','Xortli Carolina','America','Danith','Finnish','Roumanian','Kussian','Vermont','Wett Virginia','Wiscontin','Son Francisco','Siberia','Bovth Africa','Snain','Tat mania','Tennessee','Venezuela','Mississippi','Montana','Weie Orleani','New Zealand','Norway','Porte','Rangoon','BraMil','Brooklyn','Colorado','Corsica','Dakota','Epvft','Par Bait','Finland','Java','Maine','Hussion','United State t','Hunyary','Parit','Byzantium','Mii/ille aget','Ultt0vri','Netli erlandt','Portuyal','Balkan', 'Itoumunian', 'New Mexico', 'Philippine Islands', 'Imeden', 'Syracuse', 'Algeria', 'Baltimore',
+subheadings = ['Poltoh','Stoediih','Metrico','New York','Borne','Vienna','Wala',,'West Indiei','Indo-CMna','Iowa','Lapand','London','Manitoba','Xew Enuland','New Guinea','New Jersey','Balkan states','Went Indies','Algiers','Berlin','Burma','Esthonia','Ethiopia','Hawaii','Ktissian','West Indies','Louisville','Hear East','Hew England','Salem','Singapore','Koutlt Africa','South Dakota','Gaul','Argentina','British Columbia','Brittany','Budapest','Crotia','Glasgow','Isle of Man','Hungarian','Portuguete','Servian','Nor wan','Quebec','San Francitco','Texas','Watts','Ceylon','Ituly','Uaryland','Massachusetts','Nevada','Hew Knylunil','Xortli Carolina','America','Danith','Finnish','Roumanian','Kussian','Vermont','Wett Virginia','Wiscontin','Son Francisco','Siberia','Bovth Africa','Snain','Tat mania','Tennessee','Venezuela','Mississippi','Montana','Weie Orleani','New Zealand','Norway','Porte','Rangoon','BraMil','Brooklyn','Colorado','Corsica','Dakota','Epvft','Par Bait','Finland','Java','Maine','Hussion','United State t','Hunyary','Parit','Byzantium','Mii/ille aget','Ultt0vri','Netli erlandt','Portuyal','Balkan', 'Itoumunian', 'New Mexico', 'Philippine Islands', 'Imeden', 'Syracuse', 'Algeria', 'Baltimore',
                'BroOklyn', 'Detroit', 'Hawaiian Islands', 'Long Island', 'Heeico', 'Michigan', 'Flem\xef\xac\x82h',
                'Prussia', 'Austria', 'Balkans', 'Hungary', 'Poland', 'Asiatic Turkey', 'Austrla-Hungary', 'Brazll',
                'Richard', 'Georgla', 'Great Lakes', 'Clammer and', 'Newport', 'South Sea Islands', 'Turkey', 'Bohemia',
@@ -33,7 +33,7 @@ subheadings = ['Ktissian','West Indies','Louisville','Hear East','Hew England','
 subheadings = sorted(list(set(subheadings)))
 print(subheadings)
 # a list of headings that follows the fiction section. Need to add manually each time
-nextheadings = ['Field book of common rocks and minerals.','Field, Eugene','Fiddler\'s luck. Schauffler, R. H. (Jl JO)','Fiddler\'s luck. Schauﬂier, R. H. (Jl \'20)','Fiddier\'s luck. _ Schauﬂ\'ler, R. H. (.11 \'20)', 'Field ambulance sketches. (N \'19',
+nextheadings = ['Fiction as she is wrote. Knox, E. G: V. (D','Field book of common rocks and minerals.','Field, Eugene','Fiddler\'s luck. Schauffler, R. H. (Jl JO)','Fiddler\'s luck. Schauﬂier, R. H. (Jl \'20)','Fiddier\'s luck. _ Schauﬂ\'ler, R. H. (.11 \'20)', 'Field ambulance sketches. (N \'19',
                 'Field book of insects. Lutz. . E.', 'Fielchrtlips for the cotton-belt. Morgan. J. O.',
                 'Fifth wheel. Prouty, 0. H. (Ap \'16)', 'Fifteens thousand miles by stage. Strahorn, C.',
                 'Fifty years in Oregon. Geer, T. T. (Jl. \'12.)', 'Field-days in California. Torrey. B. (Ap \'18)',
@@ -106,13 +106,13 @@ for year, suffix in year_suffix:
     flag2 = 0
 
     for i in range(pagenumber):  # read all documents in all volumes
+        if (flag2 == 1):
+            break
         if pagelist[i][0][:34].lower() == 'subject, title and pseudonym index':  # case insensitive, and two different index titles
             print('Volume number %d: the index begins at page %d' % (
                 volume_id, i + 1))  # output is added by 1 to be consistent with the book-no page 0 there
             index_startpage = i
             flag = 1
-            if(flag2==1):
-                break
 
             for k in range(i, pagenumber):
                 if pagelist[k][0][:23].lower() == 'directory of publishers' or len(pagelist[k]) == 0:  # case insensitive, and two different possible type of page after index: another directory, or empty
