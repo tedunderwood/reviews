@@ -103,6 +103,7 @@ for year, suffix in year_suffix:
     bookcount_fiction_about = 0
     bookcount_fiction_genre = 0
     flag = 0
+    flag2 = 0
 
     for i in range(pagenumber):  # read all documents in all volumes
         if pagelist[i][0][:34].lower() == 'subject, title and pseudonym index':  # case insensitive, and two different index titles
@@ -110,11 +111,15 @@ for year, suffix in year_suffix:
                 volume_id, i + 1))  # output is added by 1 to be consistent with the book-no page 0 there
             index_startpage = i
             flag = 1
+            if(flag2==1):
+                break
+
             for k in range(i, pagenumber):
                 if pagelist[k][0][:23].lower() == 'directory of publishers' or len(pagelist[k]) == 0:  # case insensitive, and two different possible type of page after index: another directory, or empty
                     print('Volume number %d: the index ends at page %d' % (
                         volume_id, k))  # no 1 added, since that page is no longer index
                     index_endpage = k
+                    flag2=1
                     break
 
     if flag == 1:  # if the volume has an index, do the following steps
@@ -141,7 +146,6 @@ for year, suffix in year_suffix:
                         break
                     if (text[j + k] == "Fiction"):
                         text[j+k] = "Fiction (classified by subject)"
-                        print('!')
                         break
                     if '(' in text[j + k]:
                         bookcount_fiction_about += 1
