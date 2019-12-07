@@ -108,7 +108,7 @@ for year, suffix in year_suffix:
     for i in range(pagenumber):  # read all documents in all volumes
         if (flag2 == 1):
             break
-        if (pagelist[i][0][:34].lower() == 'subject, title and pseudonym index' or pagelist[i][0][:34].lower() == 'Subject and Title Index'):  # case insensitive, and two different index titles
+        if (pagelist[i][0][:34].lower() == 'subject, title and pseudonym index' or pagelist[i][0][:23].lower() == 'Subject and Title Index'):  # case insensitive, and two different index titles
             print('Volume number %d: the index begins at page %d' % (
                 volume_id, i + 1))  # output is added by 1 to be consistent with the book-no page 0 there
             index_startpage = i
