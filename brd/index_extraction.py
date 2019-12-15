@@ -85,6 +85,9 @@ def read(x): # read the document
 """
 #def main():
 for year, suffix in year_suffix:
+    special=0
+    if(year=='1935'):
+        special=1
     volume_id = int(year) - 1904  # volume id
     file1 = open("/media/secure_volume/brd/output_index/volume%i extract.txt" % volume_id, 'w', encoding='utf-8')
     file2 = open("/media/secure_volume/brd/output_index/volume%i discard.txt" % volume_id, 'w', encoding='utf-8')
@@ -149,6 +152,10 @@ for year, suffix in year_suffix:
                         break
                     if (text[j + k] == "Fiction"):
                         text[j+k] = "Fiction (classified by subject)"
+                        break
+                    if (special==1 and text[j+k]=='1161'):
+                        text[j + k-1] = "Fiction (classified by subject)"
+                        text[j + k] = "Animal stories"
                         break
                     if '(' in text[j + k]:
                         bookcount_fiction_about += 1
