@@ -65,6 +65,15 @@ def pricetranslate(astring):
     else:
         price = 0.0
 
+    if price > 25 and len(digits) > 1 and (digits[0] == '5' or digits[0] == '8'):
+        try:
+            price = float(digits[1:])
+        except:
+            price = 0.0
+
+    if price > 25:
+        price = 0.0
+
     return price
 
 def numcaps(word):
@@ -123,6 +132,7 @@ class Citation:
         titledone = False
         authordone = False
         authorstop = False
+        dollarpricefound = False
 
         # The underlying logic here is elegant. We take words up to the first
         # full stop as the "author." From there to the next full stop is
@@ -171,6 +181,8 @@ class Citation:
 
                 if titlestart and 'dollarprice' in tags:
                     price = pricetranslate(word)
+                    if '$' in word:
+                        dollarpricefound = True
                     titledone = True
                 else:
                     title.append(word)
@@ -178,10 +190,14 @@ class Citation:
 
             else:
                 if 'dollarprice' in tags:
+                    tryprice = pricetranslate(word)
+                    if not dollarpricefound:
+                        price = tryprice
+                    if '$' in word:
+                        dollarpricefound = True
+                elif 'centprice' in tags and not dollarpricefound:
                     price = pricetranslate(word)
-                elif 'centprice' in tags:
-                    price = pricetranslate(word)
-                elif word.strip("'‘’*t") in valid_prices:
+                elif word.strip("'‘’*t") in valid_prices and not dollarpricefound:
                     price = valid_prices[word.strip("'‘’*t")]
                 else:
                     publisher.append(word)
