@@ -18,7 +18,7 @@ import lexparse
 
 publishers = ['Liverlght', 'Appleton', 'Baker', 'Barnes', 'Benziger', 'Bobbs', "Brentano's", 'Cassell', 'Century', 'Collier-Fox', 'Crowell', 'Ditson', 'Dodd', 'Doran', 'Doubleday', 'Dutton', 'Elder', 'Estes', 'Ginn', 'Goodspeed', 'Harper', 'Heath', 'Holt', 'Houghton', 'Knopf', 'Lane', 'Lippincott', 'Little', 'Liveright', 'Longmans', 'Macmillan', 'McClure', 'McGraw', 'Moffat', 'Oxford', 'Page', 'Pott', 'Putnam', 'Scribner', 'Simmons', 'Stokes', 'Walton', 'Warne', 'Wessels', 'Wilde', 'Wiley', 'Winston', 'Yale']
 
-valid_prices = {"81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35, '81.85': 1.85, '81.95': 1.95, '81.45': 1.45, '83.50': 3.50, '85': 5.0, '84': 4.0}
+valid_prices = {"81": 1.00, "81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35, '81.85': 1.85, '81.95': 1.95, '81.45': 1.45, '83.50': 3.50, '85': 5.0, '84': 4.0}
 
 def match_strings(stringA, stringB):
     m = SequenceMatcher(None, stringA, stringB)
@@ -162,12 +162,19 @@ class Citation:
                     authorstop = True
 
             elif not titledone:
-                title.append(word)
+
                 if word[0].isupper():
                     titlestart = True
 
                 if titlestart and 'fullstop' in tags:
                     titledone = True
+
+                if titlestart and 'dollarprice' in tags:
+                    price = pricetranslate(word)
+                    titledone = True
+                else:
+                    title.append(word)
+
 
             else:
                 if 'dollarprice' in tags:
@@ -203,7 +210,7 @@ def get_books(pagelist):
     ('volandpgrange', '[0-9]+[:][0-9-]+'),
     ('somenumeric', '.?.?[0-9]{1,7}.?.?[0-9]*.?'),
     ('allcaps', '[A-Z\'\,\‘\.\-]+'),
-    ('dollarprice', '.{0,2}[$\"\“].?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
+    ('dollarprice', '.{0,2}[$\"\'\“].?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
     ('hyphennumber', '[0-9]{1,3}[-—~]+[0-9]{3,7}[,.:=)]?'),
     ('openquote', '[\"\'“‘]+\S*'),
