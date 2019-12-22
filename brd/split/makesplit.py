@@ -13,11 +13,12 @@ numlines = len(lines)
 
 fileindex = 0
 
-for floor in range(0, numlines, 48):
+for floor in range(0, numlines, 50):
     filename = outfolder + 's' + str(fileindex) + '.txt'
     fileindex += 1
 
     with open(filename, mode = 'w', encoding = 'utf-8') as f:
-        for l in lines[floor: floor + 48]:
+        f.write('\n')
+        for l in lines[floor: floor + 50]:
             outline = ' ' + l.replace('$', ' <:> ')
             f.write(outline)
