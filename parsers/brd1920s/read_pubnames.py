@@ -19,10 +19,9 @@ def get_names(path):
 			name = row['fullname']
 			pubnames[code] = name
 
-	not_allowed = ['a', 'an', 'am', 'to', 'the', 'of']
+	not_allowed = ['a', 'an', 'to', 'the', 'of']
 	for n in not_allowed:
 		if n in pubwords:
-			print(n)
 			pubwords.remove(n)
 
 	return pubwords, pubnames
