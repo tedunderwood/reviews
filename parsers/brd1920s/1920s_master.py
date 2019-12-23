@@ -5,7 +5,7 @@ import os, sys, csv
 quotefieldnames = ['bookauthor', 'booktitle', 'brdpage', 'price', 'publisher', 'publication',
                 'sentiment', 'citation', 'quote']
 
-import brd_bookmaker as bookmaker
+import brd1920s_bookmaker as bookmaker
 import brd_quotationmaker as quotationmaker
 import extract_1920s_pagelist as extractor
 import hyphenjoiner
