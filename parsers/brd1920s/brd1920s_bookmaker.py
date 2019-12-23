@@ -252,7 +252,7 @@ def get_books(pagelist):
     ('allcaps', '[A-Z\'\,\‘\.\-]+'),
     ('dollarprice', '.{0,2}[$\"\'\“].?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
-    ('hyphennumber', '[0-9]{1,3}[-—~]+[0-9]{3,7}[,.:=)]?'),
+    ('hyphennumber', '[0-9]{1,3}[-—~]+[0-9]{3,7}.?'),
     ('openquote', '[\"\'“‘]+\S*'),
     ('deweydecimal', '[0-9]{3}[.][0-9-]+'),
     ('numpages', '\d{2,5}p')
@@ -393,8 +393,11 @@ def get_books(pagelist):
 
                 lineuppercasepct = percent_upper(line)
 
-                if allcapcount > 1 or lineuppercasepct > 0.6:
+                if allcapcount > 1 or (lineuppercasepct > 0.6 and len(line) > 9):
                     percentageupper = percent_upper(firstword)
+
+                    if pagenum < 25:
+                        print(firstword, percentageupper)
 
                     if 'allcaps' in firsttagset and ('commastop' in firsttagset or 'fullstop' in firsttagset) and len(firstword) > 2:
                         this_line_is_new_citation = True
@@ -411,9 +414,6 @@ def get_books(pagelist):
                 if this_line_is_new_citation:
                     # a new citation has begun
                     citation_finished = False
-
-                    if pagenum < 25:
-                        print(firstword)
 
                     citationlines = []
 
