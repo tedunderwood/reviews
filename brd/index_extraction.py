@@ -86,8 +86,11 @@ def read(x): # read the document
 #def main():
 for year, suffix in year_suffix:
     special=0
+    special2=0
     if(year=='1935'):
         special=1
+    if(year=='1944'):
+        special2=1
     volume_id = int(year) - 1904  # volume id
     file1 = open("/media/secure_volume/brd/output_index/volume%i extract.txt" % volume_id, 'w', encoding='utf-8')
     file2 = open("/media/secure_volume/brd/output_index/volume%i discard.txt" % volume_id, 'w', encoding='utf-8')
@@ -143,6 +146,10 @@ for year, suffix in year_suffix:
             fiction_headings = []  # to store the headings
             fiction_books = []  # to store the lines under the heading
             count = -1
+
+            if (special2==0 and text[j + k] == "Fiction"):
+                text[j + k] = "Fiction (classified by subject)"
+                break
 
             if (text[j] == "Fiction (books about)"):
                 for k in range(10):
@@ -350,7 +357,7 @@ for year, suffix in year_suffix:
                             k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
-                            if(fiction_headings[k]=='Young people' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry'):
+                            if(fiction_headings[k]=='Young people' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-'):
                                 print(fiction_books[k][m])
                             if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
                                                                                                fiction_books[k][
