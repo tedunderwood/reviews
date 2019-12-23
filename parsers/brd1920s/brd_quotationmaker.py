@@ -69,8 +69,6 @@ def divide_into_quotations(booklist):
     rule_list = lexparse.patterns2rules(lexical_patterns)
     allquotes = []
 
-    trailingbibs = []
-
     plusmisreads = {'-4-', '4-', '1-', '-1-', '4—', '1—', '-|-',
         '-l-', '-)-', '—|—', '-I-', '-(-', '-f'}
 
@@ -88,47 +86,6 @@ def divide_into_quotations(booklist):
             # We keep track of linecount because there are
             # characteristic kinds of noise early on, when trailing lines
             # of a citation get treated as part of the review.
-
-
-
-            # Most of the reviews in BRD are followed by a separate
-            # citation line like this:
-
-            # + Boston Transcript p6 O 9 '20 340w
-
-            # That's easy to parse! Beautiful. Most of the code below
-            # will be devoted to that ordinary case.
-
-            # But the last line of the *first* review,
-            # which is just summarizing the book as a whole,
-            # often looks like this:
-
-            # to Lloyd's register."—-N Y P I. New Tech Bits
-
-            # That's a trickier situation and requires special care.
-
-            # if "—" in line:
-            #     parts = line.split('—')
-            #     possiblename = parts[-1]
-            #     if len(possiblename) > 3:
-            #         matched = False
-
-            #         for review in reviewnames:
-            #             match = match_strings(possiblename, review)
-            #             if match > 0.9:
-            #                 accumulated.append(parts[0])
-            #                 # add the part before the review name
-            #                 sentiment = ''
-            #                 cite = ''
-            #                 citationcount += 1
-            #                 quote = Quotation(book, reviewdict[review], sentiment, cite, accumulated)
-            #                 allquotes.append(quote)
-            #                 accumulated = []
-            #                 matched = True
-            #                 break
-
-            #         if matched:
-            #             continue
 
             if len(addtonext) > 0:
                 line = addtonext + ' ' + line
@@ -153,12 +110,9 @@ def divide_into_quotations(booklist):
                 for tags in taglist.tagseq:
                     if 'hyphennumber' in tags or 'dollarprice' in tags or 'centprice' in tags:
                         trailingbibline = True
-
                 if trailingbibline:
-                    for oldline in accumulated:
-                        trailingbibs.append(oldline)
-                    accumulated = []
-                    trailingbibs.append(line)
+                    line = line + ' <endsubj>'
+                    accumulated.append(line)
                     continue
 
             # Sometimes a book is followed by a summary that
@@ -288,8 +242,6 @@ def divide_into_quotations(booklist):
             else:
                 # odds of review 1 or less
                 accumulated.append(line)
-
-    print('TRAILING:', trailingbibs)
 
     return allquotes
 

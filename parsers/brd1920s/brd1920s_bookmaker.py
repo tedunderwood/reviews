@@ -188,7 +188,7 @@ class Citation:
                 if titlestart and 'fullstop' in tags:
                     titledone = True
 
-                elif titlestart and 'dollarprice' in tags:
+                if titlestart and 'dollarprice' in tags and not 'numpages' in tags:
                     price = pricetranslate(word)
                     if '$' in word:
                         dollarpricefound = True
