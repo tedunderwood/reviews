@@ -40,6 +40,10 @@ def percent_upper(astring):
         denom = 1
     return uppercount / denom
 
+def aggressivepricetranslate(astring):
+    astring = astring.replace('I', '1').replace('O', '0')
+    return pricetranslate(astring)
+
 def pricetranslate(astring):
     digits = ''
     decimalused = False
@@ -150,8 +154,11 @@ class Citation:
         author = []
         price = 0
         publisher = []
+        tokenssincenumpages = 3
 
         for word, tags in alltuples:
+
+            tokenssincenumpages += 1
 
             if authorstop and not authordone:
                 if word.startswith('eds.') or word.startswith('pseud.'):
@@ -179,17 +186,27 @@ class Citation:
                 if titlestart and 'fullstop' in tags:
                     titledone = True
 
-                if titlestart and 'dollarprice' in tags:
+                elif titlestart and 'dollarprice' in tags:
                     price = pricetranslate(word)
                     if '$' in word:
                         dollarpricefound = True
                     titledone = True
+
+                elif titlestart and 'numpages' in tags:
+                    titledone = True
+                    publisher.append(word)
+                    tokenssincenumpages = 0
+
                 else:
                     title.append(word)
 
-
             else:
-                if 'dollarprice' in tags:
+                if tokenssincenumpages < 2 and 'somenumeric' in tags:
+                    if '$' in word:
+                        dollarpricefound = True
+                    price = aggressivepricetranslate(word)
+
+                elif 'dollarprice' in tags:
                     tryprice = pricetranslate(word)
                     if not dollarpricefound:
                         price = tryprice
@@ -224,13 +241,14 @@ def get_books(pagelist):
     ('monthabbrev', {'Ja', 'F', 'Mr', 'Ap', 'My', 'Je', 'Jl', 'Ag', 'S', 'O', 'N', 'D'}),
     ('lineendingyear', '[\'"•■]\d+'),
     ('volandpgrange', '[0-9]+[:][0-9-]+'),
-    ('somenumeric', '.?.?[0-9]{1,7}.?.?[0-9]*.?'),
+    ('somenumeric', '.?.?.?[0-9]{1,7}.?.?[0-9]*.?'),
     ('allcaps', '[A-Z\'\,\‘\.\-]+'),
     ('dollarprice', '.{0,2}[$\"\'\“].?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
     ('hyphennumber', '[0-9]{1,3}[-—~]+[0-9]{3,7}[,.:=)]?'),
     ('openquote', '[\"\'“‘]+\S*'),
-    ('deweydecimal', '[0-9]{3}[.][0-9-]+')
+    ('deweydecimal', '[0-9]{3}[.][0-9-]+'),
+    ('numpages', '\d{2,5}p')
     ]
 
     rule_list = lexparse.patterns2rules(lexical_patterns)
