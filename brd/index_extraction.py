@@ -147,9 +147,11 @@ for year, suffix in year_suffix:
             fiction_books = []  # to store the lines under the heading
             count = -1
 
-            if (special2==1 and text[j + k] == "Fiction"):
-                text[j + k] = "Fiction (classified by subject)"
-                break
+            if (special2==1 and text[j] == "871"):
+                for k in range(1,linelength-j):
+                    if(text[j+k]=='Fiction'):
+                        text[j + k] = "Fiction (classified by subject)"
+                        break
 
             if (text[j] == "Fiction (books about)"):
                 for k in range(10):
