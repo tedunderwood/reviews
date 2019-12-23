@@ -85,12 +85,12 @@ def read(x): # read the document
 """
 #def main():
 for year, suffix in year_suffix:
-    special=0
-    special2=0
+    volume1935=0
+    volume1944=0
     if(year=='1935'):
-        special=1
+        volume1935=1
     if(year=='1944'):
-        special2=1
+        volume1944=1
     volume_id = int(year) - 1904  # volume id
     file1 = open("/media/secure_volume/brd/output_index/volume%i extract.txt" % volume_id, 'w', encoding='utf-8')
     file2 = open("/media/secure_volume/brd/output_index/volume%i discard.txt" % volume_id, 'w', encoding='utf-8')
@@ -147,7 +147,7 @@ for year, suffix in year_suffix:
             fiction_books = []  # to store the lines under the heading
             count = -1
 
-            if (special2==1 and text[j] == "871"):
+            if (volume1944==1 and text[j] == "871"):
                 for k in range(1,linelength-j):
                     if(text[j+k]=='Fiction'):
                         text[j + k] = "Fiction (classified by subject)"
@@ -162,7 +162,7 @@ for year, suffix in year_suffix:
                     if (text[j + k] == "Fiction"):
                         text[j+k] = "Fiction (classified by subject)"
                         break
-                    if (special==1 and text[j+k]=='1161'):
+                    if (volume1935==1 and text[j+k]=='1161'):
                         text[j + k-1] = "Fiction (classified by subject)"
                         text[j + k] = "Animal stories"
                         break
