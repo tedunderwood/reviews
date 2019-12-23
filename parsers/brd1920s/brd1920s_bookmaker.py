@@ -391,12 +391,14 @@ def get_books(pagelist):
                     if 'allcaps' in tags:
                         allcapcount += 1
 
-                if allcapcount > 1:
+                lineuppercasepct = percent_upper(line)
+
+                if allcapcount > 1 or lineuppercasepct > 0.6:
                     percentageupper = percent_upper(firstword)
 
                     if 'allcaps' in firsttagset and ('commastop' in firsttagset or 'fullstop' in firsttagset) and len(firstword) > 2:
                         this_line_is_new_citation = True
-                    elif percentageupper > 0.8 and len(firstword) > 4:
+                    elif lineuppercasepct > 0.8 and len(line) > 16:
                         this_line_is_new_citation = True
                     elif percentageupper > 0.7 and len(firstword) > 4 and allcapcount > 2:
                         this_line_is_new_citation = True
@@ -462,7 +464,7 @@ def get_books(pagelist):
                     author_errors.append((textpage, last_author_name, new_author))
                 last_author_name = new_author
 
-            elif len(citationlines) > 8:
+            elif len(citationlines) > 7:
                 # this is too many lines, and we were probably in error to have
                 # started the citation, so put those lines back in reviewlines.
                 # This is esp. likely to happen at the top of a page, when
