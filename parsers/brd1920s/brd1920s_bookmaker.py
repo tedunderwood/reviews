@@ -393,7 +393,7 @@ def get_books(pagelist):
 
                 lineuppercasepct = percent_upper(line)
 
-                if (allcapcount > 0 and lineuppercasepct > 0.12 and len(line) > 9) or (lineuppercasepct > 0.6 and len(line) > 9):
+                if (allcapcount > 0 and lineuppercasepct > 0.1 and len(line) > 9) or (lineuppercasepct > 0.6 and len(line) > 9):
                     percentageupper = percent_upper(firstword)
                     if len(line) > 15:
                         pctupin15 = percent_upper(line[0: 15])
@@ -440,6 +440,14 @@ def get_books(pagelist):
                     # sometimes there's no price and the publisher's name is the only clue
                     # that the citation is finished
                     citation_finished = True
+
+                if len(citationlines) > 2 and len(taglist.tagseq) > 1 and 'somenumeric' in taglist.tagseq[0]:
+                    try:
+                        deweydecimal = float(taglist.stringseq[0])
+                        if deweydecimal > 99:
+                            citation_finished = True
+                    except:
+                        pass
 
             if this_line_is_new_citation or citation_started:
                 citationlines.append(line)
