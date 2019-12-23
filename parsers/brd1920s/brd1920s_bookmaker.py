@@ -42,6 +42,8 @@ def percent_upper(astring):
 
 def aggressivepricetranslate(astring):
     astring = astring.replace('I', '1').replace('O', '0')
+    if len(astring) > 1 and astring[0] == 'J':
+        astring = astring[1:]
     return pricetranslate(astring)
 
 def pricetranslate(astring):
@@ -201,7 +203,7 @@ class Citation:
                     title.append(word)
 
             else:
-                if tokenssincenumpages < 2 and 'somenumeric' in tags:
+                if tokenssincenumpages < 3 and 'somenumeric' in tags:
                     if '$' in word:
                         dollarpricefound = True
                     price = aggressivepricetranslate(word)
@@ -325,7 +327,6 @@ def get_books(pagelist):
                     thetail = line[-11: ]
                     thematch = match_strings('—Continued.', thetail)
                     if thematch > 0.8:
-                        print("continued: ", line)
                         continue
 
                 if line.isdigit() and aligned < 4:

@@ -289,7 +289,7 @@ def divide_into_quotations(booklist):
                 # odds of review 1 or less
                 accumulated.append(line)
 
-    print(trailingbibs)
+    print('TRAILING:', trailingbibs)
 
     return allquotes
 
