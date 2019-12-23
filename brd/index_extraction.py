@@ -34,7 +34,7 @@ subheadings = ['Hank','Uruguay','Polith','Ruttian','Epvpt','Missouri river','Con
 subheadings = sorted(list(set(subheadings)))
 print(subheadings)
 # a list of headings that follows the fiction section. Need to add manually each time
-nextheadings = ['Fiddle Longspay. Bledsoe, W. (Ag \'42)','Fiction writing self-taught. Hoffman, A. S.','Field of honor. St Johns, A. (S \'38)','Field, Cyrus West','Fiddler\'s coin. Abbott, J. L. (S \'34)','Fields of Gomorrah. White, N. (N \'35)','Fiddler\'s coin. Abbott, J. L,. (S \'34)','Field book of the shore fishes of Bermuda.','Fifteen and five. Bernstein. A. (Ag \'32)','Fiddler. Mlllln, S. G. (S \'29)','Field, David Dudley','Fiddler. Mlllin. S. G. (S \'29)','Field book of common ferns. Durand, H. (D','Fiction as she is wrote. Knox, E. G: V. (D','Field book of common rocks and minerals.','Field, Eugene','Fiddler\'s luck. Schauffler, R. H. (Jl JO)','Fiddler\'s luck. Schauﬂier, R. H. (Jl \'20)','Fiddier\'s luck. _ Schauﬂ\'ler, R. H. (.11 \'20)', 'Field ambulance sketches. (N \'19',
+nextheadings = ['Fiction catalog. 1941. (My \'43)','Fiddle Longspay. Bledsoe, W. (Ag \'42)','Fiction writing self-taught. Hoffman, A. S.','Field of honor. St Johns, A. (S \'38)','Field, Cyrus West','Fiddler\'s coin. Abbott, J. L. (S \'34)','Fields of Gomorrah. White, N. (N \'35)','Fiddler\'s coin. Abbott, J. L,. (S \'34)','Field book of the shore fishes of Bermuda.','Fifteen and five. Bernstein. A. (Ag \'32)','Fiddler. Mlllln, S. G. (S \'29)','Field, David Dudley','Fiddler. Mlllin. S. G. (S \'29)','Field book of common ferns. Durand, H. (D','Fiction as she is wrote. Knox, E. G: V. (D','Field book of common rocks and minerals.','Field, Eugene','Fiddler\'s luck. Schauffler, R. H. (Jl JO)','Fiddler\'s luck. Schauﬂier, R. H. (Jl \'20)','Fiddier\'s luck. _ Schauﬂ\'ler, R. H. (.11 \'20)', 'Field ambulance sketches. (N \'19',
                 'Field book of insects. Lutz. . E.', 'Fielchrtlips for the cotton-belt. Morgan. J. O.',
                 'Fifth wheel. Prouty, 0. H. (Ap \'16)', 'Fifteens thousand miles by stage. Strahorn, C.',
                 'Fifty years in Oregon. Geer, T. T. (Jl. \'12.)', 'Field-days in California. Torrey. B. (Ap \'18)',
@@ -299,7 +299,12 @@ for year, suffix in year_suffix:
                         break
                     if '(' in text[j + k]:
                         bookcount_fiction_genre += 1
-                    if len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
+                    if text[j+k]=='Women\'s army corps' or text[j+k]=='World war, 1939-':
+                        fiction_headings.append(text[k + j])  # Otherwise, add that heading into the list
+                        fiction_books.append(
+                            [])  # add an empty list to the booklist, to match the headinglist
+                        count += 1  # to count the number of lists in the booklist
+                    elif len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
                         k + j] and '\'' not in text[
                         k + j]:  # must be at least 2 characters, no more than 25 characters (avoiding titles not finished in a line to be included, not including '(' to avoid OCR error) # next line beginning with non-characterized character
                         if (text[k + j][0] >= 'A' and text[k + j][0] <= 'Z' and text[k + j][1] >= 'a' and
