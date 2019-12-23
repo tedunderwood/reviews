@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # brd_bookmaker.py
 
 # Extracts Book objects from the Book Review Digest.
