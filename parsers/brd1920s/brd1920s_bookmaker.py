@@ -459,7 +459,7 @@ def get_books(pagelist):
                     author_errors.append((textpage, last_author_name, new_author))
                 last_author_name = new_author
 
-            elif len(citationlines) > 5:
+            elif len(citationlines) > 7:
                 # this is too many lines, and we were probably in error to have
                 # started the citation, so put those lines back in reviewlines.
                 # This is esp. likely to happen at the top of a page, when
