@@ -410,6 +410,9 @@ def get_books(pagelist):
                     # a new citation has begun
                     citation_finished = False
 
+                    if pagenum < 25:
+                        print(firstword)
+
                     citationlines = []
 
                     for string, tags in zip(taglist.stringseq, taglist.tagseq):
