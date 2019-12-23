@@ -71,13 +71,13 @@ def pricetranslate(astring):
     else:
         price = 0.0
 
-    if price > 25 and len(digits) > 1 and (digits[0] == '5' or digits[0] == '8'):
+    if price > 40 and len(digits) > 1 and (digits[0] == '5' or digits[0] == '8'):
         try:
             price = float(digits[1:])
         except:
             price = 0.0
 
-    if price > 25:
+    if price > 40:
         price = 0.0
 
     return price
@@ -194,7 +194,7 @@ class Citation:
                         dollarpricefound = True
                     titledone = True
 
-                elif titlestart and 'numpages' in tags:
+                if titlestart and 'numpages' in tags:
                     titledone = True
                     publisher.append(word)
                     tokenssincenumpages = 0
@@ -203,7 +203,11 @@ class Citation:
                     title.append(word)
 
             else:
-                if tokenssincenumpages < 3 and 'somenumeric' in tags:
+                if titlestart and 'numpages' in tags:
+                    publisher.append(word)
+                    tokenssincenumpages = 0
+
+                elif tokenssincenumpages < 3 and 'somenumeric' in tags:
                     if '$' in word:
                         dollarpricefound = True
                     price = aggressivepricetranslate(word)
