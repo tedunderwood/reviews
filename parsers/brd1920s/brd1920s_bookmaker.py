@@ -406,7 +406,7 @@ def get_books(pagelist):
                         this_line_is_new_citation = True
                     elif percentageupper > 0.7 and len(firstword) > 4 and allcapcount > 2:
                         this_line_is_new_citation = True
-                    elif pctupin15 > 0.78:
+                    elif pctupin15 > 0.65:
                         this_line_is_new_citation = True
                     else:
                         reviewlines.append(line)
