@@ -7,40 +7,21 @@ quotefieldnames = ['bookauthor', 'booktitle', 'brdpage', 'price', 'publisher', '
 
 import brd_bookmaker as bookmaker
 import brd_quotationmaker as quotationmaker
-import brd_extract_pagelist as extractor
+import extract_1920s_pagelist as extractor
 import hyphenjoiner
 
+quartets = []
 
-# The commented and uncommented sections below toggle to
-# move this from multiple-volume to single-volume processing.
+with open('/media/secure_volume/brd/meta/1920sfiles.tsv', encoding = 'utf-8') as f:
+    reader = csv.DictReader(f, delimiter = '\t')
+    for row in reader:
+        quartet = (row['year'], row['idsuffix'], int(row['start']), int(row['stop']))
+        quartets.append(quartet)
 
-# year = '1917'
-# suffix = '39015078261040'
-# startpage = 9
-
-# year_suffix_startpage = [(year, suffix, startpage)]
-
-# with open('/media/secure_volume/brd/output/processed_files.tsv', mode = 'a', encoding = 'utf-8') as f:
-#     for y, v, s in year_suffix_startpage:
-#         f.write(y + '\t' + v + '\t' + str(s) + '\n')
-
-bookdict = dict()
-
-with open('/media/secure_volume/brd/output/processed_files.tsv', encoding = 'utf-8') as f:
-    for line in f:
-        fields = line.strip().split('\t')
-        triplet = (fields[0], fields[1], int(fields[2]))
-        bookdict[fields[1]] = triplet
-
-year_suffix_startpage = []
-
-for k, v in bookdict.items():
-    year_suffix_startpage.append(v)
-
-for year, vol, startpage in year_suffix_startpage:
-    print(year, vol, startpage)
+for year, vol, startpage, endpage in quartets:
+    print(year, vol, startpage, endpage)
     outfile = '/media/secure_volume/brd/output/' + year + '_' + vol + '.tsv'
-    pagelist = extractor.extract(vol, startpage)
+    pagelist = extractor.extract(vol, startpage, endpage)
     books, author_errors = bookmaker.get_books(pagelist)
     quotations = quotationmaker.divide_into_quotations(books)
 
@@ -64,5 +45,3 @@ for year, vol, startpage in year_suffix_startpage:
             c['quote'] = hyphenjoiner.join_hyphens(quote.thequote)
 
             writer.writerow(c)
-
-        print(author_errors)
