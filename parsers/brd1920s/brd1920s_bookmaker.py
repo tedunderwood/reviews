@@ -393,7 +393,7 @@ def get_books(pagelist):
 
                 lineuppercasepct = percent_upper(line)
 
-                if allcapcount > 1 or (lineuppercasepct > 0.6 and len(line) > 9):
+                if (allcapcount > 0 and lineuppercasepct > 0.12 and len(line) > 9) or (lineuppercasepct > 0.6 and len(line) > 9):
                     percentageupper = percent_upper(firstword)
 
                     if pagenum < 25:
