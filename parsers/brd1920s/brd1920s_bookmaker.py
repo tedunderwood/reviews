@@ -395,15 +395,18 @@ def get_books(pagelist):
 
                 if (allcapcount > 0 and lineuppercasepct > 0.12 and len(line) > 9) or (lineuppercasepct > 0.6 and len(line) > 9):
                     percentageupper = percent_upper(firstword)
-
-                    if pagenum < 25:
-                        print(firstword, percentageupper)
+                    if len(line) > 15:
+                        pctupin15 = percent_upper(line[0: 15])
+                    else:
+                        pctupin15 = 0
 
                     if 'allcaps' in firsttagset and ('commastop' in firsttagset or 'fullstop' in firsttagset) and len(firstword) > 2:
                         this_line_is_new_citation = True
                     elif lineuppercasepct > 0.8 and len(line) > 16:
                         this_line_is_new_citation = True
                     elif percentageupper > 0.7 and len(firstword) > 4 and allcapcount > 2:
+                        this_line_is_new_citation = True
+                    elif pctupin15 > 0.78:
                         this_line_is_new_citation = True
                     else:
                         reviewlines.append(line)
