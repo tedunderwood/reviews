@@ -16,29 +16,14 @@ import os, sys
 from difflib import SequenceMatcher
 import lexparse
 
-publishers = ['Liverlght', 'Appleton', 'Baker', 'Barnes', 'Benziger', 'Bobbs', "Brentano's", 'Cassell', 'Century', 'Collier-Fox', 'Crowell', 'Ditson', 'Dodd', 'Doran', 'Doubleday', 'Dutton', 'Elder', 'Estes', 'Ginn', 'Goodspeed', 'Harper', 'Heath', 'Holt', 'Houghton', 'Knopf', 'Lane', 'Lippincott', 'Little', 'Liveright', 'Longmans', 'Macmillan', 'McClure', 'McGraw', 'Moffat', 'Oxford', 'Page', 'Pott', 'Putnam', 'Scribner', 'Simmons', 'Stokes', 'Walton', 'Warne', 'Wessels', 'Wilde', 'Wiley', 'Winston', 'Yale']
-
-valid_prices = {"81": 1.00, "81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35, '81.85': 1.85, '81.95': 1.95, '81.45': 1.45, '83.50': 3.50, '85': 5.0, '84': 4.0}
-
 def match_strings(stringA, stringB):
     m = SequenceMatcher(None, stringA, stringB)
-
     match = m.quick_ratio()
 
     if match > 0.7:
         match = m.ratio()
 
     return match
-
-def percent_upper(astring):
-    uppercount = 0
-    for character in astring:
-        if character.isupper():
-            uppercount += 1
-    denom = len(astring)
-    if denom < 1:
-        denom = 1
-    return uppercount / denom
 
 def pricetranslate(astring):
     digits = ''
@@ -65,15 +50,6 @@ def pricetranslate(astring):
     else:
         price = 0.0
 
-    if price > 25 and len(digits) > 1 and (digits[0] == '5' or digits[0] == '8'):
-        try:
-            price = float(digits[1:])
-        except:
-            price = 0.0
-
-    if price > 25:
-        price = 0.0
-
     return price
 
 def numcaps(word):
@@ -81,9 +57,8 @@ def numcaps(word):
     for char in word:
         if char.isupper():
             capcount += 1
-        elif not char.isalpha():
-            capcount += 1
     return capcount
+
 
 class Book:
 
@@ -128,11 +103,9 @@ class Citation:
             for astring, tags in zip(taglist.stringseq, taglist.tagseq):
                 alltuples.append((astring, tags))
 
-        titlestart = False
         titledone = False
         authordone = False
         authorstop = False
-        dollarpricefound = False
 
         # The underlying logic here is elegant. We take words up to the first
         # full stop as the "author." From there to the next full stop is
@@ -154,51 +127,29 @@ class Citation:
         for word, tags in alltuples:
 
             if authorstop and not authordone:
-                if word.startswith('eds.') or word.startswith('pseud.'):
-                    author.append(word)
-                elif len(word) > 1 and numcaps(word) / len(word) < 1:
+                if len(word) > 3:
                     authordone = True
-                    if word[0].isupper():
-                        titlestart = True
-                        title.append(word)
-                else:
-                    author.append(word)
+                elif 'fullstop' not in tags:
+                    authordone = True
 
-            elif not authordone:
+            if not authordone:
                 author.append(word)
                 if 'fullstop' in tags:
                     authorstop = True
-                elif len(word) > 1 and numcaps(word) / len(word) < 0.6:
-                    authorstop = True
+                if authorstop and len(word) > 2 and numcaps(word) < 2:
+                    authordone = True
+                    # because that wasn't an initial
 
             elif not titledone:
-
-                if word[0].isupper():
-                    titlestart = True
-
-                if titlestart and 'fullstop' in tags:
+                title.append(word)
+                if 'fullstop' in tags:
                     titledone = True
-
-                if titlestart and 'dollarprice' in tags:
-                    price = pricetranslate(word)
-                    if '$' in word:
-                        dollarpricefound = True
-                    titledone = True
-                else:
-                    title.append(word)
-
 
             else:
                 if 'dollarprice' in tags:
-                    tryprice = pricetranslate(word)
-                    if not dollarpricefound:
-                        price = tryprice
-                    if '$' in word:
-                        dollarpricefound = True
-                elif 'centprice' in tags and not dollarpricefound:
                     price = pricetranslate(word)
-                elif word.strip("'‘’*t") in valid_prices and not dollarpricefound:
-                    price = valid_prices[word.strip("'‘’*t")]
+                elif 'centprice' in tags:
+                    price = pricetranslate(word)
                 else:
                     publisher.append(word)
 
@@ -216,7 +167,7 @@ def get_books(pagelist):
         'poem.', 'fict.', 'fiction', 'fict', 'fiction.', 'poem'}),
     ('openparen', '\(.*'),
     ('closeparen', '.*\)'),
-    ('fullstop', '\S+[\.\?!]'),
+    ('fullstop', '.*\.'),
     ('commastop', '.*\,'),
     ('startdash', '—.*'),
     ('numeric', {'I:', 'II:', 'III:', 'IV:'}),
@@ -225,12 +176,11 @@ def get_books(pagelist):
     ('lineendingyear', '[\'"•■]\d+'),
     ('volandpgrange', '[0-9]+[:][0-9-]+'),
     ('somenumeric', '.?.?[0-9]{1,7}.?.?[0-9]*.?'),
-    ('allcaps', '[A-Z\'\,\‘\.\-]+'),
-    ('dollarprice', '.{0,2}[$\"\'\“].?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
+    ('allcaps', '[A-Z\'\,]+'),
+    ('dollarprice', '.*\$.?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
-    ('hyphennumber', '[0-9]{1,3}[-—~]+[0-9]{3,7}[,.:=)]?'),
-    ('openquote', '[\"\'“‘]+\S*'),
-    ('deweydecimal', '[0-9]{3}[.][0-9-]+')
+    ('hyphennumber', '[0-9]*[-—]+[0-9]*[,.:=]?'),
+    ('openquote', '[\"\'“‘]+\S*')
     ]
 
     rule_list = lexparse.patterns2rules(lexical_patterns)
@@ -262,8 +212,6 @@ def get_books(pagelist):
 
     reviewlines = []
     citation_started = False
-    citation_finished = False
-
     citationlines = []
     governing_citation = Citation(['Anonymous. My book. $1.00. Macmillan.'], rule_list, textpage)
     aligned = 0
@@ -271,10 +219,6 @@ def get_books(pagelist):
     for pagenum, page in enumerate(pagelist):
 
         for linenum, line in enumerate(page):
-
-            line = line.strip()
-
-            this_line_is_new_citation = False
 
             # Line numbers are only relevant in guiding us to ignore the running header,
             # and to update the page number. This will be imperfect, because OCR,
@@ -287,19 +231,7 @@ def get_books(pagelist):
 
             if linenum < 4:
                 thematch = match_strings('BOOK REVIEW DIGEST', line)
-                if thematch > 0.8 and len(line) > 7:
-                    wordsinline = line.split()
-                    if len(wordsinline) > 3 and wordsinline[0].isdigit():
-                        pagenum = int(wordsinline[0])
-                    elif len(wordsinline) > 3 and wordsinline[-1].isdigit():
-                        pagenum = int(wordsinline[-1])
-
-                    if textpage + 1 == pagenum:
-                        aligned += 1
-                        textpage = pagenum
-                    elif pagenum < 20:
-                        textpage = pagenum
-
+                if thematch > 0.8:
                     continue
                     # skip this line
 
@@ -349,10 +281,7 @@ def get_books(pagelist):
                         except:
                             textpage += 1
 
-            if line.startswith('Figures in parenth'):
-                continue
-
-            tokens = line.split()
+            tokens = line.strip().split()
             if len(tokens) < 1:
                 continue
 
@@ -361,96 +290,62 @@ def get_books(pagelist):
             if not citation_started:
                 firstword = taglist.stringseq[0]
                 firsttagset = taglist.tagseq[0]
-
-                allcapcount = 0
-                for tags in taglist.tagseq:
-                    if 'allcaps' in tags:
-                        allcapcount += 1
-
-                if len(line) > 15:
-                    pctupin15 = percent_upper(line[0: 15])
-                else:
-                    pctupin15 = 0
-
-                if allcapcount > 1 or pctupin15 > .65:
-                    percentageupper = percent_upper(firstword)
-
-                    if 'allcaps' in firsttagset and ('commastop' in firsttagset or 'fullstop' in firsttagset) and len(firstword) > 2:
-                        this_line_is_new_citation = True
-                    elif percentageupper > 0.8 and len(firstword) > 4:
-                        this_line_is_new_citation = True
-                    elif percentageupper > 0.7 and len(firstword) > 4 and allcapcount > 2:
-                        this_line_is_new_citation = True
-                    elif pctupin15 > 0.65:
-                        this_line_is_new_citation = True
-                    else:
-                        reviewlines.append(line)
-
+                if 'titlecase' in firsttagset and 'commastop' in firsttagset:
+                    citation_started = True
+                elif 'allcaps' in firsttagset and len(firstword) > 3:
+                    citation_started = True
                 else:
                     reviewlines.append(line)
 
-                if this_line_is_new_citation:
+                if citation_started:
                     # a new citation has begun
-                    citation_finished = False
-
                     citationlines = []
-
-                    for string, tags in zip(taglist.stringseq, taglist.tagseq):
-                        if 'dollarprice' in tags or 'centprice' in tags:
-                            # note that our conditions for ending a citation with the first
-                            # line are more stringent than they will be from the second onward
-                            citation_finished = True
-                            break
+                    citationlines.append(line)
 
             else:
                 # if a citation has been started, let's see if we should end it
 
                 for string, tags in zip(taglist.stringseq, taglist.tagseq):
-                    if 'dollarprice' in tags or 'centprice' in tags or 'hyphennumber' in tags or 'deweydecimal' in tags:
-                        # more conditions can end a citation now
-                        citation_finished = True
+                    if 'dollarprice' in tags or 'centprice' in tags or 'hyphennumber' in tags:
+                        # we have concluded a new citation
+                        # so first, make the last citation into a book:
+
+                        thisbook = Book(governing_citation, reviewlines)
+                        books.append(thisbook)
+
+                        # initialize reviewlines, and create a new citation
+                        reviewlines = []
+                        citationlines.append(line)
+                        citation_started = False
+                        # we finished that citation
+
+                        governing_citation = Citation(citationlines, rule_list, textpage)
+                        citationlines = []
+
+                        new_author = governing_citation.author
+                        if new_author < last_author_name:
+                            author_errors.append((textpage, last_author_name, new_author))
+                        last_author_name = new_author
+
+                        # we ended the accumulation of lines, and formed a new
+                        # governing_citation, so
+
                         break
 
-                if len(taglist.stringseq) > 1 and taglist.stringseq[-1].strip('.') in publishers:
-                    # sometimes there's no price and the publisher's name is the only clue
-                    # that the citation is finished
-                    citation_finished = True
+                if len(citationlines) > 5:
+                    # this is too many lines, and we were probably in error to have
+                    # started the citation, so put those lines back in reviewlines.
+                    # This is esp. likely to happen at the top of a page, when
+                    # an entry is "continued."
 
-            if this_line_is_new_citation or citation_started:
-                citationlines.append(line)
-                citation_started = True
-                this_line_is_new_citation = False
+                    reviewlines.extend(citationlines)
+                    citationlines = []
+                    citation_started = False
 
-            if citation_finished:
-                # we have concluded a new citation
-                # first, make the last citation into a book:
 
-                thisbook = Book(governing_citation, reviewlines)
-                books.append(thisbook)
-
-                # initialize reviewlines, and create a new citation
-                reviewlines = []
-                citation_started = False
-                citation_finished = False
-                # we finished that citation, started a new one
-
-                governing_citation = Citation(citationlines, rule_list, textpage)
-                citationlines = []
-
-                new_author = governing_citation.author
-                if new_author < last_author_name:
-                    author_errors.append((textpage, last_author_name, new_author))
-                last_author_name = new_author
-
-            elif len(citationlines) > 5:
-                # this is too many lines, and we were probably in error to have
-                # started the citation, so put those lines back in reviewlines.
-                # This is esp. likely to happen at the top of a page, when
-                # an entry is "continued."
-
-                reviewlines.extend(citationlines)
-                citationlines = []
-                citation_started = False
+                if citation_started:
+                    # we didn't find any reason to end the citation
+                    citationlines.append(line)
 
 
     return books, author_errors
