@@ -38,6 +38,8 @@ with open('pairing_meta.tsv', encoding = 'utf-8') as f:
     for row in reader:
         triplets2process.append(row)
 
+print(triplets2process)
+
 def get_ratio(stringA, stringB):
 
     '''
@@ -171,10 +173,14 @@ for triplet in triplets2process:
             if line.startswith('<\h') or line.startswith('**'):
                 continue
             else:
-                line = line.strip('\n.')
-                fields = line.split('$')
-                author = fields[0]
-                title = fields[1].lower()
+                try:
+                    line = line.strip('\n.')
+                    fields = line.split('$')
+                    author = fields[0]
+                    title = fields[1].lower()
+                except:
+                    print(line)
+                    continue
 
                 authnames = specialsplit(author)
                 if len(authnames) > 1:
