@@ -14,25 +14,29 @@
 
 import pandas as pd
 import numpy as np
-import re, math
+import re, math, csv
 from difflib import SequenceMatcher
 
 wordcountregex = re.compile('\d*0w[.]?')
 
-# extract_files = ['../data/volume8 extract.txt', '../data/volume9 extract.txt',
-#     '../data/volume10 extract.txt', '../data/volume11 extract.txt',
-#     '../data/volume12 extract.txt', '../data/volume13 extract.txt']
+# we read a list of files to process from disk
+# each row of this file contains three data elements:
+#
+# * an 'indexpath' that provides the complete file path
+# to an index file
+#
+# * a 'reviewsname' that names an extracted .tsv with
+# per-review data; these are expected to all be in the
+# same folder
+#
+# * an 'outfilename' under which the results will be saved
 
-# review_files = ['/media/secure_volume/brd/output/1912_39015078260992.tsv',
-# '/media/secure_volume/brd/output/1913_33433082016522.tsv',
-# '/media/secure_volume/brd/output/1914_32106019850293.tsv',
-# '/media/secure_volume/brd/output/1915_30112013681629.tsv',
-# '/media/secure_volume/brd/output/1916_33433082016555.tsv',
-# '/media/secure_volume/brd/output/1917_39015078261040.tsv']
+triplets2process = []
 
-extract_files = ['../data/volume14 extract.txt']
-review_files = ['/media/secure_volume/brd/output/1918_30112013681652.tsv']
-outfilename = '/media/secure_volume/brd/paired/pairedficvol14'
+with open('pairing_meta.tsv', encoding = 'utf-8') as f:
+    reader = csv.DictReader(f, delimiter = '\t')
+    for row in reader:
+        triplets2process.append(row)
 
 def get_ratio(stringA, stringB):
 
@@ -137,17 +141,22 @@ def specialsplit(author):
 
     return allnames
 
+for triplet in triplets2process:
 
-yearctr = 0
-bookdata = dict()
-bookmeta = dict()
+    indexpath = row['indexpath']
 
-for ef, rf in zip(extract_files, review_files):
+    reviewsname = row['reviewsname']
+    reviewspath = '/media/secure_volume/brd/output/' + reviewsname
 
-    # to process multiple files at once, we iterate through
-    # two paired lists
+    outfilename = row['outfilename']
+    outfilepath = '/media/secure_volume/brd/paired/' + outfilename
 
-    yearctr += 1
+    year = outfilename[-4: ]
+
+    bookdata = dict()
+    bookmeta = dict()
+
+    print(outfilename)
 
     # first open the index/"extract" file
     # to create a list of author-title combos
@@ -155,7 +164,9 @@ for ef, rf in zip(extract_files, review_files):
 
     fic_authors = dict()
 
-    with open(ef, encoding = 'utf-8') as f:
+    numindexlines = 0
+
+    with open(indexpath, encoding = 'utf-8') as f:
         for indexlinenum, line in enumerate(f):
             if line.startswith('<\h'):
                 continue
@@ -177,8 +188,9 @@ for ef, rf in zip(extract_files, review_files):
                 fic_authors[theinitial] = []
 
             fic_authors[theinitial].append((lastname, initials, title, indexlinenum))
+            numindexlines += 1
 
-    reviews = pd.read_csv(rf, sep = '\t')
+    reviews = pd.read_csv(reviewspath, sep = '\t')
 
     reviews = reviews.assign(initial = reviews.bookauthor.map(name_to_initial))
 
@@ -269,12 +281,12 @@ for ef, rf in zip(extract_files, review_files):
 
                     prevclose, prevmatch = previousreviews[closestreviewidx]
                     dislodgedindexlines.append((prevmatch, closestreviewidx))
-                    removeindex = str(yearctr) + '+' + str(prevmatch)
+                    removeindex = year + '+' + str(prevmatch)
                     bookmeta.pop(removeindex)
 
                 previousreviews[closestreviewidx] = maxcloseness, indexlinenum
 
-                masterindex = str(yearctr) + '+' + str(indexlinenum)
+                masterindex = year + '+' + str(indexlinenum)
                 bookmeta[masterindex] = dict()
                 bookmeta[masterindex]['closeness'] = maxcloseness
                 bookmeta[masterindex]['target'] = lastname + ' + ' + first_initials + ' + ' + title
@@ -333,9 +345,8 @@ for ef, rf in zip(extract_files, review_files):
             sentiments.append(thissent)
 
         closeness, indexlinenum = previousreviews[idx]
-        masterindex = str(yearctr) + '+' + str(indexlinenum)
+        masterindex = year + '+' + str(indexlinenum)
         bookdata[masterindex] = [author, title, price, wordcount, idx2, publisher, sentiments]
-
 
     average_sentiment = np.nanmean(allsentiments)
 
@@ -345,19 +356,27 @@ for ef, rf in zip(extract_files, review_files):
         sentiments = [average_sentiment if math.isnan(x) else x for x in sentiments]
         sentiment = np.mean(sentiments)
         data[6] = sentiment
-        data.append(sentcount)
-        data.append(len(sentiments))
+        data.append(sentcount) # number of non-NaN reviews
+        data.append(len(sentiments)) # total number of reviews
 
-with open(outfilename + '.tsv', mode = 'w', encoding = 'utf-8') as f:
-    f.write('index\tauthor\ttitle\tprice\twordcount\trows\tpublisher\tavgsent\tsentcount\tnumreviews\tcloseness\ttarget\n')
-    for idx, data in bookdata.items():
-        outrow = [idx]
-        outrow.extend([str(x) for x in data])
-        outrow.extend([str(bookmeta[idx]['closeness']), bookmeta[idx]['target']])
-        f.write('\t'.join(outrow) + '\n')
+    with open(outfilepath + '.tsv', mode = 'w', encoding = 'utf-8') as f:
+        f.write('index\tauthor\ttitle\tprice\twordcount\trows\tpublisher\tavgsent\tnumreviewswithsent\tnumallreviews\tcloseness\ttarget\n')
+        for idx, data in bookdata.items():
+            outrow = [idx]
+            outrow.extend([str(x) for x in data])
+            outrow.extend([str(bookmeta[idx]['closeness']), bookmeta[idx]['target']])
+            f.write('\t'.join(outrow) + '\n')
 
 
-notfound = sorted(notfound, key = lambda x: x[3])
+    notfound = sorted(notfound, key = lambda x: x[3])
+
+    percentfound = len(bookdata) / numindexlines
+
+    percentfound = round(percentfound, 2)
+
+    print('Index lines: ' + str(numindexlines) + '\t Found: ' + str(len(bookdata)))
+    print('Not found: ' + str(len(notfound)) + '\t Percent found: ' + str(percentfound))
+    print()
 
 
 
