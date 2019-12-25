@@ -168,7 +168,7 @@ for triplet in triplets2process:
 
     with open(indexpath, encoding = 'utf-8') as f:
         for indexlinenum, line in enumerate(f):
-            if line.startswith('<\h'):
+            if line.startswith('<\h') or line.startswith('**'):
                 continue
             else:
                 line = line.strip('\n.')
