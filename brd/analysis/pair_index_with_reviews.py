@@ -145,12 +145,12 @@ def specialsplit(author):
 
 for triplet in triplets2process:
 
-    indexpath = row['indexpath']
+    indexpath = triplet['indexpath']
 
-    reviewsname = row['reviewsname']
+    reviewsname = triplet['reviewsname']
     reviewspath = '/media/secure_volume/brd/output/' + reviewsname
 
-    outfilename = row['outfilename']
+    outfilename = triplet['outfilename']
     outfilepath = '/media/secure_volume/brd/paired/' + outfilename
 
     year = outfilename[-4: ]
@@ -179,7 +179,7 @@ for triplet in triplets2process:
                     author = fields[0]
                     title = fields[1].lower()
                 except:
-                    print(line)
+                    print('input error: ', line)
                     continue
 
                 authnames = specialsplit(author)
@@ -378,7 +378,7 @@ for triplet in triplets2process:
 
     percentfound = len(bookdata) / numindexlines
 
-    percentfound = round(percentfound, 2)
+    percentfound = round(percentfound, 3)
 
     print('Index lines: ' + str(numindexlines) + '\t Found: ' + str(len(bookdata)))
     print('Not found: ' + str(len(notfound)) + '\t Percent found: ' + str(percentfound))
