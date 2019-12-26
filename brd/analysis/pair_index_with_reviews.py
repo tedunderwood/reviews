@@ -227,7 +227,7 @@ for triplet in triplets2process:
             if line.startswith('**'):
                 continue
             elif line.startswith('<\h'):
-                currentheading = line.replace.('<\heading', '').replace('>', '').strip('\'\" \n')
+                currentheading = line.replace('<\heading', '').replace('>', '').strip('\'\" \n')
                 continue
             else:
                 try:
