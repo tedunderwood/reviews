@@ -343,11 +343,10 @@ for triplet in triplets2process:
                 # review index. This is because books very commonly appear in, for instance,
                 # both "short stories" and "mystery stories."
 
-                masterindex = year + '+' + str(indexlinenum)
-                bookmeta[masterindex] = dict()
-                bookmeta[masterindex]['closeness'] = maxcloseness
-                bookmeta[masterindex]['target'] = lastname + ' + ' + first_initials + ' + ' + title
-                bookmeta[masterindex]['heading'] = heading
+                bookmeta[closestreviewidx] = dict()
+                bookmeta[closestreviewidx]['closeness'] = maxcloseness
+                bookmeta[closestreviewidx]['target'] = lastname + ' + ' + first_initials + ' + ' + title
+
             else:
                 if closestreviewidx < 0:
                     matchtitle = 'no title found'
@@ -400,9 +399,7 @@ for triplet in triplets2process:
             allsentiments.append(thissent)
             sentiments.append(thissent)
 
-        closeness, indexlinenum = matchedreviews[idx]
-        masterindex = year + '+' + str(indexlinenum)
-        bookdata[masterindex] = [author, title, price, wordcount, idx2, publisher, sentiments, headings]
+        bookdata[idx] = [author, title, price, wordcount, idx2, publisher, sentiments, headings]
 
     average_sentiment = np.nanmean(allsentiments)
 
