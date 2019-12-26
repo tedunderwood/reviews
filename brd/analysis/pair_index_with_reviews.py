@@ -143,6 +143,60 @@ def specialsplit(author):
 
     return allnames
 
+def find_occurrences(s, ch):
+    ''' Borrowed from
+    https://stackoverflow.com/questions/13009675/find-all-the-occurrences-of-a-character-in-a-string
+    '''
+    return [i for i, letter in enumerate(s) if letter == ch]
+
+def split_discard_line(dline):
+    ''' The problem here is that we're given an unparsed line
+    from the "discard" set and need to transform it into the
+    most ~likely~ author, title pair. We won't get it exactly,
+    but we'll make a rough guess.
+
+    Our strategy is going to be simple. If there's a '(' in the
+    last 10 chars, discard everything to the right of it. Then
+    just split the line roughly in half, and assume the left part is
+    author name!! Crude, but more work would confront diminishing
+    returns.
+
+    We will get a little more sophisticated by splitting on
+    punctuation if we have a choice of places to split in the middle.
+    But that's it.
+    '''
+
+    if len(dline) > 10 and '(' in dline[-9: ]:
+        parens = find_occurrences(dline, '(')
+        lastparen = parens[-1]
+        dline = dline[0 : lastparen]
+
+    midpoint = len(dline) // 2
+    radius = len(dline) // 8
+    periods = find_occurrences(dline, '.')
+    colons = find_occurrences(dline, ':')
+    semicolons = find_occurrences(dline, ';')
+    punct = periods + colons + semicolons
+    punct.sort()
+
+    # Set the best division location to be the midpoint.
+    # Replace it by a punctuation loc if the punctuation
+    # loc is less than the radius. Then keep choosing
+    # nearer punctuation marks if they exist.
+
+    closest_index = midpoint
+    closeness = radius
+    for p in punct:
+        if abs(midpoint - p) < closeness:
+            closest_index = p
+            closeness = abs(midpoint - p)
+
+    author = dline[0 : closest_index]
+    title = dline[closest_index: ]
+
+    return author, title
+
+
 for triplet in triplets2process:
 
     indexpath = triplet['indexpath']
@@ -167,10 +221,13 @@ for triplet in triplets2process:
     fic_authors = dict()
 
     numindexlines = 0
-
+    currentheading = 'unclassified'
     with open(indexpath, encoding = 'utf-8') as f:
         for indexlinenum, line in enumerate(f):
-            if line.startswith('<\h') or line.startswith('**'):
+            if line.startswith('**'):
+                continue
+            elif line.startswith('<\h'):
+                currentheading = line.replace.('<\heading', '').replace('>', '').strip('\'\" \n')
                 continue
             else:
                 try:
@@ -193,14 +250,22 @@ for triplet in triplets2process:
             if theinitial not in fic_authors:
                 fic_authors[theinitial] = []
 
-            fic_authors[theinitial].append((lastname, initials, title, indexlinenum))
+            fic_authors[theinitial].append((lastname, initials, title, indexlinenum, currentheading))
             numindexlines += 1
 
     reviews = pd.read_csv(reviewspath, sep = '\t')
 
-    reviews = reviews.assign(initial = reviews.bookauthor.map(name_to_initial))
+    grouped = reviews.groupby(['bookauthor', 'booktitle'])
+    indexes_of_unique_books = []
 
-    initialgroups = reviews.groupby('initial')
+    for idx, group in grouped:
+        indexes_of_unique_books.append(group.index[0])
+
+    unique_books = reviews.loc[indexes_of_unique_books, : ]
+
+    unique_books = unique_books.assign(initial = unique_books.bookauthor.map(name_to_initial))
+
+    initialgroups = unique_books.groupby('initial')
 
     initialdict = dict()
 
@@ -209,24 +274,18 @@ for triplet in triplets2process:
 
     del initialgroups
 
-    matchedindexes = []
     notfound = []
 
-    previousreviews = dict()
-    previousindexlines = dict()
-    dislodgedindexlines = []
+    matchedreviews = dict()
 
     for init, auth_titles in fic_authors.items():
 
         df = initialdict[init]
 
-        for lastname, first_initials, title, indexlinenum in auth_titles:
+        for lastname, first_initials, title, indexlinenum, heading in auth_titles:
 
             closestreviewidx = -1
             maxcloseness = 0
-            nextcloseness = 0
-            nextreviewidx = -1
-            besttitleratio = 0
 
             if len(lastname) < 3 or len(title) < 3:
                 continue
@@ -268,34 +327,27 @@ for triplet in triplets2process:
 
                     overallmatch = (lastratio + (initialratio * .45)) * ((titleratio + .08) ** 1.5)
 
-                    if reviewidx in previousreviews:
-                        prevclose, prevmatch = previousreviews[reviewidx]
-                    else:
-                        prevclose = 0
-
-                    if overallmatch > maxcloseness and overallmatch > prevclose:
+                    if overallmatch > maxcloseness:
 
                         maxcloseness = overallmatch
                         closestreviewidx = reviewidx
-                        besttitleratio = titleratio
 
             if maxcloseness > 0.77:
 
-                if closestreviewidx in previousreviews:
-                    # we made a mistake with our first assignment
-                    # let's assign this index line to its next best match
+                if closestreviewidx not in matchedreviews:
+                    matchedreviews[closestreviewidx] = []
 
-                    prevclose, prevmatch = previousreviews[closestreviewidx]
-                    dislodgedindexlines.append((prevmatch, closestreviewidx))
-                    removeindex = year + '+' + str(prevmatch)
-                    bookmeta.pop(removeindex)
+                matchedreviews[closestreviewidx].append((maxcloseness, indexlinenum, heading))
 
-                previousreviews[closestreviewidx] = maxcloseness, indexlinenum
+                # Notice that there can be more than one index line mapping to a single
+                # review index. This is because books very commonly appear in, for instance,
+                # both "short stories" and "mystery stories."
 
                 masterindex = year + '+' + str(indexlinenum)
                 bookmeta[masterindex] = dict()
                 bookmeta[masterindex]['closeness'] = maxcloseness
                 bookmeta[masterindex]['target'] = lastname + ' + ' + first_initials + ' + ' + title
+                bookmeta[masterindex]['heading'] = heading
             else:
                 if closestreviewidx < 0:
                     matchtitle = 'no title found'
@@ -306,23 +358,21 @@ for triplet in triplets2process:
 
     allsentiments = []
 
-    matchedindexes = list(previousreviews.keys())
+    matchedindexes = list(matchedreviews.keys())
 
     for idx in matchedindexes:
-        author = reviews.loc[idx, 'bookauthor']
-        title = reviews.loc[idx, 'booktitle']
-        publisher = reviews.loc[idx, 'publisher']
+        author = unique_books.loc[idx, 'bookauthor']
+        title = unique_books.loc[idx, 'booktitle']
+        publisher = unique_books.loc[idx, 'publisher']
+        price = unique_books.loc[idx, 'price']
+        headings = ' | '.join([x[2] for x in matchedreviews[idx]])
 
         matchingrows = reviews.loc[(reviews.bookauthor == author) & (reviews.booktitle == title),  : ]
-        # print(author, title, matchingrows.shape)
 
         sentiments = []
         wordcount = 0
-        price = 0
 
         for idx2, row in matchingrows.iterrows():
-            if row.price > 0:
-                price = row.price
 
             if not pd.isnull(row.citation):
                 citationparts = row.citation.split()
@@ -350,9 +400,9 @@ for triplet in triplets2process:
             allsentiments.append(thissent)
             sentiments.append(thissent)
 
-        closeness, indexlinenum = previousreviews[idx]
+        closeness, indexlinenum = matchedreviews[idx]
         masterindex = year + '+' + str(indexlinenum)
-        bookdata[masterindex] = [author, title, price, wordcount, idx2, publisher, sentiments]
+        bookdata[masterindex] = [author, title, price, wordcount, idx2, publisher, sentiments, headings]
 
     average_sentiment = np.nanmean(allsentiments)
 
@@ -366,7 +416,7 @@ for triplet in triplets2process:
         data.append(len(sentiments)) # total number of reviews
 
     with open(outfilepath + '.tsv', mode = 'w', encoding = 'utf-8') as f:
-        f.write('index\tauthor\ttitle\tprice\twordcount\trows\tpublisher\tavgsent\tnumreviewswithsent\tnumallreviews\tcloseness\ttarget\n')
+        f.write('index\tauthor\ttitle\tprice\twordcount\trows\tpublisher\tavgsent\theadings\tnumreviewswithsent\tnumallreviews\tcloseness\ttarget\n')
         for idx, data in bookdata.items():
             outrow = [idx]
             outrow.extend([str(x) for x in data])
