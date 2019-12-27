@@ -40,6 +40,10 @@ with open('pairing_meta.tsv', encoding = 'utf-8') as f:
 
 print(triplets2process)
 
+# triplets2process = [{'indexpath': '/Users/tunder/Dropbox/python/reviews/brd/data/volume14 extract.txt',
+#     'reviewpath': '/Users/tunder/Dropbox/python/reviews/output/brd_quotes.tsv',
+#     'outfilepath': 'outfile.tsv'}]
+
 def get_ratio(stringA, stringB):
 
     '''
@@ -207,8 +211,6 @@ for triplet in triplets2process:
     outfilename = triplet['outfilename']
     outfilepath = '/media/secure_volume/brd/paired/' + outfilename
 
-    year = outfilename[-4: ]
-
     bookdata = dict()
     bookmeta = dict()
 
@@ -353,7 +355,127 @@ for triplet in triplets2process:
                 else:
                     matchtitle = reviews.loc[closestreviewidx, 'booktitle']
 
-                notfound.append((lastname, first_initials, title, maxcloseness, matchtitle))
+                notfound.append((lastname, first_initials, title, indexlinenum, heading))
+
+    print('--- before including discard ---')
+    potentialbooks = len(matchedreviews) + len(notfound)
+
+    percentfound = len(matchedreviews) / potentialbooks
+
+    percentfound = round(percentfound, 3)
+
+    print('Potential: ' + str(potentialbooks) + '\t Found: ' + str(len(matchedreviews)))
+    print('Not found: ' + str(len(notfound)) + '\t Percent found: ' + str(percentfound))
+
+    currentheading = 'unclassified'
+    discardpath = indexpath.replace('extract', 'discard')
+    discardindex = numindexlines
+
+    with open(discardpath, encoding = 'utf-8') as f:
+        for line in f:
+            discardindex += 1
+            if line.startswith('**') or len(line) < 11:
+                continue
+            elif line.startswith('<\h'):
+                currentheading = line.replace('<\heading', '').replace('>', '').strip('\'\" \n')
+                continue
+            else:
+                try:
+                    line = line.strip('\n.')
+                    author, title = split_discard_line(line)
+                except:
+                    print('discard error: ', line)
+                    continue
+
+                authnames = specialsplit(author)
+                if len(authnames) > 1:
+                    lastname = authnames[0].lower()
+                    initials = ''.join([onlyalpha(x[0].lower()) for x in authnames[1:]])
+                else:
+                    lastname = author.lower()
+
+            notfound.append((lastname, initials, title, discardindex, currentheading))
+            discardindex += 1
+
+    reallynotfound = []
+
+    for lastname, first_initials, title, indexlinenum, heading in notfound:
+
+        closestreviewidx = -1
+        maxcloseness = 0
+
+        if len(lastname) < 3 or len(title) < 3:
+            continue
+
+        for reviewidx, row in unique_books.iterrows():
+            bookauthor = row['bookauthor'].strip('.,')
+            booktitle = row['booktitle']
+
+            if pd.isnull(bookauthor) or pd.isnull(booktitle):
+                continue
+            elif len(bookauthor) < 5 or len(booktitle) < 4:
+                continue
+            else:
+                booktitle = booktitle.lower().replace('— ', '').replace('- ', '')
+
+            authnames = specialsplit(bookauthor)
+            book_initials = ''
+            if len(authnames) > 1:
+                book_last = authnames[0].lower().replace('- ', '').replace('— ', '')
+                for name in authnames[1:]:
+                    if len(name) > 0:
+                        book_initials = book_initials + name[0].lower()
+            else:
+                book_last = bookauthor.lower()
+
+            lastratio = get_ratio(lastname, book_last)
+
+            if lastratio > 0.5:
+                initialratio = get_ratio(first_initials, book_initials)
+
+                minlen = min(len(first_initials), len(book_initials))
+
+                if initialratio < 0.5 and minlen > 0 and first_initials[0] == book_initials[0]:
+                    initialratio = 0.5
+                elif minlen == 0:
+                    initialratio = 0.25
+
+                titleratio = get_title_ratio(title.replace('- ', ''), booktitle)
+
+                overallmatch = (lastratio + (initialratio * .45)) * ((titleratio + .08) ** 1.5)
+
+                if overallmatch > maxcloseness:
+
+                    maxcloseness = overallmatch
+                    closestreviewidx = reviewidx
+
+        if maxcloseness > 0.77:
+
+            if closestreviewidx not in matchedreviews:
+                matchedreviews[closestreviewidx] = []
+
+            matchedreviews[closestreviewidx].append((maxcloseness, indexlinenum, heading))
+
+            # Notice that there can be more than one index line mapping to a single
+            # review index. This is because books very commonly appear in, for instance,
+            # both "short stories" and "mystery stories."
+
+            bookmeta[closestreviewidx] = dict()
+            bookmeta[closestreviewidx]['closeness'] = maxcloseness
+            bookmeta[closestreviewidx]['target'] = lastname + ' + ' + first_initials + ' + ' + title
+
+            booktitle = unique_books.loc[closestreviewidx, 'booktitle']
+            bookauthor = unique_books.loc[closestreviewidx, 'bookauthor']
+
+            # print('Discard find: ', title, '|', booktitle, '|', lastname, '|', bookauthor, maxcloseness)
+
+        else:
+            if closestreviewidx < 0:
+                matchtitle = 'no title found'
+            else:
+                matchtitle = reviews.loc[closestreviewidx, 'booktitle']
+
+            reallynotfound.append((lastname, first_initials, title, maxcloseness, heading))
 
     allsentiments = []
 
@@ -421,14 +543,16 @@ for triplet in triplets2process:
             f.write('\t'.join(outrow) + '\n')
 
 
-    notfound = sorted(notfound, key = lambda x: x[3])
+    reallynotfound = sorted(reallynotfound, key = lambda x: x[3])
 
-    percentfound = len(bookdata) / numindexlines
+    potentialbooks = len(matchedreviews) + len(reallynotfound)
+
+    percentfound = len(matchedreviews) / potentialbooks
 
     percentfound = round(percentfound, 3)
-
-    print('Index lines: ' + str(numindexlines) + '\t Found: ' + str(len(bookdata)))
-    print('Not found: ' + str(len(notfound)) + '\t Percent found: ' + str(percentfound))
+    print('--- after including discard ---')
+    print('Potential: ' + str(potentialbooks) + '\t Found: ' + str(len(matchedreviews)))
+    print('Not found: ' + str(len(reallynotfound)) + '\t Percent found: ' + str(percentfound))
     print()
 
 
