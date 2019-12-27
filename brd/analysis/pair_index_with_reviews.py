@@ -369,7 +369,7 @@ for triplet in triplets2process:
 
     currentheading = 'unclassified'
     discardpath = indexpath.replace('extract', 'discard')
-    discardindex = numindexlines
+    discardindex = numindexlines + 1
 
     with open(discardpath, encoding = 'utf-8') as f:
         for line in f:
@@ -465,6 +465,10 @@ for triplet in triplets2process:
             bookmeta[closestreviewidx] = dict()
             bookmeta[closestreviewidx]['closeness'] = maxcloseness
             bookmeta[closestreviewidx]['target'] = lastname + ' + ' + first_initials + ' + ' + title
+
+            # flag discard lines
+            if indexlinenum > numindexlines:
+                bookmeta[closestreviewidx]['target'] = 'DISCARD: ' + bookmeta[closestreviewidx]['target']
 
             booktitle = unique_books.loc[closestreviewidx, 'booktitle']
             bookauthor = unique_books.loc[closestreviewidx, 'bookauthor']
