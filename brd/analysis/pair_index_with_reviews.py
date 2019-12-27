@@ -33,7 +33,7 @@ wordcountregex = re.compile('\d*0w[.]?')
 
 triplets2process = []
 
-with open('pairing_meta.tsv', encoding = 'utf-8') as f:
+with open('pairing_meta2.tsv', encoding = 'utf-8') as f:
     reader = csv.DictReader(f, delimiter = '\t')
     for row in reader:
         triplets2process.append(row)
@@ -281,6 +281,9 @@ for triplet in triplets2process:
     matchedreviews = dict()
 
     for init, auth_titles in fic_authors.items():
+
+        if init not in initialdict:
+            continue
 
         df = initialdict[init]
 
