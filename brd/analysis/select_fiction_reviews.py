@@ -34,7 +34,7 @@ for triplet in triplets2process:
     reviewspath = '/media/secure_volume/brd/output/' + reviewsfile
 
     bookfile = triplet['outfilename']  # it was the 'outfile' for the other script!
-    bookpath = '/media/secure_volume/brd/paired/' + bookfile
+    bookpath = '/media/secure_volume/brd/paired/' + bookfile + '.tsv'
 
     if bookfile.endswith('1914') or bookfile.endswith('1915'):
         continue
