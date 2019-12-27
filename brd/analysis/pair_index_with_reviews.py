@@ -538,8 +538,10 @@ for triplet in triplets2process:
 
     with open(outfilepath + '.tsv', mode = 'w', encoding = 'utf-8') as f:
         f.write('index\tauthor\ttitle\tprice\twordcount\trows\tpublisher\tavgsent\theadings\tnumreviewswithsent\tnumallreviews\tcloseness\ttarget\n')
+        newindex = 0
         for idx, data in bookdata.items():
-            outrow = [str(idx)]
+            outrow = [str(newindex)]
+            newindex += 1
             outrow.extend([str(x) for x in data])
             outrow.extend([str(bookmeta[idx]['closeness']), bookmeta[idx]['target']])
             f.write('\t'.join(outrow) + '\n')
