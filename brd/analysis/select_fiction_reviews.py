@@ -39,13 +39,15 @@ for triplet in triplets2process:
     if bookfile.endswith('1914') or bookfile.endswith('1915'):
         continue
         # those don't actually exist!
+    else:
+        print(bookfile)
 
     # reviewspath = triplet['reviewpath']
     # bookpath = triplet['outfilename']
 
     reviews = pd.read_csv(reviewspath, sep = '\t')
 
-    books = pd.read_csv(bookpath, sep = '\t', index_col = 'index')
+    books = pd.read_csv(bookpath, sep = '\t', engine=’python’, index_col = 'index')
 
     list_of_dfs = []
 
@@ -88,7 +90,7 @@ for triplet in triplets2process:
 
             thisdf.at[idx2, 'quote'] = wordbag
 
-        thisdf.drop(columns = ['sentiment'], inplace = True)
+        thisdf.drop(['sentiment'], axis = 1, inplace = True)
 
         list_of_dfs.append(thisdf)
 
