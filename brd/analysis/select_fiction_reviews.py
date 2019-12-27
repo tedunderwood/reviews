@@ -47,7 +47,7 @@ for triplet in triplets2process:
 
     reviews = pd.read_csv(reviewspath, sep = '\t')
 
-    books = pd.read_csv(bookpath, sep = '\t', engine=’python’, index_col = 'index')
+    books = pd.read_csv(bookpath, sep = '\t', engine='python', index_col = 'index')
 
     list_of_dfs = []
 
