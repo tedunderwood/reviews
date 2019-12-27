@@ -38,8 +38,6 @@ with open('pairing_meta.tsv', encoding = 'utf-8') as f:
     for row in reader:
         triplets2process.append(row)
 
-print(triplets2process)
-
 # triplets2process = [{'indexpath': '/Users/tunder/Dropbox/python/reviews/brd/data/volume14 extract.txt',
 #     'reviewpath': '/Users/tunder/Dropbox/python/reviews/output/brd_quotes.tsv',
 #     'outfilepath': 'outfile.tsv'}]
@@ -231,6 +229,8 @@ for triplet in triplets2process:
             elif line.startswith('<\h'):
                 currentheading = line.replace('<\heading', '').replace('>', '').strip('\'\" \n')
                 continue
+            elif len(line) < 3:
+                continue
             else:
                 try:
                     line = line.strip('\n.')
@@ -378,6 +378,8 @@ for triplet in triplets2process:
                 continue
             elif line.startswith('<\h'):
                 currentheading = line.replace('<\heading', '').replace('>', '').strip('\'\" \n')
+                continue
+            elif len(line) < 3:
                 continue
             else:
                 try:
