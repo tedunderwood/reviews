@@ -67,7 +67,11 @@ for triplet in triplets2process:
         for idx2, row2 in thisdf.iterrows():
             thisreview = row2['quote']
             allowedwords = []
-            words = thisreview.split()
+            if not pd.isnull(thisreview):
+                words = thisreview.split()
+            else:
+                words = []
+
             for w in words:
                 if w == '<endsubj>':
                     allowedwords = []
