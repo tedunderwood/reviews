@@ -16,6 +16,7 @@
 # headings, unfortunately, because we're not allowed to export them.
 
 import pandas as pd
+import csv
 
 triplets2process = []
 
