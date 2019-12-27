@@ -36,6 +36,10 @@ for triplet in triplets2process:
     bookfile = triplet['outfilename']  # it was the 'outfile' for the other script!
     bookpath = '/media/secure_volume/brd/paired/' + bookfile
 
+    if bookfile.endswith('1914') or bookfile.endswith('1915'):
+        continue
+        # those don't actually exist!
+
     # reviewspath = triplet['reviewpath']
     # bookpath = triplet['outfilename']
 
