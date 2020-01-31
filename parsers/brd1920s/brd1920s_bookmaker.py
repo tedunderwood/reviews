@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # brd_bookmaker.py
 
 # Extracts Book objects from the Book Review Digest.
@@ -16,7 +17,7 @@ import os, sys
 from difflib import SequenceMatcher
 import lexparse
 
-publishers = ['Liverlght', 'Appleton', 'Baker', 'Barnes', 'Benziger', 'Bobbs', "Brentano's", 'Cassell', 'Century', 'Collier-Fox', 'Crowell', 'Ditson', 'Dodd', 'Doran', 'Doubleday', 'Dutton', 'Elder', 'Estes', 'Ginn', 'Goodspeed', 'Harper', 'Heath', 'Holt', 'Houghton', 'Knopf', 'Lane', 'Lippincott', 'Little', 'Liveright', 'Longmans', 'Macmillan', 'McClure', 'McGraw', 'Moffat', 'Oxford', 'Page', 'Pott', 'Putnam', 'Scribner', 'Simmons', 'Stokes', 'Walton', 'Warne', 'Wessels', 'Wilde', 'Wiley', 'Winston', 'Yale']
+publishers = ['Liverlght', 'Appleton', 'Baker', 'Barnes', 'Benziger', 'Bobbs', "Brentano's", 'Cassell', 'Century', 'Collier-Fox', 'Crowell', 'Ditson', 'Dodd', 'Doran', 'Doubleday', 'Dutton', 'Elder', 'Estes', 'Ginn', 'Goodspeed', 'Harper', 'Heath', 'Holt', 'Houghton', 'Knopf', 'Lane', 'Lippincott', 'Little', 'Liveright', 'Longmans', 'Macmillan', 'McBride', 'McClure', 'McGraw', 'Moffat', 'Oxford', 'Page', 'Pott', 'Putnam', 'Scribner', 'Simmons', 'Stokes', 'Walton', 'Warne', 'Wessels', 'Wilde', 'Wiley', 'Winston', 'Yale']
 
 valid_prices = {"81": 1.00, "81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35, '81.85': 1.85, '81.95': 1.95, '81.45': 1.45, '83.50': 3.50, '85': 5.0, '84': 4.0}
 
@@ -39,6 +40,12 @@ def percent_upper(astring):
     if denom < 1:
         denom = 1
     return uppercount / denom
+
+def aggressivepricetranslate(astring):
+    astring = astring.replace('I', '1').replace('O', '0')
+    if len(astring) > 1 and astring[0] == 'J':
+        astring = astring[1:]
+    return pricetranslate(astring)
 
 def pricetranslate(astring):
     digits = ''
@@ -65,13 +72,13 @@ def pricetranslate(astring):
     else:
         price = 0.0
 
-    if price > 25 and len(digits) > 1 and (digits[0] == '5' or digits[0] == '8'):
+    if price > 40 and len(digits) > 1 and (digits[0] == '5' or digits[0] == '8'):
         try:
             price = float(digits[1:])
         except:
             price = 0.0
 
-    if price > 25:
+    if price > 40:
         price = 0.0
 
     return price
@@ -150,8 +157,11 @@ class Citation:
         author = []
         price = 0
         publisher = []
+        tokenssincenumpages = 3
 
         for word, tags in alltuples:
+
+            tokenssincenumpages += 1
 
             if authorstop and not authordone:
                 if word.startswith('eds.') or word.startswith('pseud.'):
@@ -179,17 +189,31 @@ class Citation:
                 if titlestart and 'fullstop' in tags:
                     titledone = True
 
-                if titlestart and 'dollarprice' in tags:
+                if titlestart and 'dollarprice' in tags and not 'numpages' in tags:
                     price = pricetranslate(word)
                     if '$' in word:
                         dollarpricefound = True
                     titledone = True
+
+                if titlestart and 'numpages' in tags:
+                    titledone = True
+                    publisher.append(word)
+                    tokenssincenumpages = 0
+
                 else:
                     title.append(word)
 
-
             else:
-                if 'dollarprice' in tags:
+                if titlestart and 'numpages' in tags:
+                    publisher.append(word)
+                    tokenssincenumpages = 0
+
+                elif tokenssincenumpages < 3 and 'somenumeric' in tags:
+                    if '$' in word:
+                        dollarpricefound = True
+                    price = aggressivepricetranslate(word)
+
+                elif 'dollarprice' in tags:
                     tryprice = pricetranslate(word)
                     if not dollarpricefound:
                         price = tryprice
@@ -224,13 +248,14 @@ def get_books(pagelist):
     ('monthabbrev', {'Ja', 'F', 'Mr', 'Ap', 'My', 'Je', 'Jl', 'Ag', 'S', 'O', 'N', 'D'}),
     ('lineendingyear', '[\'"•■]\d+'),
     ('volandpgrange', '[0-9]+[:][0-9-]+'),
-    ('somenumeric', '.?.?[0-9]{1,7}.?.?[0-9]*.?'),
+    ('somenumeric', '.?.?.?[0-9]{1,7}.?.?[0-9]*.?'),
     ('allcaps', '[A-Z\'\,\‘\.\-]+'),
     ('dollarprice', '.{0,2}[$\"\'\“].?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
-    ('hyphennumber', '[0-9]{1,3}[-—~]+[0-9]{3,7}[,.:=)]?'),
+    ('hyphennumber', '.?[0-9]{1,2}[-—~]+[0-9]{3,7}.?'),
     ('openquote', '[\"\'“‘]+\S*'),
-    ('deweydecimal', '[0-9]{3}[.][0-9-]+')
+    ('deweydecimal', '[0-9]{3}[.][0-9-]+'),
+    ('numpages', '\d{2,5}p')
     ]
 
     rule_list = lexparse.patterns2rules(lexical_patterns)
@@ -307,7 +332,6 @@ def get_books(pagelist):
                     thetail = line[-11: ]
                     thematch = match_strings('—Continued.', thetail)
                     if thematch > 0.8:
-                        print("continued: ", line)
                         continue
 
                 if line.isdigit() and aligned < 4:
@@ -367,17 +391,18 @@ def get_books(pagelist):
                     if 'allcaps' in tags:
                         allcapcount += 1
 
-                if len(line) > 15:
-                    pctupin15 = percent_upper(line[0: 15])
-                else:
-                    pctupin15 = 0
+                lineuppercasepct = percent_upper(line)
 
-                if allcapcount > 1 or pctupin15 > .65:
+                if (allcapcount > 0 and lineuppercasepct > 0.1 and len(line) > 9) or (lineuppercasepct > 0.6 and len(line) > 9):
                     percentageupper = percent_upper(firstword)
+                    if len(line) > 15:
+                        pctupin15 = percent_upper(line[0: 15])
+                    else:
+                        pctupin15 = 0
 
                     if 'allcaps' in firsttagset and ('commastop' in firsttagset or 'fullstop' in firsttagset) and len(firstword) > 2:
                         this_line_is_new_citation = True
-                    elif percentageupper > 0.8 and len(firstword) > 4:
+                    elif lineuppercasepct > 0.8 and len(line) > 16:
                         this_line_is_new_citation = True
                     elif percentageupper > 0.7 and len(firstword) > 4 and allcapcount > 2:
                         this_line_is_new_citation = True
@@ -416,6 +441,14 @@ def get_books(pagelist):
                     # that the citation is finished
                     citation_finished = True
 
+                if len(citationlines) > 2 and len(taglist.tagseq) > 1 and 'somenumeric' in taglist.tagseq[0]:
+                    try:
+                        deweydecimal = float(taglist.stringseq[0])
+                        if deweydecimal > 99:
+                            citation_finished = True
+                    except:
+                        pass
+
             if this_line_is_new_citation or citation_started:
                 citationlines.append(line)
                 citation_started = True
@@ -442,7 +475,7 @@ def get_books(pagelist):
                     author_errors.append((textpage, last_author_name, new_author))
                 last_author_name = new_author
 
-            elif len(citationlines) > 5:
+            elif len(citationlines) > 7:
                 # this is too many lines, and we were probably in error to have
                 # started the citation, so put those lines back in reviewlines.
                 # This is esp. likely to happen at the top of a page, when

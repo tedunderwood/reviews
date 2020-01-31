@@ -1,7 +1,7 @@
 reviews
 =======
 
-Mining periodical indexes and book reviews, 1800-2010. In collaboration with Kent Kai-hsiung Chang, Yuerong Hu, Wenyi Shang, and Richard Jean So.
+Mining periodical indexes and book reviews, 1800-2010. In collaboration with Kent Kai-hsiung Chang, Yuerong Hu, Wenyi Shang, Aniruddha Sharma, Shubhangi Singhal, Richard Jean So, Jessica Witte, and Peizhen Wu.
 
 The project is at an early stage of development. Our ultimate goal is to develop a database of responses to fiction (and poetry, where possible). Evidence of contemporary reception can be used to train models of genre and literary prestige.
 
