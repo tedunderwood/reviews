@@ -58,8 +58,8 @@ pattern2_1 = re.compile(" [A-Z][a-z]+")
 pattern2_2 = re.compile("[.:]\s[A-Z][a-z]+")
 
 
-year = ['1921','1922','1923','1924','1925','1926','1927','1928','1929','1930','1931','1932','1933','1934','1935','1936','1937','1938','1939','1940','1941','1942','1943','1944','1945','1946','1947']
-suffix = ['32106019850368','32106019610374','32106019610382','32106019610390','32106019610408','32106019610416','32106019610424','32106019610432','32106019610440','32106019610457','39015078261180','32106019610465','32106019610473','32106019610481','32106019610499','39015078261230','32106019610507','32106019610515','32106019610523','32106019610531','39015078261289','32106019610549','32106019610556','32106019610564','32106019610572','32106019610580','32106019610598']
+year = ['1921','1922','1923','1924','1925','1926','1927','1928','1929','1930','1931','1932','1933','1934','1935','1936','1937','1938','1939','1940','1941','1942','1943','1944','1945','1946','1947','1948']
+suffix = ['32106019850368','32106019610374','32106019610382','32106019610390','32106019610408','32106019610416','32106019610424','32106019610432','32106019610440','32106019610457','39015078261180','32106019610465','32106019610473','32106019610481','32106019610499','39015078261230','32106019610507','32106019610515','32106019610523','32106019610531','39015078261289','32106019610549','32106019610556','32106019610564','32106019610572','32106019610580','32106019610598','32106019610606']
 
 length=len(year)
 year_suffix=[]
@@ -359,7 +359,7 @@ for year, suffix in year_suffix:
                             k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
-                            if(fiction_headings[k]=='Young people' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or fiction_headings[k]=='Whaling industry' ):
+                            if(fiction_headings[k]=='Young people' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or text[j+k]=='World war, 1939-1945' or fiction_headings[k]=='Whaling industry' ):
                                 print(fiction_books[k][m])
                             if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
                                                                                                fiction_books[k][
