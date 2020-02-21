@@ -359,7 +359,7 @@ for year, suffix in year_suffix:
                             k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
-                            if(fiction_headings[k]=='Young people' or fiction_headings[k]=='Youth' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or fiction_headings[k]=='World war, 1939-1945' or fiction_headings[k]=='Whaling industry' or 'Zoological specimens'):
+                            if(fiction_headings[k]=='Young people' or fiction_headings[k]=='Youth' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or fiction_headings[k]=='World war, 1939-1945' or fiction_headings[k]=='Whaling industry' or fiction_headings[k]=='Zoological specimens'):
                                 print(fiction_books[k][m])
                             if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
                                                                                                fiction_books[k][
