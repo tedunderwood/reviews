@@ -16,7 +16,7 @@ First, we plan to test the coherence of the genre categories defined by the libr
 
 We grouped LoC genre and subject headings into nineteen categories. For instance "Mystery fiction" and "Detective and mystery stories, American" belong to the same category.
 
-Then we measured in-genre distance by selecting pairs of books in the same category, and measuring the cosine distance between their texts, using a vector of relative frequencies constructed with the 2500 most common words in the entire corpus. We will use tf-idf scaling to adjust the vectors--reflecting our intuition that relatively uncommon words are more important in discriminating genres than their sheer frequency might suggest.
+Next we will measure in-genre distance by selecting pairs of books in the same category, and measuring the cosine distance between their texts, using a vector of relative frequencies constructed with the 2500 most common words in the entire corpus. We will use tf-idf scaling to adjust the vectors--reflecting our intuition that relatively uncommon words are more important in discriminating genres than their sheer frequency might suggest.
 
 (We could alternately do no adjustment, or scale all the words to have equal weight--i.e., compare z scores of the frequencies. We have tried both of these things in a previous experiment, and it didn't make a great deal of difference. A pattern durable enough to be of real significance for us should probably hold true across most methodological details of this kind.)
 
