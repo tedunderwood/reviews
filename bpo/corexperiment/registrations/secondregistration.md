@@ -3,7 +3,7 @@ second registration
 
 These experiments continue to explore the questions we were posing in our earlier inquiry. Especially this question:
 
-    Do genre categories generally become more crisply defined or more closely knit as we move from the late 19c, through the 20c, to the present?
+`Do genre categories generally become more crisply defined or more closely knit as we move from the late 19c, through the 20c, to the present?`
 
 Both of the experiments below are based on the intuition that the coherence and "tightness" of generic clustering in different periods can be assessed by measuring the difference between the average (random) distances between books and the distances measured between pairs of books that share a genre. The greater the difference, the more strongly books appear to be sorted by genre. This measure is loosely analogous to one called [silhouette value](https://en.wikipedia.org/wiki/Silhouette_(clustering)). The difference is that the silhouette strategy is designed for complete partitioning of a single dataset, and we need to evaluate a window that slides down a timeline.
 
