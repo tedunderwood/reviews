@@ -24,7 +24,7 @@ We will only compare books published within ten years of each other, according t
 
 As a control for each in-genre comparison, we will compare the first book in genre A (Ax) to a randomly selected book in year y (Ry), and the second book (Ay) to a randomly selected book in year x (Rx). We will try two different forms of "random selection": one is to randomly select a book from the list of books assigned to other genres. Another is to randomly select a book from a subset of books that were genuinely plucked randomly from HathiTrust (including books without any genre categorization). We consider the second more reliable, but the difference between these measurements might also be of interest.
 
-So the overall measurement is
+So the overall outgenre - ingenre difference is
 
     ((Ax to Ry + Rx to Ay) / 2) - (Ax to Ay)
 
@@ -32,7 +32,7 @@ We'll date each measurement at the midpoint of years x and y.
 
 **Hypothesis to test:**
 
-We expect that there is some year Y in the second half of the twentieth century, such that average generic closeness (outgenre_distance - ingenre_distance) increases from 1860 to that year, and decreases thereafter, where "increases" and "decreases" describe a correlation with time. We expect the increase from 1860 to Y to be statistically significant at p < .05. The decrease thereafter might not be significant if we're comparing aggregate yearly values, though we would expect significance when we test the correlation with time on individual pairs of books.
+We expect that there is some year Y in the second half of the twentieth century, such that average generic closeness (outgenre_distance - ingenre_distance) increases from 1860 to that year, and decreases thereafter, where "increases" and "decreases" describe a correlation with time. We expect both correlations to be significant at p < .05, if we compare the differences for individual pairs of books to the midpoint dates for those pairs.
 
 second experiment: genre categories derived from a topic model of Kirkus Reviews
 ---------------------------------------------------------------------------------
@@ -55,7 +55,9 @@ So the first hypothesis we offer is that the average out-topic/in-topic differen
 
 We also, secondarily, hypothesize that the out-topic/in-topic difference will in general be greatest when a topic is most prevalent in the model. In other words, when a "science fiction" topic is just beginning to emerge in reception, books may not yet be very clearly sorted into that category. But when it reaches its peak (measured as the proportion of words in year Y assigned to the topic), we would expect it to be a more prominent category in reception.
 
-To formalize this as a hypothesis we can test: if we measure out-topic/in-topic difference for topic X in year Y, and the total prevalence of the topic in year Y, and aggregate those measurements across all years and topics, we expect a very small but significant (p < .05) correlation between the two variables.
+Since we're interested in a topic's peak relative to its own distribution, not its absolute size, we will measure a topic's relative "prevalence" in this experiment as `words in topic T, year Y / all words in topic T`.
+
+To formalize this as a hypothesis we can test: if we measure out-topic/in-topic difference for topic X in year Y, and the relative prevalence of the topic in year Y, and aggregate those measurements across all years and topics, we expect a very small but significant (p < .05) correlation between the two variables.
 
 It would also be interesting if this correlation were improved by sliding the two sets of measurements relative to each other on the timeline. In other words, do topics tend to reach peak prevalence *before*, or *after*, books are most clearly sorted into the topic? We'll pose that question for now in an exploratory way; it might help us frame a hypothesis about the causal relations between writing and reception.
 
