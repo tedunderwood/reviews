@@ -162,7 +162,7 @@ for year, suffix in year_suffix:
                 for k in range(10):
                     print(text[j+k])
                 for k in list(range(1, linelength - j)):
-                    if (text[j + k] == "Fiction (classified by subject)" or text[j+k]=='Fiction (classified according to subject)'or text[j+k]=='Fiction (c\'assifled according to subject)'):  # if fiction section_about ends
+                    if (text[j + k] == "Fiction (classified by subject)" or text[j+k]=='Fiction (classified according to subject)' or text[j+k]=='Fiction (c\'assifled according to subject)'):  # if fiction section_about ends
                         break
                     if (text[j + k] == "Fiction"):
                         text[j+k] = "Fiction (classified by subject)"
@@ -307,7 +307,7 @@ for year, suffix in year_suffix:
             fiction_headings = []  # to store the headings
             fiction_books = []  # to store the lines under the heading
             count = -1
-            if (text[j] == "Fiction (classified by subject)" or text[j]=='Fiction (classified according to subject)'):
+            if (text[j] == "Fiction (classified by subject)" or text[j]=='Fiction (classified according to subject)' or text[j]=='Fiction (c\'assifled according to subject)'):
                 for k in list(range(1, linelength - j)):
                     if (text[j + k] in nextheadings):  # if fiction section ends
                         break
