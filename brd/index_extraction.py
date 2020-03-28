@@ -139,7 +139,7 @@ for year, suffix in year_suffix:
                 bookcount += pagelist[i][j].count('(')  # how many books are there in the index in total
                 if (pagelist[i][j] != ''):
                     text.append(pagelist[i][j])
-                if (volume1972 == 1 and i<=1550):
+                if (volume1972 == 1 and i<=1500):
                     print(pagelist[i][j])
 
             linelength=len(text)
@@ -158,11 +158,11 @@ for year, suffix in year_suffix:
                         text[j + k] = "Fiction (classified by subject)"
                         break
 
-            if (text[j] == "Fiction (books about)"):
+            if (text[j] == "Fiction (books about)" or text[j] == "Fiction (Books about)"):
                 for k in range(10):
                     print(text[j+k])
                 for k in list(range(1, linelength - j)):
-                    if (text[j + k] == "Fiction (classified by subject)" or text[j+k]=='Fiction (classified according to subject)'):  # if fiction section_about ends
+                    if (text[j + k] == "Fiction (classified by subject)" or text[j+k]=='Fiction (classified according to subject)'or text[j+k]=='Fiction (c\'assifled according to subject)'):  # if fiction section_about ends
                         break
                     if (text[j + k] == "Fiction"):
                         text[j+k] = "Fiction (classified by subject)"
