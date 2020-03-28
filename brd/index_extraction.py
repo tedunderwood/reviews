@@ -139,7 +139,7 @@ for year, suffix in year_suffix:
                 bookcount += pagelist[i][j].count('(')  # how many books are there in the index in total
                 if (pagelist[i][j] != ''):
                     text.append(pagelist[i][j])
-                if (volume1972 == 1 and i<=1500):
+                if (volume1972 == 1 and i>=1500 and i<=1530):
                     print(pagelist[i][j])
 
             linelength=len(text)
