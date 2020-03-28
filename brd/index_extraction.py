@@ -140,7 +140,7 @@ for year, suffix in year_suffix:
                 if (pagelist[i][j] != ''):
                     text.append(pagelist[i][j])
                 if (volume1972 == 1 and i<=1550):
-                    print(pagellist[i][j])
+                    print(pagelist[i][j])
 
             linelength=len(text)
         print("Fiction (books about)")
