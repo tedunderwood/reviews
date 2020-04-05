@@ -14,7 +14,7 @@ first experiment: genres assigned by librarians
 
 First, we plan to test the coherence of the genre categories defined by the librarians who assigned Library of Congress subject and genre headings recorded in HathiTrust metadata, from 1860 to 2010.
 
-We grouped LoC genre and subject headings into nineteen categories. For instance "Mystery fiction" and "Detective and mystery stories, American" belong to the same category.
+We grouped LoC genre and subject headings into nineteen categories. For instance "Mystery fiction" and "Detective and mystery stories, American" belong to the same category. See `genre_groups_for_20c_exp.tsv` for these categories.
 
 Next we will measure in-genre distance by selecting pairs of books in the same category, and measuring the cosine distance between their texts, using a vector of relative frequencies constructed with the 2500 most common words in the entire corpus. We will use tf-idf scaling to adjust the vectors--reflecting our intuition that relatively uncommon words are more important in discriminating genres than their sheer frequency might suggest.
 
@@ -41,7 +41,7 @@ The chief objection to our first experiment will be that we're using genre categ
 
 There are several ways to address this concern; by summer, we'll be able to use explicit genre categories derived from the index of the *Book Review Digest.* But in the meantime we can use book reviews as a source of genre-like categories that were assigned by readers closer to the date of a book's publication.
 
-After optimizing the number of topics, we produced an 80-topic model of Kirkus book reviews from 1930 to 2010. We manually inspected the model to identify 23 topics that seemed genre-*like*. We didn't expect a 1:1 mapping between topics and library genre labels, but we did try to exclude topics that were, for instance, organized around different types of evaluative language rather than different *kinds* of books.
+After optimizing the number of topics, we produced an 80-topic model of Kirkus book reviews from 1930 to 2010. We manually inspected the model to identify 23 topics that seemed genre-*like*. (See `genre_80_mallet_categories_for_20c_exp.csv.`) We didn't expect a 1:1 mapping between topics and library genre labels, but we did try to exclude topics that were, for instance, organized around different types of evaluative language rather than different *kinds* of books.
 
 We will evaluate these 23 topics in the same way as we evaluated the 19 library-assigned categories above. In other words, we'll select pairs of books in the same review topic, measure the Ax-Ay distance, and then compare it to the average of Ax-Ry and Rx-Ay. We'll plot the differences between in-topic and out-topic distance across a timeline.
 
