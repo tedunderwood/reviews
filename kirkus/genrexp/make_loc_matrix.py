@@ -1,13 +1,14 @@
 # make_loc_matrix
 
-# Cosine distances on genre categories inferred from
+# We're preparing to measure
+# cosine distances on genre categories inferred from
 # Library of Congress genre/form/subject headings.
 
 # This part of the code is purely data preparation:
 # it infers a vocabulary of the top 2500 words,
 # calculates inverse document frequencies for that vocabulary,
-# and saves a matrix where rows are docids and columns are
-# vocabulary words.
+# and saves a matrix where rows are docids, columns are
+# vocabulary words, and cells are tf-idf scores for the words.
 
 import pandas as pd
 import os, glob
@@ -18,8 +19,8 @@ import numpy as np
 
 # BUILD TRANSLATORS.
 
-punctuationstring = string.punctuation + '—‘’“”'
-punctzapper = str.maketrans(punctuationstring, ' ' * len(punctuationstring))
+# We want to translate ocr errors and American spellings
+# to the correct British spelling when possible.
 
 translator = dict()
 
@@ -39,16 +40,8 @@ with open('../../bpo/gethathimatches/VariantSpellings.txt', encoding = 'utf-8') 
 
 print('Translators built.')
 
-# if os.path.exists('vocabulary.tsv'):
-#     havevocab = True
-#     vocab = dict()
-#     with open('vocabulary.tsv', encoding = 'utf-8') as f:
-#         for line in f[1:]                      # skip header
-#             fields = line.strip().split('\t')
-#             vocab[fields[0]] = int(fields[1])
-
-# else:
-#     havevocab = False
+# Now get the token frequencies for individual docids,
+# using data created by Yuerong Hu.
 
 rootpath = '/Volumes/T5/genrexp2_token_counts/'
 
@@ -58,16 +51,23 @@ docfreqs = Counter()
 termfreqs = dict()
 
 for path in filepaths:
+    # we're iterating through separate files for eachdocid
+
     df = pd.read_csv(path, index_col = 0)
+
     thesewords = Counter()
+
+    # .itertuples() gives relatively fast iteration through Pandas DataFrames
+
     for row in df.itertuples(index = False):
         if pd.isnull(row[0]):
             continue
-        word = row[0].lower().strip('.",') # the last strip shouldn't be necessary
-                                         # but in practice there are stray double
-                                         # quotes that can prove problematic
+        word = row[0].lower().strip('.",')
 
-            # lowercase everything
+            # we're lowercasing everything and also
+            # stripping certain kinds of punctuation that
+            # may be glued to the word without really
+            # changing its meaning
 
         if len(word) < 2 and not word.isalpha():
             continue
@@ -81,14 +81,21 @@ for path in filepaths:
 
         thesewords[word] = int(row[1])      # the raw count of this token in this document
 
+    # increment document frequencies
+
     for w, count in thesewords.items():
         docfreqs[w] += 1
         # note that these are document frequencies, so only increment by 1
         # not by the term frequency (count) in the document
 
+    # also create a dictionary entry in termfreqs, where the key is
+    # a docid, and the value is a Counter of term frequencies
+
     docid = path.split('/')[-1].replace('.csv', '')
 
     termfreqs[docid] = thesewords
+
+# MAKE VOCABULARY OF 2500 MOST COMMON WORDS
 
 vocab = docfreqs.most_common(2500)
 
@@ -99,6 +106,8 @@ with open('vocabulary.tsv', mode = 'w', encoding = 'utf-8') as f:
 
 vocabwords = [x[0] for x in vocab]
 docvector = np.array([x[1] for x in vocab])
+
+# MAKE A MATRIX OF TF-IDF VALUES
 
 dictforpandas = dict()
 
