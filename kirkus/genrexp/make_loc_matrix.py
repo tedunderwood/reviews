@@ -99,7 +99,7 @@ for path in filepaths:
 
 vocab = docfreqs.most_common(2500)
 
-with open('vocabulary.tsv', mode = 'w', encoding = 'utf-8') as f:
+with open('loc_vocabulary.tsv', mode = 'w', encoding = 'utf-8') as f:
     f.write('word\tdocfreq\n')
     for word, docfreq in vocab:
         f.write(word + '\t' + str(docfreq) + '\n')
