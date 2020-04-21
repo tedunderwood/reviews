@@ -88,7 +88,8 @@ with open('tfidf_matrix_4loc.tsv', encoding = 'utf-8') as f:
         if fields[0] == 'docid':
             continue   # that's the header
         thevector = np.array([float(x) for x in fields[1:]])
-        tfidf_vectors[fields[0]] = thevector
+        docid = fields[0]
+        tfidf_vectors[docid] = thevector
 
 # ACTUAL MEASUREMENT
 
@@ -166,7 +167,10 @@ failures = 0
 
 results = list()
 
-for i in range(6000):
+for i in range(10000):
+
+    if i % 100 == 1:
+        print(i)
 
     firstdoc = random.sample(list(genredocs['allnonrandom']), 1)[0]
 
@@ -189,7 +193,7 @@ for i in range(6000):
     fullyrandommatchB = get_doc_with_date_match(matchauthor, firstdate, 'random')
 
     othergenrematchA = get_othergenredoc(genre, firstauthor, genrematchdate)
-    othergenrematchB = get_doc_with_date_match(matchauthor, firstdate, 'allnonrandom')
+    othergenrematchB = get_othergenredoc(genre, matchauthor, firstdate)
 
     if fullyrandommatchA == 'no match' or fullyrandommatchB == 'no match':
         failures += 1
