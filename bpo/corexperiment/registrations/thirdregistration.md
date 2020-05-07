@@ -27,8 +27,8 @@ Although we got statistically significant results for all of the experiments, we
 
 To address these concerns (and a few others), we propose another version of the LoC experiment, with these adjustments:
 
-+ We will use almost 2x the total number of books (more than 6000), and in particular almost 3x more "fully random" books (around 1100),
-+ We will also sample volumes in a more strictly random way (allowing genre proportions to vary), and sample them more evenly across the timeline. The one small exception to this: we will ensure that there are at least 3 volumes in each genre in each decade (if at least 3 are available in Hathi). Otherwise some volumes could become "orphans," without any nearby point of comparison in the same genre (or only one). This supplement only adds ~50 volumes to our ~6000 volume sample.
++ We will use almost 2x the total number of books (~5800), and in particular almost 3x more "fully random" books (around 1100),
++ We will sample volumes in a more strictly random way (allowing genre proportions to vary), and sample them more evenly across the timeline. The one small exception to this: we will ensure that there are at least 3 volumes in each genre in each decade (if at least 3 are available in Hathi). Otherwise some volumes could become "orphans," without any nearby point of comparison in the same genre (or only one). This supplement only adds ~50 volumes to our ~6000 volume sample.
 + We will keep the sizes (lengths) of volumes relatively constant (by excluding volumes < 11000 words and down-sampling ones > 60000 words),
 + manually groom the list to exclude obvious nonfiction, and
 + weight word-frequency vectors using the Delta logic rather than tf-idf, guided by the arguments in [Evert et al.](https://academic.oup.com/dsh/article/32/suppl_2/ii4/3865676) We will continue to use the 2500 most common words selected by document frequency.
