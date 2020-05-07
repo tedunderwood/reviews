@@ -1,16 +1,16 @@
 third registration
 ===================
 
-Having gotten generally positive results from our second experiment, we want to refine our methods and do one last experiment.
+Having gotten generally positive results from our second experiment, we want to refine our methods and do one more experiment.
 
 First a quick summary of results from the last set of experiments.
 
 results from second experiment
 -------------------------------
 
-The main question we posed was whether genre boundaries become strongest in the second half of the twentieth century. Formally, is there is some year Y in the second half of the twentieth century, such that average generic closeness (outgenre_distance - ingenre_distance) increases from 1860 to that year, and decreases thereafter, where "increases" and "decreases" describe a correlation with time. We expect both correlations to be significant at p < .05, if we compare the differences for individual pairs of books to the midpoint dates for those pairs.
+The main question we posed was whether genre boundaries become strongest in the second half of the twentieth century. Formally, is there is some year Y in the second half of the twentieth century, such that average generic closeness (outgenre_distance - ingenre_distance) increases from 1860 to that year, and decreases thereafter. We expected both correlations to be significant at p < .05, if we compare the differences for individual pairs of books to the midpoint dates for those pairs.
 
-We asked this using LoC genre labels assigned by librarians. The answer was "yes": there was a significant rise to some point in the later 20c, and a significant decline thereafter, for all of the measurement methods we proposed.
+We asked this using LoC genre labels assigned by librarians. The answer was "yes": there was a significant rise to some point in the later 20c, and a significant decline thereafter, for all of the measurement methods we proposed. Because we tried a couple of different methods, we cannot precisely pinpoint the peak, but it's probably somewhere between 1950 and 1975.
 
 We also posed a sub-experiment using "genres" inferred from a topic model of *Kirkus* book reviews from the 1930s forward. We hypothesized that the strength of genre boundaries (outgenre-ingenre differences) would correlate significantly with the pattern in the LoC data; the answer was yes.
 
