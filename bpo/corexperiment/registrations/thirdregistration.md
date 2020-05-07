@@ -8,7 +8,7 @@ First a quick summary of results from the last set of experiments.
 results from second experiment
 -------------------------------
 
-The main question we posed was whether genre boundaries become strongest in the second half of the twentieth century. Formally, is there is some year Y in the second half of the twentieth century, such that average generic closeness (outgenre_distance - ingenre_distance) increases from 1860 to that year, and decreases thereafter. We expected both correlations to be significant at p < .05, if we compare the differences for individual pairs of books to the midpoint dates for those pairs.
+The main question we posed was whether genre clustering becomes strongest in the second half of the twentieth century. Formally, is there is some year Y in the second half of the twentieth century, such that clustering strength (outgenre_distance - ingenre_distance) increases from 1860 to that year, and decreases thereafter. We expected both correlations to be significant at p < .05, if we compare the differences for individual pairs of books to the midpoint dates for those pairs.
 
 We asked this using LoC genre labels assigned by librarians. The answer was "yes": there was a significant rise to some point in the later 20c, and a significant decline thereafter, for all of the measurement methods we proposed. Because we tried a couple of different methods, we cannot precisely pinpoint the peak, but it's probably somewhere between 1950 and 1975.
 
