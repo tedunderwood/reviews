@@ -27,10 +27,17 @@ Although we got statistically significant results for all of the experiments, we
 
 To address these concerns (and a few others), we propose another version of the LoC experiment, with these adjustments:
 
-+ we will use almost 2x the total number of books (more than 6000), and in particular almost 3x more "fully random" books (around 1100),
-+ also sample volumes in a more strictly random way (allowing genre proportions to vary), and sample them more evenly across the timeline
-+ keep the sizes of those books relatively constant (by excluding volumes < 11000 words and truncating ones > 60000 words),
++ We will use almost 2x the total number of books (more than 6000), and in particular almost 3x more "fully random" books (around 1100),
++ We will also sample volumes in a more strictly random way (allowing genre proportions to vary), and sample them more evenly across the timeline. The one small exception to this: we will ensure that there are at least 3 volumes in each genre in each decade (if at least 3 are available in Hathi). Otherwise some volumes could become "orphans," without any nearby point of comparison in the same genre (or only one). This supplement only adds ~50 volumes to our ~6000 volume sample.
++ We will keep the sizes (lengths) of volumes relatively constant (by excluding volumes < 11000 words and down-sampling ones > 60000 words),
 + manually groom the list to exclude obvious nonfiction, and
-+ weight word-frequency vectors using the Delta logic rather than tf-idf, guided by the arguments in [Evert et al.](https://academic.oup.com/dsh/article/32/suppl_2/ii4/3865676)
++ weight word-frequency vectors using the Delta logic rather than tf-idf, guided by the arguments in [Evert et al.](https://academic.oup.com/dsh/article/32/suppl_2/ii4/3865676) We will continue to use the 2500 most common words selected by document frequency.
++ Finally, we're dropping the "novel" category, since it includes most of the other categories in an anomalous way.
 
+**Hypothesis to test:**
 
+To be candid, we already know that the Delta weighting strategy produces results very similar to the tf-idf weighting strategy. So this experiment is not really a "test" of that metric. The results we have found so far hold up well with either strategy, but we find that Delta is more interpretable, less noisy, and preferred by other researchers, so we are simply planning to adopt it.
+
+The question that is still open, without a known answer, is whether the late-twentieth-century peak we found in our second experiment will persist when we use a sample of books drawn entirely randomly. This strategy will allow our sample to be dominated in some periods by a smaller number of genres (especially historical fiction and war stories; to a smaller degree, short stories and fiction with an autobiographical dimension.) In some periods historical fiction will make up more than a third (or almost half) of the sample.
+
+We don't know what this will do to the pattern, but we hypothesize that we will still see a late-20c peak, where ingenre distances are smaller relative to outgenre distances than before or after.
