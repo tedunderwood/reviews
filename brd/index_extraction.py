@@ -58,8 +58,8 @@ pattern2_1 = re.compile(" [A-Z][a-z]+")
 pattern2_2 = re.compile("[.:]\s[A-Z][a-z]+")
 
 
-year = ['1921','1922','1923','1924','1925','1926','1927','1928','1929','1930','1931','1932','1933','1934','1935','1936','1937','1938','1939','1940','1941','1942','1943','1944','1945','1946','1947','1948','1949','1950','1951','1952','1953','1954','1955','1956','1957','1958','1959','1962','1963','1964','1965','1966','1967','1968','1969','1970','1971','1972','1973','1974','1975','1978','1979','1980']
-suffix = ['32106019850368','32106019610374','32106019610382','32106019610390','32106019610408','32106019610416','32106019610424','32106019610432','32106019610440','32106019610457','39015078261180','32106019610465','32106019610473','32106019610481','32106019610499','39015078261230','32106019610507','32106019610515','32106019610523','32106019610531','39015078261289','32106019610549','32106019610556','32106019610564','32106019610572','32106019610580','32106019610598','32106019610606','32106019610614','39015078261370','39015078261388','32106019610622','32106019610630','32106019610648','32106019610655','39015078261438','32106019610663','32106019610671','32106019610689','39015078261495','32106019848347','39015078261511','39015078261529','39015078261537','39015078261552','39015078261560','39015078261578','39015078261586','39015078261594','39015078261610','39015078261628','39015078261636','39015078261685','39015078261701','39015078261719','39015078261727','30000114363876']
+year = ['1921','1922','1923','1924','1925','1926','1927','1928','1929','1930','1931','1932','1933','1934','1935','1936','1937','1938','1939','1940','1941','1942','1943','1944','1945','1946','1947','1948','1949','1950','1951','1952','1953','1954','1955','1956','1957','1958','1959','1962','1963','1964','1965','1966','1967','1968','1969','1970','1971','1972','1973','1974','1975','1976','1977']
+suffix = ['32106019850368','32106019610374','32106019610382','32106019610390','32106019610408','32106019610416','32106019610424','32106019610432','32106019610440','32106019610457','39015078261180','32106019610465','32106019610473','32106019610481','32106019610499','39015078261230','32106019610507','32106019610515','32106019610523','32106019610531','39015078261289','32106019610549','32106019610556','32106019610564','32106019610572','32106019610580','32106019610598','32106019610606','32106019610614','39015078261370','39015078261388','32106019610622','32106019610630','32106019610648','32106019610655','39015078261438','32106019610663','32106019610671','32106019610689','39015078261495','32106019848347','39015078261511','39015078261529','39015078261537','39015078261552','39015078261560','39015078261578','39015078261586','39015078261594','39015078261610','39015078261628','39015078261636','39015078261685','39015078261693','39015078261701']
 
 length=len(year)
 year_suffix=[]
@@ -88,12 +88,15 @@ for year, suffix in year_suffix:
     volume1935=0
     volume1944=0
     volume1972=0
+    volume1976_and_later=0
     if(year=='1935'):
         volume1935=1
     if(year=='1944'):
         volume1944=1
     if(year=='1972'):
         volume1972=1
+    if(int(year)>=1976):
+        volume1976_and_later=1
     volume_id = int(year) - 1904  # volume id
     file1 = open("/media/secure_volume/brd/output_index/volume%i extract.txt" % volume_id, 'w', encoding='utf-8')
     file2 = open("/media/secure_volume/brd/output_index/volume%i discard.txt" % volume_id, 'w', encoding='utf-8')
@@ -186,6 +189,8 @@ for year, suffix in year_suffix:
                                     continue
                             if (text[k + j] in subheadings or text[
                                 k + j] in wrong_headings or text [k+j][-11:]=='Collections' or text[k+j][0:13]=='United States' or text[k+j][0:13]=='United State*' or text[k+j][0:13]=='United Btates' or text[k+j][0:13]=='United Slutcs' or text[k+j][0:12]=='United 8tate' or text[k+j][-13:]=='United States' or text[k+j][0:6]=='France' or text[k+j][0:6]=='Russia' or text[k+j][0:7]=='America' or text[k+j][0:7]=='England' or text[k+j][0:7]=='Britain' or text[k+j][0:13]=='Great Britain' or text[k+j][0:13]=='Qreat Britain' or text[k+j][0:7]=='Germany' or text[k+j][0:7]=='Austria' or (text[k+j][0:6]=='States' and text[k+j][-18:]=='Nineteenth century') or (text[k+j][0:11]=='Inquisition' and text[k+j][12:17]=='Spain') or text[k+j][0:11]=='Set Fiction' or text[k+j][0:11]=='Bee Fiction' or (text[k+j][0:7]=='Fiction' and text[k+j][8:17]=='Ciintinui') or (text[k+j][0:3]=='Pru' and text[k+j][5:7]=='io' or (text[k+j][0:7]=='Fiction' and text[k+j][8:13]=='Youth') or (text[k+j][0:7]=='Fiction' and text[k+j][8:22]=='Mental illness') or (text[k+j][0:7]=='Fiction' and text[k+j][8:27]=='United States. Navy') or (text[k+j][0:7]=='Fiction' and text[k+j][8:21]=='Race problems') or (text[k+j][0:7]=='Fiction' and text[k+j][8:21]=='Psychiatrists') or (text[k+j][0:7]=='Fiction' and text[k+j][8:16]=='Surgeons') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Chicago. University') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='Oxiord. University') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='School life') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='Vassar College') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='College life') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Poets') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Teachers') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Homosexuality') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Atomic submarines') or (text[k+j][0:26]=='Swados, H. Story for Teddy' and text[k+j][-3:]=='and') or (text[k+j][0:11]=='Sea Fiction' and text[k+j][12:]=='Refugees') or (text[k+j][0:7]=='Germanv' and text[k+j][8:]=='Nasi movement') or (text[k+j][0:5]=='Papua' and text[k+j][6:]=='New Guinea'))):  # For wrong headings, ignore them
+                                continue
+                            if(volume1976_and_later==1 and '.' in text[j+k]):
                                 continue
                             fiction_headings.append(text[k + j])  # Otherwise, add that heading into the list or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='Vassar College')
                             fiction_books.append(
@@ -331,6 +336,8 @@ for year, suffix in year_suffix:
                                     continue
                             if (text[k + j] in subheadings or text[
                                 k + j] in wrong_headings or text [k+j][-11:]=='Collections' or text[k+j][0:13]=='United States' or text[k+j][0:13]=='United State*' or text[k+j][0:13]=='United Btates' or text[k+j][0:13]=='United Slutcs' or text[k+j][0:12]=='United 8tate' or text[k+j][-13:]=='United States' or text[k+j][0:6]=='France' or text[k+j][0:6]=='Russia' or text[k+j][0:7]=='America' or text[k+j][0:7]=='England' or text[k+j][0:7]=='Britain' or text[k+j][0:13]=='Great Britain' or text[k+j][0:13]=='Qreat Britain' or text[k+j][0:7]=='Germany' or text[k+j][0:7]=='Austria' or (text[k+j][0:6]=='States' and text[k+j][-18:]=='Nineteenth century') or (text[k+j][0:11]=='Inquisition' and text[k+j][12:17]=='Spain') or text[k+j][0:11]=='Set Fiction' or text[k+j][0:11]=='Bee Fiction' or (text[k+j][0:7]=='Fiction' and text[k+j][8:17]=='Ciintinui') or (text[k+j][0:3]=='Pru' and text[k+j][5:7]=='io' or (text[k+j][0:7]=='Fiction' and text[k+j][8:13]=='Youth') or (text[k+j][0:7]=='Fiction' and text[k+j][8:22]=='Mental illness') or (text[k+j][0:7]=='Fiction' and text[k+j][8:27]=='United States. Navy') or (text[k+j][0:7]=='Fiction' and text[k+j][8:21]=='Race problems') or (text[k+j][0:7]=='Fiction' and text[k+j][8:21]=='Psychiatrists') or (text[k+j][0:7]=='Fiction' and text[k+j][8:16]=='Surgeons') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Chicago. University') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='Oxiord. University') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='School life') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='Vassar College') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='College life') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Poets') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Teachers') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Homosexuality') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Atomic submarines') or (text[k+j][0:26]=='Swados, H. Story for Teddy' and text[k+j][-3:]=='and') or (text[k+j][0:11]=='Sea Fiction' and text[k+j][12:]=='Refugees') or (text[k+j][0:7]=='Germanv' and text[k+j][8:]=='Nasi movement') or (text[k+j][0:5]=='Papua' and text[k+j][6:]=='New Guinea'))):  # For wrong headings, ignore them
+                                continue
+                            if (volume1976_and_later == 1 and '.' in text[j + k]):
                                 continue
                             fiction_headings.append(text[k + j])  # Otherwise, add that heading into the list
                             fiction_books.append(
