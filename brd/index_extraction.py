@@ -34,7 +34,7 @@ subheadings = ['Afrikaani','Annlv','Borchert','Africa. Wett','For East','Bong Ko
 subheadings = sorted(list(set(subheadings)))
 print(subheadings)
 # a list of headings that follows the fiction section. Need to add manually each time
-nextheadings = ['Fiction, English. See English Action','Fiction & the colonial experience. Meyers. J.','Fiction of Jack London. Walker. D. L. (Ag "73)','Fiction, American. See American Action','Finance, Personal . . ...','Fiction, American. See American fiction','Fiction of E. M. Forster. Thomson, G. H. (Ja','Fiction; v. 1 of Southern writing in the sixties.','Fiction in public libraries, 1S76-1900. Carrier,','Field, Noel Havlland','Fiction of the forties. Elslnger. C. B. (Mr\'64)','Field, James Thomas','Field administration in the United Nations','Field guide to reptiles and amphibians. Conant,','Fiction and the unconscious. Lesser, S. O. (Ap','Fiction fights the Civil war. Lively. R. A.','Fiction factory. Reynolds. Q. J. (Mr \'6*)','Fiction factory. Reynolds. Q. J. (Mr \'6*)','Fiction goes to court. Blausteln, A, P.. ed.','Field full of people. Hazel, R. (D \'54)','Fiddle, a sword, and a lady. Spaldlng, A.','Fiddling cowboy In search of gold. Regll, A.','Flddlefoot. Glidden, F. D. (Ag \'49) _','Fiddler crab and the sand dollar. Henle, M. E.','Flddlefoot. Glidden, F. D. (Ag \'49)','Fidus Achatea. Eng title of: Paris of Troy.','Field guide to the birds. [2d rev & enl ed].','Fiction catalog, 1941. (My \'43)','Fifty years of_ best sellers. 1896-1945. Hackett.','Fiddler In the sky. Homeland, K. (Je \'44)','Fiction catalog. 1941. (My \'43)','Fiddle Longspay. Bledsoe, W. (Ag \'42)','Fiction writing self-taught. Hoffman, A. S.','Field of honor. St Johns, A. (S \'38)','Field, Cyrus West','Fiddler\'s coin. Abbott, J. L. (S \'34)','Fields of Gomorrah. White, N. (N \'35)','Fiddler\'s coin. Abbott, J. L,. (S \'34)','Field book of the shore fishes of Bermuda.','Fifteen and five. Bernstein. A. (Ag \'32)','Fiddler. Mlllln, S. G. (S \'29)','Field, David Dudley','Fiddler. Mlllin. S. G. (S \'29)','Field book of common ferns. Durand, H. (D','Fiction as she is wrote. Knox, E. G: V. (D','Field book of common rocks and minerals.','Field, Eugene','Fiddler\'s luck. Schauffler, R. H. (Jl JO)','Fiddler\'s luck. Schauﬂier, R. H. (Jl \'20)','Fiddier\'s luck. _ Schauﬂ\'ler, R. H. (.11 \'20)', 'Field ambulance sketches. (N \'19',
+nextheadings = ['Fiction as knowledge. McCormick, J.','Fiction and the camera eye. Spiegel. A.','Fiction, English. See English Action','Fiction & the colonial experience. Meyers. J.','Fiction of Jack London. Walker. D. L. (Ag "73)','Fiction, American. See American Action','Finance, Personal . . ...','Fiction, American. See American fiction','Fiction of E. M. Forster. Thomson, G. H. (Ja','Fiction; v. 1 of Southern writing in the sixties.','Fiction in public libraries, 1S76-1900. Carrier,','Field, Noel Havlland','Fiction of the forties. Elslnger. C. B. (Mr\'64)','Field, James Thomas','Field administration in the United Nations','Field guide to reptiles and amphibians. Conant,','Fiction and the unconscious. Lesser, S. O. (Ap','Fiction fights the Civil war. Lively. R. A.','Fiction factory. Reynolds. Q. J. (Mr \'6*)','Fiction factory. Reynolds. Q. J. (Mr \'6*)','Fiction goes to court. Blausteln, A, P.. ed.','Field full of people. Hazel, R. (D \'54)','Fiddle, a sword, and a lady. Spaldlng, A.','Fiddling cowboy In search of gold. Regll, A.','Flddlefoot. Glidden, F. D. (Ag \'49) _','Fiddler crab and the sand dollar. Henle, M. E.','Flddlefoot. Glidden, F. D. (Ag \'49)','Fidus Achatea. Eng title of: Paris of Troy.','Field guide to the birds. [2d rev & enl ed].','Fiction catalog, 1941. (My \'43)','Fifty years of_ best sellers. 1896-1945. Hackett.','Fiddler In the sky. Homeland, K. (Je \'44)','Fiction catalog. 1941. (My \'43)','Fiddle Longspay. Bledsoe, W. (Ag \'42)','Fiction writing self-taught. Hoffman, A. S.','Field of honor. St Johns, A. (S \'38)','Field, Cyrus West','Fiddler\'s coin. Abbott, J. L. (S \'34)','Fields of Gomorrah. White, N. (N \'35)','Fiddler\'s coin. Abbott, J. L,. (S \'34)','Field book of the shore fishes of Bermuda.','Fifteen and five. Bernstein. A. (Ag \'32)','Fiddler. Mlllln, S. G. (S \'29)','Field, David Dudley','Fiddler. Mlllin. S. G. (S \'29)','Field book of common ferns. Durand, H. (D','Fiction as she is wrote. Knox, E. G: V. (D','Field book of common rocks and minerals.','Field, Eugene','Fiddler\'s luck. Schauffler, R. H. (Jl JO)','Fiddler\'s luck. Schauﬂier, R. H. (Jl \'20)','Fiddier\'s luck. _ Schauﬂ\'ler, R. H. (.11 \'20)', 'Field ambulance sketches. (N \'19',
                 'Field book of insects. Lutz. . E.', 'Fielchrtlips for the cotton-belt. Morgan. J. O.',
                 'Fifth wheel. Prouty, 0. H. (Ap \'16)', 'Fifteens thousand miles by stage. Strahorn, C.',
                 'Fifty years in Oregon. Geer, T. T. (Jl. \'12.)', 'Field-days in California. Torrey. B. (Ap \'18)',
@@ -97,6 +97,8 @@ for year, suffix in year_suffix:
         volume1972=1
     if(int(year)>=1976):
         volume1976_and_later=1
+    if(volume1976_and_later==1):
+        print('sb')
     volume_id = int(year) - 1904  # volume id
     file1 = open("/media/secure_volume/brd/output_index/volume%i extract.txt" % volume_id, 'w', encoding='utf-8')
     file2 = open("/media/secure_volume/brd/output_index/volume%i discard.txt" % volume_id, 'w', encoding='utf-8')
@@ -139,7 +141,11 @@ for year, suffix in year_suffix:
         text = []
         for i in range(index_startpage, index_endpage):
             for j in range(len(pagelist[i])):
-                bookcount += pagelist[i][j].count('(')  # how many books are there in the index in total
+                if(volume1976_and_later==0):
+                    bookcount += pagelist[i][j].count('(')  # how many books are there in the index in total
+                else:
+                    if('.' in pagelist[i][j]):
+                        bookcount+=1
                 if (pagelist[i][j] != ''):
                     text.append(pagelist[i][j])
             linelength=len(text)
@@ -173,6 +179,8 @@ for year, suffix in year_suffix:
                         break
                     if '(' in text[j + k]:
                         bookcount_fiction_about += 1
+                    elif(volume1976_and_later==1 and '.' in text[j+k]):
+                        bookcount_fiction_about+=1
                     if len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
                         k + j] and '\'' not in text[
                         k + j]:  # must be at least 2 characters, no more than 25 characters (avoiding titles not finished in a line to be included, not including '(' to avoid OCR error) # next line beginning with non-characterized character
