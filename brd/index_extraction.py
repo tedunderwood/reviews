@@ -52,9 +52,9 @@ pattern1_3 = re.compile(
 pattern1_4 = re.compile("[A-Z]['‘]*[a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*[,.:]*\sSir\s[A-Za-z01][,.:]+\s")  # names with "Sir"
 pattern1_5 = re.compile(
     "[A-Z]['‘]*[a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*\s[A-Z][a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*[,.:]*\s[A-Z]*\s*[A-Za-z01][,.:]+\s")  # family names with two words "Du Puy"
-pattern2 = re.compile("[A-Z][a-z]+")
-pattern2_1 = re.compile(" [A-Z][a-z]+")
-pattern2_2 = re.compile("[.:]\s[A-Z][a-z]+")
+pattern2 = re.compile("[A-Z][]?[a-z]+")
+pattern2_1 = re.compile(" [A-Z][]?[a-z]+")
+pattern2_2 = re.compile("[.:]\s[A-Z][]?[a-z]+")
 
 
 year = ['1921','1922','1923','1924','1925','1926','1927','1928','1929','1930','1931','1932','1933','1934','1935','1936','1937','1938','1939','1940','1941','1942','1943','1944','1945','1946','1947','1948','1949','1950','1951','1952','1953','1954','1955','1956','1957','1958','1959','1962','1963','1964','1965','1966','1967','1968','1969','1970','1971','1972','1973','1974','1975','1976','1977','1978']
@@ -178,9 +178,11 @@ for year, suffix in year_suffix:
                         bookcount_fiction_about += 1
                     elif(volume1976_and_later==1 and '.' in text[j+k]):
                         bookcount_fiction_about+=1
-                    if len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
+                    if ((volume1976_and_later!=0 and len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
                         k + j] and '\'' not in text[
-                        k + j]:  # must be at least 2 characters, no more than 25 characters (avoiding titles not finished in a line to be included, not including '(' to avoid OCR error) # next line beginning with non-characterized character
+                        k + j]) or (volume1976_and_later==0 and len(text[j + k]) > 1 and '.' not in text[
+                        k + j] and '\'' not in text[
+                        k + j])):  # must be at least 2 characters, no more than 25 characters (avoiding titles not finished in a line to be included, not including '(' to avoid OCR error) # next line beginning with non-characterized character
                         if (text[k + j][0] >= 'A' and text[k + j][0] <= 'Z' and text[k + j][1] >= 'a' and
                                 text[k + j][1] <= 'z' and (
                                         text[k + j][-1] >= 'a' and text[k + j][-1] <= 'z' or text[
@@ -194,8 +196,6 @@ for year, suffix in year_suffix:
                                     continue
                             if (text[k + j] in subheadings or text[
                                 k + j] in wrong_headings or text [k+j][-11:]=='Collections' or text[k+j][0:13]=='United States' or text[k+j][0:13]=='United State*' or text[k+j][0:13]=='United Btates' or text[k+j][0:13]=='United Slutcs' or text[k+j][0:12]=='United 8tate' or text[k+j][-13:]=='United States' or text[k+j][0:6]=='France' or text[k+j][0:6]=='Russia' or text[k+j][0:7]=='America' or text[k+j][0:7]=='England' or text[k+j][0:7]=='Britain' or text[k+j][0:13]=='Great Britain' or text[k+j][0:13]=='Qreat Britain' or text[k+j][0:7]=='Germany' or text[k+j][0:7]=='Austria' or (text[k+j][0:6]=='States' and text[k+j][-18:]=='Nineteenth century') or (text[k+j][0:11]=='Inquisition' and text[k+j][12:17]=='Spain') or text[k+j][0:11]=='Set Fiction' or text[k+j][0:11]=='Bee Fiction' or (text[k+j][0:7]=='Fiction' and text[k+j][8:17]=='Ciintinui') or (text[k+j][0:3]=='Pru' and text[k+j][5:7]=='io' or (text[k+j][0:7]=='Fiction' and text[k+j][8:13]=='Youth') or (text[k+j][0:7]=='Fiction' and text[k+j][8:22]=='Mental illness') or (text[k+j][0:7]=='Fiction' and text[k+j][8:27]=='United States. Navy') or (text[k+j][0:7]=='Fiction' and text[k+j][8:21]=='Race problems') or (text[k+j][0:7]=='Fiction' and text[k+j][8:21]=='Psychiatrists') or (text[k+j][0:7]=='Fiction' and text[k+j][8:16]=='Surgeons') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Chicago. University') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='Oxiord. University') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='School life') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='Vassar College') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='College life') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Catholic priests') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Poets') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Teachers') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Spies')  or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Navaho Indians') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='International intrigue') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Poker') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Espionage') or (text[k+j][0:11]=='Sea Fiction' and text[k+j][12:]=='Feminism') or (text[k+j][0:11]=='Sea Fiction' and text[k+j][12:]=='Politics') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Atomic warfare') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Homosexuality') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Atomic submarines') or (text[k+j][0:26]=='Swados, H. Story for Teddy' and text[k+j][-3:]=='and') or (text[k+j][0:11]=='Sea Fiction' and text[k+j][12:]=='Refugees') or (text[k+j][0:7]=='Germanv' and text[k+j][8:]=='Nasi movement') or (text[k+j][0:5]=='Papua' and text[k+j][6:]=='New Guinea'))):  # For wrong headings, ignore them
-                                continue
-                            if(volume1976_and_later==1 and '.' in text[j+k]):
                                 continue
                             fiction_headings.append(text[k + j])  # Otherwise, add that heading into the list or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='Vassar College')
                             fiction_books.append(
@@ -316,9 +316,6 @@ for year, suffix in year_suffix:
             count = -1
             if (text[j] == "Fiction (classified by subject)" or text[j]=='Fiction (classified according to subject)' or text[j]=='Fiction (c\'assifled according to subject)'):
                 for k in list(range(1, linelength - j)):
-                    if(volume1976_and_later==1):
-                        print(text[j+k])
-                        print(count)
                     if (text[j + k] in nextheadings):  # if fiction section ends
                         break
                     if '(' in text[j + k]:
@@ -333,10 +330,12 @@ for year, suffix in year_suffix:
                     elif len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
                         k + j] and '\'' not in text[
                         k + j]:  # must be at least 2 characters, no more than 25 characters (avoiding titles not finished in a line to be included, not including '(' to avoid OCR error) # next line beginning with non-characterized character
-                        if (text[k + j][0] >= 'A' and text[k + j][0] <= 'Z' and text[k + j][1] >= 'a' and
-                                text[k + j][1] <= 'z' and (
-                                        text[k + j][-1] >= 'a' and text[k + j][-1] <= 'z' or text[
-                                    k + j] == ':')):  # first character A-Z, second a-z (avoiding "BOOK REVIEW DIGEST"), last a-z or 0-9 (eg "Adams, Henry, 1838-1918")
+                        if ((volume1976_and_later != 0 and len(text[j + k]) > 1 and len(
+                                text[k + j]) <= 30 and '(' not in text[
+                                 k + j] and '\'' not in text[
+                                 k + j]) or (volume1976_and_later == 0 and len(text[j + k]) > 1 and '.' not in text[
+                            k + j] and '\'' not in text[
+                                                 k + j])):  # first character A-Z, second a-z (avoiding "BOOK REVIEW DIGEST"), last a-z or 0-9 (eg "Adams, Henry, 1838-1918")
                             if (len(text[
                                         k + j]) >= 4):  # Sometimes a heading contains no books, but direct to "See other sections"
                                 if (text[k + j][:4] in ['See ', 'Sec ', 'Sac ']):
@@ -355,14 +354,10 @@ for year, suffix in year_suffix:
                             count += 1  # to count the number of lists in the booklist
                     if (text[
                         j + k] in fiction_headings):  # begin to add lines to book list, skip the lines that already in heading list
-                        if (volume1976_and_later == 1):
-                            print(text[j + k])
                         continue
                     elif (
                             count >= 0):  # if there is already a list in the book list (which means there is already list in headings)
                         fiction_books[count].append(text[j + k])  # add texts into the booklist
-                        if(volume1976_and_later==1):
-                            print(fiction_books[count])
                 length = len(fiction_headings)
 
                 fiction_authors = []  # to store the names of authors
