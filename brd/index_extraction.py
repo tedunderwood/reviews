@@ -318,6 +318,7 @@ for year, suffix in year_suffix:
                 for k in list(range(1, linelength - j)):
                     if(volume1976_and_later==1):
                         print(text[j+k])
+                        print(count)
                     if (text[j + k] in nextheadings):  # if fiction section ends
                         break
                     if '(' in text[j + k]:
@@ -355,6 +356,8 @@ for year, suffix in year_suffix:
                     if (text[
                         j + k] in fiction_headings):  # begin to add lines to book list, skip the lines that already in heading list
                         continue
+                        if(volume1976_and_later==1):
+                            print(text[j+k])
                     elif (
                             count >= 0):  # if there is already a list in the book list (which means there is already list in headings)
                         fiction_books[count].append(text[j + k])  # add texts into the booklist
