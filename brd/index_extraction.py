@@ -178,7 +178,7 @@ for year, suffix in year_suffix:
                         bookcount_fiction_about += 1
                     elif(volume1976_and_later==1 and '.' in text[j+k]):
                         bookcount_fiction_about+=1
-                    if ((volume1976_and_later!=1 and len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
+                    if ((volume1976_and_later==0 and len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
                         k + j] and '\'' not in text[
                         k + j]) or (volume1976_and_later==1 and len(text[j + k]) > 1 and '.' not in text[
                         k + j] and '\'' not in text[
@@ -327,15 +327,14 @@ for year, suffix in year_suffix:
                         fiction_books.append(
                             [])  # add an empty list to the booklist, to match the headinglist
                         count += 1  # to count the number of lists in the booklist
-                    elif len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
-                        k + j] and '\'' not in text[
-                        k + j]:  # must be at least 2 characters, no more than 25 characters (avoiding titles not finished in a line to be included, not including '(' to avoid OCR error) # next line beginning with non-characterized character
-                        if ((volume1976_and_later != 1 and len(text[j + k]) > 1 and len(
+                    elif ((volume1976_and_later ==0 and len(text[j + k]) > 1 and len(
                                 text[k + j]) <= 30 and '(' not in text[
                                  k + j] and '\'' not in text[
                                  k + j]) or (volume1976_and_later == 1 and len(text[j + k]) > 1 and '.' not in text[
                             k + j] and '\'' not in text[
-                                                 k + j])):  # first character A-Z, second a-z (avoiding "BOOK REVIEW DIGEST"), last a-z or 0-9 (eg "Adams, Henry, 1838-1918")
+                                                 k + j])):  # must be at least 2 characters, no more than 25 characters (avoiding titles not finished in a line to be included, not including '(' to avoid OCR error) # next line beginning with non-characterized character
+                        if (text[k + j][0] >= 'A' and text[k + j][0] <= 'Z' and text[k + j][1] >= 'a' and
+                                    text[k + j][1] <= 'z' and (text[k + j][-1] >= 'a' and text[k + j][-1] <= 'z' or text[k + j] == ':')):  # first character A-Z, second a-z (avoiding "BOOK REVIEW DIGEST"), last a-z or 0-9 (eg "Adams, Henry, 1838-1918")
                             if (len(text[
                                         k + j]) >= 4):  # Sometimes a heading contains no books, but direct to "See other sections"
                                 if (text[k + j][:4] in ['See ', 'Sec ', 'Sac ']):
@@ -345,8 +344,6 @@ for year, suffix in year_suffix:
                                     continue
                             if (text[k + j] in subheadings or text[
                                 k + j] in wrong_headings or text [k+j][-11:]=='Collections' or text[k+j][0:13]=='United States' or text[k+j][0:13]=='United State*' or text[k+j][0:13]=='United Btates' or text[k+j][0:13]=='United Slutcs' or text[k+j][0:12]=='United 8tate' or text[k+j][-13:]=='United States' or text[k+j][0:6]=='France' or text[k+j][0:6]=='Russia' or text[k+j][0:7]=='America' or text[k+j][0:7]=='England' or text[k+j][0:7]=='Britain' or text[k+j][0:13]=='Great Britain' or text[k+j][0:13]=='Qreat Britain' or text[k+j][0:7]=='Germany' or text[k+j][0:7]=='Austria' or (text[k+j][0:6]=='States' and text[k+j][-18:]=='Nineteenth century') or (text[k+j][0:11]=='Inquisition' and text[k+j][12:17]=='Spain') or text[k+j][0:11]=='Set Fiction' or text[k+j][0:11]=='Bee Fiction' or (text[k+j][0:7]=='Fiction' and text[k+j][8:17]=='Ciintinui') or (text[k+j][0:3]=='Pru' and text[k+j][5:7]=='io' or (text[k+j][0:7]=='Fiction' and text[k+j][8:13]=='Youth') or (text[k+j][0:7]=='Fiction' and text[k+j][8:22]=='Mental illness') or (text[k+j][0:7]=='Fiction' and text[k+j][8:27]=='United States. Navy') or (text[k+j][0:7]=='Fiction' and text[k+j][8:21]=='Race problems') or (text[k+j][0:7]=='Fiction' and text[k+j][8:21]=='Psychiatrists') or (text[k+j][0:7]=='Fiction' and text[k+j][8:16]=='Surgeons') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Chicago. University') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='Oxiord. University') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='School life') or (text[k+j][0:7]=='Fiction' and text[k+j][10:]=='Vassar College') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='College life') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Catholic priests') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Poets') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Teachers') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Spies')  or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Navaho Indians') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='International intrigue') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Poker') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Espionage') or (text[k+j][0:11]=='Sea Fiction' and text[k+j][12:]=='Feminism') or (text[k+j][0:11]=='Sea Fiction' and text[k+j][12:]=='Politics') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Atomic warfare') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Homosexuality') or (text[k+j][0:7]=='Fiction' and text[k+j][8:]=='Atomic submarines') or (text[k+j][0:26]=='Swados, H. Story for Teddy' and text[k+j][-3:]=='and') or (text[k+j][0:11]=='Sea Fiction' and text[k+j][12:]=='Refugees') or (text[k+j][0:7]=='Germanv' and text[k+j][8:]=='Nasi movement') or (text[k+j][0:5]=='Papua' and text[k+j][6:]=='New Guinea'))):  # For wrong headings, ignore them
-                                continue
-                            if (volume1976_and_later == 1 and '.' in text[j + k]):
                                 continue
                             fiction_headings.append(text[k + j])  # Otherwise, add that heading into the list
                             fiction_books.append(
