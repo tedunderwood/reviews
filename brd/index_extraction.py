@@ -358,7 +358,8 @@ for year, suffix in year_suffix:
                     elif (
                             count >= 0):  # if there is already a list in the book list (which means there is already list in headings)
                         fiction_books[count].append(text[j + k])  # add texts into the booklist
-                        print(fiction_books[count])
+                        if(volume1976_and_later==1):
+                            print(fiction_books[count])
                 length = len(fiction_headings)
 
                 fiction_authors = []  # to store the names of authors
