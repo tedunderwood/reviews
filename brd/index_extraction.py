@@ -376,6 +376,7 @@ for year, suffix in year_suffix:
                         print('<\heading "%s">' % fiction_headings[
                             k])  # print headings and all the content of each heading
                         count = -1
+                        print(fiction_books[k])
                         for m in list(range(len(fiction_books[k]))):
                             if(fiction_headings[k]=='Women' or [k]=='Young people' or fiction_headings[k]=='Youth' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or fiction_headings[k]=='World war, 1939-1945' or fiction_headings[k]=='Whaling industry' or fiction_headings[k]=='Writers' or fiction_headings[k]=='Zoological specimens' or fiction_headings[k]=='Collection and preservation'):
                                 print(fiction_books[k][m])
