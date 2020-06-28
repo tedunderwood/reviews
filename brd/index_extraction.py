@@ -355,9 +355,9 @@ for year, suffix in year_suffix:
                             count += 1  # to count the number of lists in the booklist
                     if (text[
                         j + k] in fiction_headings):  # begin to add lines to book list, skip the lines that already in heading list
+                        if (volume1976_and_later == 1):
+                            print(text[j + k])
                         continue
-                        if(volume1976_and_later==1):
-                            print(text[j+k])
                     elif (
                             count >= 0):  # if there is already a list in the book list (which means there is already list in headings)
                         fiction_books[count].append(text[j + k])  # add texts into the booklist
