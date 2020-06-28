@@ -316,6 +316,8 @@ for year, suffix in year_suffix:
             count = -1
             if (text[j] == "Fiction (classified by subject)" or text[j]=='Fiction (classified according to subject)' or text[j]=='Fiction (c\'assifled according to subject)'):
                 for k in list(range(1, linelength - j)):
+                    if(volume1976_and_later==1):
+                        print(text[j+k])
                     if (text[j + k] in nextheadings):  # if fiction section ends
                         break
                     if '(' in text[j + k]:
@@ -375,7 +377,7 @@ for year, suffix in year_suffix:
                             k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
-                            if(volume1976_and_later==1 or fiction_headings[k]=='Women' or [k]=='Young people' or fiction_headings[k]=='Youth' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or fiction_headings[k]=='World war, 1939-1945' or fiction_headings[k]=='Whaling industry' or fiction_headings[k]=='Writers' or fiction_headings[k]=='Zoological specimens' or fiction_headings[k]=='Collection and preservation'):
+                            if(fiction_headings[k]=='Women' or [k]=='Young people' or fiction_headings[k]=='Youth' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or fiction_headings[k]=='World war, 1939-1945' or fiction_headings[k]=='Whaling industry' or fiction_headings[k]=='Writers' or fiction_headings[k]=='Zoological specimens' or fiction_headings[k]=='Collection and preservation'):
                                 print(fiction_books[k][m])
                             if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
                                                                                                fiction_books[k][
