@@ -52,9 +52,9 @@ pattern1_3 = re.compile(
 pattern1_4 = re.compile("[A-Z]['‘]*[a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*[,.:]*\sSir\s[A-Za-z01][,.:]+\s")  # names with "Sir"
 pattern1_5 = re.compile(
     "[A-Z]['‘]*[a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*\s[A-Z][a-zé§¢ﬂﬁ]+['‘]*[a-zé§¢ﬂﬁ]*[,.:]*\s[A-Z]*\s*[A-Za-z01][,.:]+\s")  # family names with two words "Du Puy"
-pattern2 = re.compile("[A-Z][]?[a-z]+")
-pattern2_1 = re.compile(" [A-Z][]?[a-z]+")
-pattern2_2 = re.compile("[.:]\s[A-Z][]?[a-z]+")
+pattern2 = re.compile("[A-Z][ ]?[a-z]+")
+pattern2_1 = re.compile(" [A-Z][ ]?[a-z]+")
+pattern2_2 = re.compile("[.:]\s[A-Z][ ]?[a-z]+")
 
 
 year = ['1921','1922','1923','1924','1925','1926','1927','1928','1929','1930','1931','1932','1933','1934','1935','1936','1937','1938','1939','1940','1941','1942','1943','1944','1945','1946','1947','1948','1949','1950','1951','1952','1953','1954','1955','1956','1957','1958','1959','1962','1963','1964','1965','1966','1967','1968','1969','1970','1971','1972','1973','1974','1975','1976','1977','1978']
@@ -178,9 +178,9 @@ for year, suffix in year_suffix:
                         bookcount_fiction_about += 1
                     elif(volume1976_and_later==1 and '.' in text[j+k]):
                         bookcount_fiction_about+=1
-                    if ((volume1976_and_later!=0 and len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
+                    if ((volume1976_and_later!=1 and len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
                         k + j] and '\'' not in text[
-                        k + j]) or (volume1976_and_later==0 and len(text[j + k]) > 1 and '.' not in text[
+                        k + j]) or (volume1976_and_later==1 and len(text[j + k]) > 1 and '.' not in text[
                         k + j] and '\'' not in text[
                         k + j])):  # must be at least 2 characters, no more than 25 characters (avoiding titles not finished in a line to be included, not including '(' to avoid OCR error) # next line beginning with non-characterized character
                         if (text[k + j][0] >= 'A' and text[k + j][0] <= 'Z' and text[k + j][1] >= 'a' and
@@ -330,10 +330,10 @@ for year, suffix in year_suffix:
                     elif len(text[j + k]) > 1 and len(text[k + j]) <= 30 and '(' not in text[
                         k + j] and '\'' not in text[
                         k + j]:  # must be at least 2 characters, no more than 25 characters (avoiding titles not finished in a line to be included, not including '(' to avoid OCR error) # next line beginning with non-characterized character
-                        if ((volume1976_and_later != 0 and len(text[j + k]) > 1 and len(
+                        if ((volume1976_and_later != 1 and len(text[j + k]) > 1 and len(
                                 text[k + j]) <= 30 and '(' not in text[
                                  k + j] and '\'' not in text[
-                                 k + j]) or (volume1976_and_later == 0 and len(text[j + k]) > 1 and '.' not in text[
+                                 k + j]) or (volume1976_and_later == 1 and len(text[j + k]) > 1 and '.' not in text[
                             k + j] and '\'' not in text[
                                                  k + j])):  # first character A-Z, second a-z (avoiding "BOOK REVIEW DIGEST"), last a-z or 0-9 (eg "Adams, Henry, 1838-1918")
                             if (len(text[
