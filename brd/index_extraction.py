@@ -174,7 +174,7 @@ for year, suffix in year_suffix:
                         text[j + k-1] = "Fiction (classified by subject)"
                         text[j + k] = "Animal stories"
                         break
-                    if '(' in text[j + k]:
+                    if volume1976_and_later==0 and '(' in text[j + k]:
                         bookcount_fiction_about += 1
                     elif(volume1976_and_later==1 and '.' in text[j+k]):
                         bookcount_fiction_about+=1
@@ -316,7 +316,7 @@ for year, suffix in year_suffix:
                 for k in list(range(1, linelength - j)):
                     if (text[j + k] in nextheadings):  # if fiction section ends
                         break
-                    if '(' in text[j + k]:
+                    if volume1976_and_later==0 and '(' in text[j + k]:
                         bookcount_fiction_genre += 1
                     elif(volume1976_and_later==1 and '.' in text[j+k]):
                         bookcount_fiction_genre +=1
