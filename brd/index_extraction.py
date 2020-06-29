@@ -341,7 +341,6 @@ for year, suffix in year_suffix:
                             if len(text[j + k]) >= 9:  # not "xxx-Continued"
                                 if (text[j + k][-9:] in ['Continued', 'Continucd','Uontinued','Continual',' ontinued']):
                                     continue
-                                                            continue
                             fiction_headings.append(text[k + j])  # Otherwise, add that heading into the list
                             fiction_books.append(
                                 [])  # add an empty list to the booklist, to match the headinglist
