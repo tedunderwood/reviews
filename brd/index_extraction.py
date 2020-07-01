@@ -112,6 +112,8 @@ for year, suffix in year_suffix:
     #   pagelist[i]=pagelist[i].split('\n')
 
     bookcount = 0
+    headingcount_fiction_about = 0
+    headingcount_fiction_genre = 0
     bookcount_fiction_about = 0
     bookcount_fiction_genre = 0
     flag = 0
@@ -162,8 +164,8 @@ for year, suffix in year_suffix:
                         break
 
             if (text[j] == "Fiction (books about)" or text[j] == "Fiction (Books about)"):
-                for k in range(10):
-                    print(text[j+k])
+                #for k in range(10):
+                #    print(text[j+k])
                 for k in list(range(1, linelength - j)):
                     if (text[j + k] == "Fiction (classified by subject)" or text[j+k]=='Fiction (classified according to subject)' or text[j+k]=='Fiction (c\'assifled according to subject)'):  # if fiction section_about ends
                         break
@@ -220,8 +222,9 @@ for year, suffix in year_suffix:
                     discard.append([])
                 if (length > 0):
                     for k in list(range(length)):
-                        print('<\heading "%s">' % fiction_headings[
-                            k])  # print headings and all the content of each heading
+                        headingcount_fiction_about+=1
+                        #print('<\heading "%s">' % fiction_headings[
+                        #    k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
                             if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
@@ -366,8 +369,9 @@ for year, suffix in year_suffix:
                     discard.append([])
                 if (length > 0):
                     for k in list(range(length)):
-                        print('<\heading "%s">' % fiction_headings[
-                            k])  # print headings and all the content of each heading
+                        headingcount_fiction_genre += 1
+                        #print('<\heading "%s">' % fiction_headings[
+                        #    k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
                             if(fiction_headings[k]=='Women' or [k]=='Young people' or fiction_headings[k]=='Youth' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or fiction_headings[k]=='World war, 1939-1945' or fiction_headings[k]=='Whaling industry' or fiction_headings[k]=='Writers' or fiction_headings[k]=='Zoological specimens' or fiction_headings[k]=='Collection and preservation'):
@@ -458,6 +462,8 @@ for year, suffix in year_suffix:
         print(bookcount)
         print(bookcount_fiction_about)
         print(bookcount_fiction_genre)
+        print(headingcount_fiction_about)
+        print(headingcount_fiction_genre)
 
     if flag == 0:  # if the volume doesn't have an index, print it out and end
         print('Volume number %d: no index found in this volume' % (volume_id))
