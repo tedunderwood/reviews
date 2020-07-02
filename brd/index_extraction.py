@@ -145,8 +145,8 @@ for year, suffix in year_suffix:
         text = []
         for i in range(index_startpage, index_endpage):
             for j in range(len(pagelist[i])):
-                #if(volume1983==1 and i>=1640 and i<=1670):
-                #    print(pagelist[i][j])
+                if(volume1984==1 and i>=1760 and i<=1800):
+                    print(pagelist[i][j])
                 if(volume1976_and_later==0):
                     bookcount += pagelist[i][j].count('(')  # how many books are there in the index in total
                 else:
