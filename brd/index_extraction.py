@@ -143,8 +143,6 @@ for year, suffix in year_suffix:
         text = []
         for i in range(index_startpage, index_endpage):
             for j in range(len(pagelist[i])):
-                if(volume1983==1 and i>=1620 and i<=1670):
-                    print(pagelist[i][j])
                 if(volume1976_and_later==0):
                     bookcount += pagelist[i][j].count('(')  # how many books are there in the index in total
                 else:
@@ -164,6 +162,12 @@ for year, suffix in year_suffix:
             count = -1
 
             if (volume1944==1 and text[j] == "871"):
+                for k in range(1,linelength-j):
+                    if(text[j+k]=='Fiction'):
+                        text[j + k] = "Fiction (classified by subject)"
+                        break
+
+            if (volume1983==1 and text[j] == "1642"):
                 for k in range(1,linelength-j):
                     if(text[j+k]=='Fiction'):
                         text[j + k] = "Fiction (classified by subject)"
@@ -321,7 +325,7 @@ for year, suffix in year_suffix:
             fiction_headings = []  # to store the headings
             fiction_books = []  # to store the lines under the heading
             count = -1
-            if (text[j] == "Fiction (classified by subject)" or text[j]=='Fiction (classified according to subject)' or text[j]=='Fiction (c\'assifled according to subject)'):
+            if (text[j] == "Fiction (classified by subject)" or text[j]=='Fiction (classified according to subject)' or text[j]=='Fiction (c\'assifled according to subject)' or text[j]=='Fiction themes'):
                 for k in list(range(1, linelength - j)):
                     if (text[j + k] in nextheadings or text[j+k][0:28]=='Fiction as wisdom. Stock, L '):  # if fiction section ends
                         break
@@ -470,7 +474,7 @@ for year, suffix in year_suffix:
         print(bookcount_fiction_genre)
         print(headingcount_fiction_about)
         print(headingcount_fiction_genre)
-        #print(index_startpage, index_endpage)
+        print(index_startpage, index_endpage)
 
     if flag == 0:  # if the volume doesn't have an index, print it out and end
         print('Volume number %d: no index found in this volume' % (volume_id))
