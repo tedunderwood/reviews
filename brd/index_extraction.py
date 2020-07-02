@@ -57,8 +57,8 @@ pattern2_1 = re.compile(" [A-Z][ ]?[a-z]+")
 pattern2_2 = re.compile("[.:]\s[A-Z][ ]?[a-z]+")
 
 
-year = ['1921','1922','1923','1924','1925','1926','1927','1928','1929','1930','1931','1932','1933','1934','1935','1936','1937','1938','1939','1940','1941','1942','1943','1944','1945','1946','1947','1948','1949','1950','1951','1952','1953','1954','1955','1956','1957','1958','1959','1962','1963','1964','1965','1966','1967','1968','1969','1970','1971','1972','1973','1974','1975','1976','1977','1978','1979','1980','1981','1982']
-suffix = ['32106019850368','32106019610374','32106019610382','32106019610390','32106019610408','32106019610416','32106019610424','32106019610432','32106019610440','32106019610457','39015078261180','32106019610465','32106019610473','32106019610481','32106019610499','39015078261230','32106019610507','32106019610515','32106019610523','32106019610531','39015078261289','32106019610549','32106019610556','32106019610564','32106019610572','32106019610580','32106019610598','32106019610606','32106019610614','39015078261370','39015078261388','32106019610622','32106019610630','32106019610648','32106019610655','39015078261438','32106019610663','32106019610671','32106019610689','39015078261495','32106019848347','39015078261511','39015078261529','39015078261537','39015078261552','39015078261560','39015078261578','39015078261586','39015078261594','39015078261610','39015078261628','39015078261636','39015078261685','39015078261693','39015078261701','39015078261719','39015078261727','39015078261735','30000114363868','39015078261750']
+year = ['1921','1922','1923','1924','1925','1926','1927','1928','1929','1930','1931','1932','1933','1934','1935','1936','1937','1938','1939','1940','1941','1942','1943','1944','1945','1946','1947','1948','1949','1950','1951','1952','1953','1954','1955','1956','1957','1958','1959','1962','1963','1964','1965','1966','1967','1968','1969','1970','1971','1972','1973','1974','1975','1976','1977','1978','1979','1980','1981','1982','1983']
+suffix = ['32106019850368','32106019610374','32106019610382','32106019610390','32106019610408','32106019610416','32106019610424','32106019610432','32106019610440','32106019610457','39015078261180','32106019610465','32106019610473','32106019610481','32106019610499','39015078261230','32106019610507','32106019610515','32106019610523','32106019610531','39015078261289','32106019610549','32106019610556','32106019610564','32106019610572','32106019610580','32106019610598','32106019610606','32106019610614','39015078261370','39015078261388','32106019610622','32106019610630','32106019610648','32106019610655','39015078261438','32106019610663','32106019610671','32106019610689','39015078261495','32106019848347','39015078261511','39015078261529','39015078261537','39015078261552','39015078261560','39015078261578','39015078261586','39015078261594','39015078261610','39015078261628','39015078261636','39015078261685','39015078261693','39015078261701','39015078261719','39015078261727','39015078261735','30000114363868','39015078261750','39015078261768']
 
 length=len(year)
 year_suffix=[]
@@ -164,8 +164,8 @@ for year, suffix in year_suffix:
                         break
 
             if (text[j] == "Fiction (books about)" or text[j] == "Fiction (Books about)"):
-                #for k in range(10):
-                #    print(text[j+k])
+                for k in range(10):
+                    print(text[j+k])
                 for k in list(range(1, linelength - j)):
                     if (text[j + k] == "Fiction (classified by subject)" or text[j+k]=='Fiction (classified according to subject)' or text[j+k]=='Fiction (c\'assifled according to subject)'):  # if fiction section_about ends
                         break
@@ -223,8 +223,8 @@ for year, suffix in year_suffix:
                 if (length > 0):
                     for k in list(range(length)):
                         headingcount_fiction_about+=1
-                        #print('<\heading "%s">' % fiction_headings[
-                        #    k])  # print headings and all the content of each heading
+                        print('<\heading "%s">' % fiction_headings[
+                            k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
                             if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
@@ -370,12 +370,12 @@ for year, suffix in year_suffix:
                 if (length > 0):
                     for k in list(range(length)):
                         headingcount_fiction_genre += 1
-                        #print('<\heading "%s">' % fiction_headings[
-                        #    k])  # print headings and all the content of each heading
+                        print('<\heading "%s">' % fiction_headings[
+                            k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
-                            #if(fiction_headings[k]=='Women' or [k]=='Young people' or fiction_headings[k]=='Youth' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or fiction_headings[k]=='World war, 1939-1945' or fiction_headings[k]=='Whaling industry' or fiction_headings[k]=='Writers' or fiction_headings[k]=='Zoological specimens' or fiction_headings[k]=='Collection and preservation'):
-                            #    print(fiction_books[k][m])
+                            if(fiction_headings[k]=='Women' or [k]=='Young people' or fiction_headings[k]=='Youth' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or fiction_headings[k]=='World war, 1939-1945' or fiction_headings[k]=='Whaling industry' or fiction_headings[k]=='Writers' or fiction_headings[k]=='Zoological specimens' or fiction_headings[k]=='Collection and preservation'):
+                                print(fiction_books[k][m])
                             if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
                                                                                                fiction_books[k][
                                                                                                    m]) != None)):  # if the line matches with the regular pattern of "author"
