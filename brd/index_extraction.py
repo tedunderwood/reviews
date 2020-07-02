@@ -177,8 +177,8 @@ for year, suffix in year_suffix:
                         break
 
             if (text[j] == "Fiction (books about)" or text[j] == "Fiction (Books about)"):
-                #for k in range(10):
-                #    print(text[j+k])
+                for k in range(10):
+                    print(text[j+k])
                 for k in list(range(1, linelength - j)):
                     if (text[j + k] == "Fiction (classified by subject)" or text[j+k]=='Fiction (classified according to subject)' or text[j+k]=='Fiction (c\'assifled according to subject)'):  # if fiction section_about ends
                         break
@@ -236,8 +236,8 @@ for year, suffix in year_suffix:
                 if (length > 0):
                     for k in list(range(length)):
                         headingcount_fiction_about+=1
-                        #print('<\heading "%s">' % fiction_headings[
-                        #    k])  # print headings and all the content of each heading
+                        print('<\heading "%s">' % fiction_headings[
+                            k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
                             if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
@@ -383,12 +383,12 @@ for year, suffix in year_suffix:
                 if (length > 0):
                     for k in list(range(length)):
                         headingcount_fiction_genre += 1
-                        #print('<\heading "%s">' % fiction_headings[
-                        #    k])  # print headings and all the content of each heading
+                        print('<\heading "%s">' % fiction_headings[
+                            k])  # print headings and all the content of each heading
                         count = -1
                         for m in list(range(len(fiction_books[k]))):
-                            #if(fiction_headings[k]=='Women' or [k]=='Young people' or fiction_headings[k]=='Youth' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or fiction_headings[k]=='World war, 1939-1945' or fiction_headings[k]=='Whaling industry' or fiction_headings[k]=='Writers' or fiction_headings[k]=='Zoological specimens' or fiction_headings[k]=='Collection and preservation' or fiction_headings[k]=='North Aamerican fossils'):
-                            #    print(fiction_books[k][m])
+                            if(fiction_headings[k]=='Women' or [k]=='Young people' or fiction_headings[k]=='Youth' or fiction_headings[k]=='Zionism' or fiction_headings[k]=='Zoological gardens' or fiction_headings[k]=='Women in Industry' or fiction_headings[k]=='World war, 1939-' or fiction_headings[k]=='Weird stories' or fiction_headings[k]=='World war, 1939-1946' or fiction_headings[k]=='World war, 1939-1945' or fiction_headings[k]=='Whaling industry' or fiction_headings[k]=='Writers' or fiction_headings[k]=='Zoological specimens' or fiction_headings[k]=='Collection and preservation' or fiction_headings[k]=='North Aamerican fossils'):
+                                print(fiction_books[k][m])
                             if ((re.match(pattern1, fiction_books[k][m]) != None) or (re.match(pattern1_3,
                                                                                                fiction_books[k][
                                                                                                    m]) != None)):  # if the line matches with the regular pattern of "author"
