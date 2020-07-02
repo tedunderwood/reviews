@@ -179,13 +179,13 @@ for year, suffix in year_suffix:
                         text[j + k] = "Fiction (classified by subject)"
                         break
 
-            if (volume1984==1):
-                for k in range(1,linelength-j):
-                    if(text[j+k]=='Fiction'):
-                        text[j + k] = "Fiction (books about)"
-                    if (text[j + k] == 'Fiction themes'):
-                        text[j + k] = "Fiction (classified by subject)"
-                        break
+            #if (volume1984==1):
+            #    for k in range(1,linelength-j):
+            #        if(text[j+k]=='Fiction'):
+            #            text[j + k] = "Fiction (books about)"
+            #        if (text[j + k] == 'Fiction themes'):
+            #            text[j + k] = "Fiction (classified by subject)"
+            #            break
 
             if (text[j] == "Fiction (books about)" or text[j] == "Fiction (Books about)"):
                 for k in range(10):
