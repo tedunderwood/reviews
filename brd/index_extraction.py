@@ -144,7 +144,7 @@ for year, suffix in year_suffix:
         for i in range(index_startpage, index_endpage):
             for j in range(len(pagelist[i])):
                 if(volume1983==1):
-                    print(pagelist[i])
+                    print(pagelist[i][j])
                 if(volume1976_and_later==0):
                     bookcount += pagelist[i][j].count('(')  # how many books are there in the index in total
                 else:
@@ -470,6 +470,7 @@ for year, suffix in year_suffix:
         print(bookcount_fiction_genre)
         print(headingcount_fiction_about)
         print(headingcount_fiction_genre)
+        print(index_startpage, index_endpage)
 
     if flag == 0:  # if the volume doesn't have an index, print it out and end
         print('Volume number %d: no index found in this volume' % (volume_id))
