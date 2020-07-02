@@ -87,7 +87,8 @@ for year, suffix in year_suffix:
     volume1944=0
     volume1972=0
     volume1976_and_later=0
-    volume1983_and_later=0
+    volume1983=0
+    volume1984=0
     if(year=='1935'):
         volume1935=1
     if(year=='1944'):
@@ -96,8 +97,10 @@ for year, suffix in year_suffix:
         volume1972=1
     if(int(year)>=1976):
         volume1976_and_later=1
-    if(int(year)>1983):
+    if(year=='1983'):
         volume1983=1
+    if(year=='1984'):
+        volume1984=1
     volume_id = int(year) - 1904  # volume id
     file1 = open("/media/secure_volume/brd/output_index/volume%i extract.txt" % volume_id, 'w', encoding='utf-8')
     file2 = open("/media/secure_volume/brd/output_index/volume%i discard.txt" % volume_id, 'w', encoding='utf-8')
@@ -169,6 +172,14 @@ for year, suffix in year_suffix:
                         break
 
             if (volume1983==1 and text[j] == "1642"):
+                for k in range(1,linelength-j):
+                    if(text[j+k]=='Fiction'):
+                        text[j + k] = "Fiction (books about)"
+                    if (text[j + k] == 'Fiction themes'):
+                        text[j + k] = "Fiction (classified by subject)"
+                        break
+
+            if (volume1984==1):
                 for k in range(1,linelength-j):
                     if(text[j+k]=='Fiction'):
                         text[j + k] = "Fiction (books about)"
