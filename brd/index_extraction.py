@@ -181,13 +181,13 @@ for year, suffix in year_suffix:
                         break
 
             if (volume1983_and_later==1): # deal with volumes after 1983 individually
-                if((volume1983==1 and text[j] == "1642") or (volume1984==1 and text[j]=="1766") or (volume1985==1 and text[j]=="1816")):
+                if((volume1983==1 and text[j] == "1642") or (volume1984==1 and text[j]=="1766") or (volume1985==1 and text[j]=="1816") or (volume1986==1 and text[j]=="1841")):
                     for k in range(1,linelength-j):
                         if(text[j+k]=='Fiction'):
                             text[j + k] = "Fiction (books about)"
                         if (text[j + k] == 'Fiction themes'):
                             text[j + k] = "Fiction (classified by subject)"
-                        if(volume1986==1 and text[j+k]=='Snor tones'):
+                        if(volume1986==1 and text[j+k]=='Snort stones'):
                             text[j+k]="Fiction (classified by subject)"
                             break
 
