@@ -180,7 +180,7 @@ for year, suffix in year_suffix:
                         text[j + k] = "Fiction (classified by subject)"
                         break
 
-            if (volume1983_and_later==1):
+            if (volume1983_and_later==1): # deal with volumes after 1983 individually
                 if((volume1983==1 and text[j] == "1642") or (volume1984==1 and text[j]=="1766") or (volume1985==1 and text[j]=="1816")):
                     for k in range(1,linelength-j):
                         if(text[j+k]=='Fiction'):
