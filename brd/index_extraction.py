@@ -181,7 +181,7 @@ for year, suffix in year_suffix:
                         break
 
             if (volume1983_and_later==1):
-                if((volume1983==1 and text[j] == "1642") or (volume1984==1 and text[j]=="1766") or (volume1985==1 and text[j]=="1816") or (volume1986==1 and text[j]=="1841")):
+                if((volume1983==1 and text[j] == "1642") or (volume1984==1 and text[j]=="1766") or (volume1985==1 and text[j]=="1816")):
                     for k in range(1,linelength-j):
                         if(text[j+k]=='Fiction'):
                             text[j + k] = "Fiction (books about)"
