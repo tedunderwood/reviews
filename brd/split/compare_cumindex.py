@@ -100,7 +100,7 @@ def do_headings_match(headingstring, heading):
 
     return headingsmatch
 
-infile = '/media/secure_volume/brd/output_index/volume' + str(year) + ' extract.txt'
+indexpath = '/media/secure_volume/brd/output_index/volume' + str(year) + ' extract.txt'
 
 indexmeta = get_metadata(indexpath)
 
