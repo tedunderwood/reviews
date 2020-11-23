@@ -12,8 +12,6 @@ args = sys.argv
 
 year = int(args[1])
 
-infile = '/media/secure_volume/brd/output_index/volume' + str(year) + ' extract.txt'
-
 def get_authtitle(line):
     tokens = line.split()
     author = []
@@ -102,7 +100,7 @@ def do_headings_match(headingstring, heading):
 
     return headingsmatch
 
-indexpath = rootdir + 'extract' + str(year) + '.txt'
+infile = '/media/secure_volume/brd/output_index/volume' + str(year) + ' extract.txt'
 
 indexmeta = get_metadata(indexpath)
 
