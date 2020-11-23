@@ -13,21 +13,10 @@ args = sys.argv
 year = int(args[1])
 
 def get_authtitle(line):
-    tokens = line.split()
-    author = []
-    title = []
-    titleyet = False
+    lineparts = line.split('$')
 
-    for t in tokens:
-        if t.startswith('<') and t.endswith('>'):
-            titleyet = True
-        elif titleyet:
-            title.append(t)
-        else:
-            author.append(t)
-
-    title = ' '.join(title)
-    author = ' '.join(author)
+    author = lineparts[0]
+    title = lineparts[1]
 
     return author, title
 
@@ -51,10 +40,11 @@ def get_metadata(path):
         elif line.startswith('<') and line.endswith('>'):
             line = line.replace('"', '').replace("'", ''). replace('”', '').replace('>', '')
             heading = ' '.join(line.split(' ')[1: ])
-        else:
-
+        elif '$' in line:
             author, title = get_authtitle(line)
             metadata.append((author, title, heading))
+        else:
+            print(line)
 
     return metadata
 
@@ -318,7 +308,7 @@ for floor in range(0, numlines, 50):
     with open(filename, mode = 'w', encoding = 'utf-8') as f:
         f.write('\n')
         for l in unmatchedlines[floor: floor + 50]:
-            outline = ' ' + line
+            outline = ' ' + l
             f.write(outline)
 
 discreplines = []
@@ -334,8 +324,8 @@ for floor in range(0, numlines, 50):
 
     with open(filename, mode = 'w', encoding = 'utf-8') as f:
         f.write('\n')
-        for l in unmatchedlines[floor: floor + 50]:
-            outline = ' ' + line
+        for l in discreplines[floor: floor + 50]:
+            outline = ' ' + l
             f.write(outline)
 
 
