@@ -301,14 +301,14 @@ for heading in headinglist:
 numlines = len(unmatchedlines)
 fileindex = 0
 
-for floor in range(0, numlines, 50):
+for floor in range(0, numlines, 56):
     filename = outfolder + 'uml' + str(fileindex) + '.txt'
     fileindex += 1
 
     with open(filename, mode = 'w', encoding = 'utf-8') as f:
         f.write('\n')
-        for l in unmatchedlines[floor: floor + 50]:
-            outline = ' ' + l
+        for l in unmatchedlines[floor: floor + 56]:
+            outline = '  ' + l
             f.write(outline)
 
 discreplines = []
@@ -318,14 +318,14 @@ for row in discrepancies:
 numlines = len(discreplines)
 fileindex = 0
 
-for floor in range(0, numlines, 50):
+for floor in range(0, numlines, 56):
     filename = outfolder + 'dcl' + str(fileindex) + '.txt'
     fileindex += 1
 
     with open(filename, mode = 'w', encoding = 'utf-8') as f:
         f.write('\n')
-        for l in discreplines[floor: floor + 50]:
-            outline = ' ' + l
+        for l in discreplines[floor: floor + 56]:
+            outline = '  ' + l
             f.write(outline)
 
 
