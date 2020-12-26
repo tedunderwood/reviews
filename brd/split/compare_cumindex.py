@@ -84,7 +84,7 @@ def do_headings_match(headingstring, heading):
 
     for h2 in headings2:
 
-        if len(h2 > 11):
+        if len(h2) > 11:
             h2 = h2[0: 11]
 
         matcher = SequenceMatcher(None, heading, h2)
