@@ -135,7 +135,10 @@ for auth, title, heading in indexmeta:
         if '|' not in h2:
             h2 = h2 + '|' + str(uniqueindex)
             uniqueindex += 1
-        h3 = h2 + '|' + heading
+        if heading not in h2:
+            h3 = h2 + '|' + heading
+        else:
+            h3 = h2
         alreadyhave[matchindex] = (a2, b2, h3)
         alreadyhave.append((auth, title, h3))
     else:
@@ -147,7 +150,10 @@ for auth, title, heading in indexmeta:
     if maxmatch > 0.6:
         matchindex = alreadyhave.index(bestmatch)
         a2, b2, h2 = alreadyhave[matchindex]
-        h3 = h2 + '|' + heading
+        if heading not in h2:
+            h3 = h2 + '|' + heading
+        else:
+            h3 = h2
         alreadyhave[matchindex] = (a2, b2, h3)
         alreadyhave.append((auth, title, h3))
     else:
