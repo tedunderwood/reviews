@@ -79,7 +79,13 @@ def do_headings_match(headingstring, heading):
     headings2 = headingstring.split('|')
     headingsmatch = False
 
+    if len(headingstring) > 11:
+        headingstring = headingstring[0: 11]
+
     for h2 in headings2:
+
+        if len(h2 > 11):
+            h2 = h2[0: 11]
 
         matcher = SequenceMatcher(None, heading, h2)
         heading_match = matcher.ratio()
