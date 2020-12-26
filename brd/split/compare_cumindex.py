@@ -319,7 +319,8 @@ for floor in range(0, numlines, 56):
 
 discreplines = []
 for row in discrepancies:
-    discreplines.append(' > '.join(row) + '\n')
+    if row[3] != row[6]:  # if they actually match headings, don't use
+        discreplines.append(' > '.join(row) + '\n')
 
 numlines = len(discreplines)
 fileindex = 0
