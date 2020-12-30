@@ -34,6 +34,7 @@ with open(targetpath, encoding = 'utf-8') as f:
         publishwords = row['publisher'].split()
 
         for w in publishwords:
+            w = w.strip('.,[]()')
             if len(w) < 3:
                 continue
             elif anynumregex.fullmatch(w):
@@ -63,7 +64,8 @@ with open('oldpublishers.tsv', mode = 'w', encoding = 'utf-8') as f:
 
 with open('newreviews.tsv', mode = 'w', encoding = 'utf-8') as f:
     for k, v in newreviews.most_common(1000):
-        if k in all_review_codes:
+        k1 = k.replace('.', '')
+        if k in all_review_codes or k1 in all_review_codes:
             continue
         else:
             f.write(k +'\t' + str(v) + '\n')
