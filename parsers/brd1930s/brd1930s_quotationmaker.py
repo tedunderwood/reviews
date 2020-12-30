@@ -110,6 +110,7 @@ def divide_into_quotations(booklist, publishers):
                 for tags in taglist.tagseq:
                     if 'hyphennumber' in tags or 'dollarprice' in tags or 'centprice' in tags:
                         trailingbibline = True
+
                 if trailingbibline:
 
                     # get the existing publisher to see if it makes more sense
@@ -119,9 +120,16 @@ def divide_into_quotations(booklist, publishers):
                     if len(existingpubparts) > 0:
                         existingpub = existingpubparts[-1].strip('-')
                     else:
-                        existingpub = ''
+                        existingpub = 'not a publisher'
 
-                    for tok in tokens:
+                    tokenssofar = []
+                    for l in accumulated:
+                        tokenssofar.extend(l.strip().split())
+                    tokenssofar.extend(tokens)
+
+                    tokenssofar = [x.strip('.,[]()-') for x in tokenssofar]
+
+                    for tok in tokenssofar:
                         if tok in publishers:
                             book.publisher = tok
                             print('wholepub', book.publisher)
