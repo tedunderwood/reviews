@@ -21,7 +21,7 @@ publishers = []
 
 with open('30spublishers.txt', encoding = 'utf-8') as f:
     for line in f:
-        publishers.append(f.strip())
+        publishers.append(line.strip())
 
 targetpaths = glob.glob('/media/secure_volume/brd/output/' +year + '*.tsv')
 
