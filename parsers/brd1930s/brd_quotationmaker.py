@@ -124,9 +124,13 @@ def divide_into_quotations(booklist, publishers):
                     for tok in tokens:
                         if tok in publishers:
                             book.publisher = tok
+                            print('wholepub')
+
                         rejoined = existingpub + tok
                         if rejoined in publishers:
                             book.publisher = book.publisher.strip('-') + tok
+                            print('partpub')
+
                     line = line + ' <endsubj>'
                     accumulated.append(line)
                     continue
