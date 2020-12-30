@@ -43,7 +43,7 @@ with open(targetpath, encoding = 'utf-8') as f:
 
         review = row['publication']
 
-        newreviews.add(review)
+        newreviews[review] += 1
 
 
 with open('newpublishers.tsv', mode = 'w', encoding = 'utf-8') as f:
