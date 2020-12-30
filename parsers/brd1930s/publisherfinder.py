@@ -17,7 +17,11 @@ all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1930s.tsv
 all_review_codes = set([x.replace('.', '') for x in reviewdict.keys()])
 all_review_codes.add('summary')
 
-publishers = ['Liverlght', 'Appleton', 'Baker', 'Barnes', 'Benziger', 'Bobbs', "Brentano's", 'Brewer', 'Cassell', 'Century', 'Columbia', 'Crowell', 'Dial', 'Ditson', 'Dodd', 'Doran', 'Doubleday', 'Dutton', 'Farrar', 'Ginn', 'Goodspeed', 'Harcourt', 'Harper', 'Harvard', 'Heath', 'Holt', 'Houghton', 'Knopf', 'Lane', 'Lippincott', 'Llpplncott', 'Little', 'Liveright', 'Longmans', 'Macmillan', 'Macmlllan', 'McBride', 'McClure', 'McGraw', 'Moffat', 'Morrow', 'Norton', 'Oxford', 'Page', 'Putnam', 'Scribner', 'Simmons', 'Simon', 'Stokes', 'Vanguard', 'Viking', 'Walton', 'Warne', 'Wessels', 'Wilde', 'Wiley', 'Winston', 'Yale']
+publishers = []
+
+with open('30spublishers.txt', encoding = 'utf-8') as f:
+    for line in f:
+        publishers.append(f.strip())
 
 targetpaths = glob.glob('/media/secure_volume/brd/output/' +year + '*.tsv')
 
