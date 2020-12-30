@@ -61,10 +61,12 @@ def divide_into_quotations(booklist, publishers):
     ('openquote', '[\"\'“‘]+\S*'),
     ('plusorminus', '[\+\-\—]+'),
     ('reviewword', all_reviewwords),
-    ('wordcount', '\d*0w[.]?')
+    ('wordcount', '\d*0w[.]?'),
+    ('OCRwordcount', '\S*Ow[.]?')
     ]
 
     wordcountregex = re.compile('\d*0w[.]?')
+    ocrwordcountregex = re.compile('\S*Ow[.]?')
 
     rule_list = lexparse.patterns2rules(lexical_patterns)
     allquotes = []
@@ -132,12 +134,10 @@ def divide_into_quotations(booklist, publishers):
                     for tok in tokenssofar:
                         if tok in publishers:
                             book.publisher = tok
-                            print('wholepub', book.publisher)
 
                         rejoined = existingpub + tok
                         if rejoined in publishers:
                             book.publisher = book.publisher.strip('-') + tok
-                            print('partpub', book.publisher)
 
                     line = line + ' <endsubj>'
                     accumulated.append(line)
@@ -243,7 +243,7 @@ def divide_into_quotations(booklist, publishers):
                     else:
                         citationbits.append(word)
 
-                    if numericyet and 'wordcount' in tags and (nextwordctr < len(taglist.stringseq)):
+                    if numericyet and ('wordcount' in tags or 'OCRwordcount' in tags) and (nextwordctr < len(taglist.stringseq)):
                         addtonext = ' '.join(taglist.stringseq[nextwordctr : ])
                         break
 
@@ -251,7 +251,7 @@ def divide_into_quotations(booklist, publishers):
                 # if this line doesn't end with a word count, and the next one does?
                 # probably a continuation
 
-                if len(citationbits) > 0 and not wordcountregex.fullmatch(citationbits[-1]):
+                if len(citationbits) > 0 and not wordcountregex.fullmatch(citationbits[-1]) and not ocrwordcountregex.fullmatch(citationbits[-1]):
                     if linecount < (len(lines) - 1):
                         wordsinnextline = lines[linecount + 1].strip().split()
                         if len(wordsinnextline) > 0 and wordcountregex.fullmatch(wordsinnextline[-1]):
