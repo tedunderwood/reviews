@@ -4,6 +4,8 @@
 
 import os, sys, csv
 
+publishers = ['Liverlght', 'Appleton', 'Baker', 'Barnes', 'Benziger', 'Bobbs', "Brentano's", 'Cassell', 'Century', 'Collier-Fox', 'Crowell', 'Ditson', 'Dodd', 'Doran', 'Doubleday', 'Dutton', 'Elder', 'Estes', 'Ginn', 'Goodspeed', 'Harper', 'Heath', 'Holt', 'Houghton', 'Knopf', 'Lane', 'Lippincott', 'Little', 'Liveright', 'Longmans', 'Macmillan', 'McBride', 'McClure', 'McGraw', 'Moffat', 'Oxford', 'Page', 'Pott', 'Putnam', 'Scribner', 'Simmons', 'Stokes', 'Walton', 'Warne', 'Wessels', 'Wilde', 'Wiley', 'Winston', 'Yale']
+
 quotefieldnames = ['bookauthor', 'booktitle', 'brdpage', 'price', 'publisher', 'publication',
                 'sentiment', 'citation', 'quote']
 
@@ -24,8 +26,8 @@ for year, vol, startpage, endpage in quartets:
     print(year, vol, startpage, endpage)
     outfile = '/media/secure_volume/brd/output/' + year + '_' + vol + '.tsv'
     pagelist = extractor.extract(vol, startpage, endpage)
-    books, author_errors = bookmaker.get_books(pagelist)
-    quotations = quotationmaker.divide_into_quotations(books)
+    books, author_errors = bookmaker.get_books(pagelist, publishers)
+    quotations = quotationmaker.divide_into_quotations(books, publishers)
 
     with open(outfile, mode = 'w', encoding = 'utf-8') as f:
         writer = csv.DictWriter(f, delimiter = '\t', fieldnames = quotefieldnames)

@@ -36,7 +36,7 @@ class Quotation:
         self.citation = cite
         self.thequote = thequote
 
-def divide_into_quotations(booklist):
+def divide_into_quotations(booklist, publishers):
 
     all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1930s.tsv')
     reviewnames = set(reviewdict.keys())
@@ -111,6 +111,22 @@ def divide_into_quotations(booklist):
                     if 'hyphennumber' in tags or 'dollarprice' in tags or 'centprice' in tags:
                         trailingbibline = True
                 if trailingbibline:
+
+                    # get the existing publisher to see if it makes more sense
+                    # fused with something in this trailing line
+
+                    existingpubparts = book.publisher.split()
+                    if len(existingpubparts) > 0:
+                        existingpub = existingpubparts[-1].strip('-')
+                    else:
+                        existingpub = ''
+
+                    for tok in tokens:
+                        if tok in publishers:
+                            book.publisher = tok
+                        rejoined = existingpub + tok
+                        if rejoined in publishers:
+                            book.publisher = book.publisher.strip('-') + tok
                     line = line + ' <endsubj>'
                     accumulated.append(line)
                     continue
