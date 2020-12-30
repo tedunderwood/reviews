@@ -74,8 +74,6 @@ with open('oldreviews.tsv', mode = 'w', encoding = 'utf-8') as f:
         r1 = r.replace('.', '')
         totalcount = newreviews[r] + newreviews[r1]
         f.write(r + '\t' + str(totalcount) + '\n')
-        else:
-            f.write(r + '\t0\n')
 
 
 
