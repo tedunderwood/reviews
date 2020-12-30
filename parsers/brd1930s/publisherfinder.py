@@ -14,7 +14,7 @@ import read_pubnames
 
 all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1930s.tsv')
 
-all_review_codes = set(reviewdict.keys())
+all_review_codes = set([x.replace('.', '') for x in reviewdict.keys()])
 all_review_codes.add('summary')
 
 publishers = ['Liverlght', 'Appleton', 'Baker', 'Barnes', 'Benziger', 'Bobbs', "Brentano's", 'Cassell', 'Century', 'Collier-Fox', 'Crowell', 'Ditson', 'Dodd', 'Doran', 'Doubleday', 'Dutton', 'Elder', 'Estes', 'Ginn', 'Goodspeed', 'Harper', 'Heath', 'Holt', 'Houghton', 'Knopf', 'Lane', 'Lippincott', 'Llpplncott', 'Little', 'Liveright', 'Longmans', 'Macmillan', 'McBride', 'McClure', 'McGraw', 'Moffat', 'Oxford', 'Page', 'Pott', 'Putnam', 'Scribner', 'Simmons', 'Stokes', 'Viking', 'Walton', 'Warne', 'Wessels', 'Wilde', 'Wiley', 'Winston', 'Yale']
@@ -64,16 +64,16 @@ with open('oldpublishers.tsv', mode = 'w', encoding = 'utf-8') as f:
 
 with open('newreviews.tsv', mode = 'w', encoding = 'utf-8') as f:
     for k, v in newreviews.most_common(1000):
-        k1 = k.replace('.', '')
-        if k in all_review_codes or k1 in all_review_codes:
+        if k in all_review_codes:
             continue
         else:
             f.write(k +'\t' + str(v) + '\n')
 
 with open('oldreviews.tsv', mode = 'w', encoding = 'utf-8') as f:
     for r in all_review_codes:
-        if r in newreviews:
-            f.write(r + '\t' + str(newreviews[r]) + '\n')
+        r1 = r.replace('.', '')
+        totalcount = newreviews[r] + newreviews[r1]
+        f.write(r + '\t' + str(totalcount) + '\n')
         else:
             f.write(r + '\t0\n')
 
