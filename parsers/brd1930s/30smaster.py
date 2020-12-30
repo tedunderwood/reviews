@@ -4,7 +4,7 @@
 
 import os, sys, csv
 
-publishers = ['Liverlght', 'Appleton', 'Baker', 'Barnes', 'Benziger', 'Bobbs', "Brentano's", 'Cassell', 'Century', 'Collier-Fox', 'Crowell', 'Ditson', 'Dodd', 'Doran', 'Doubleday', 'Dutton', 'Elder', 'Estes', 'Ginn', 'Goodspeed', 'Harper', 'Heath', 'Holt', 'Houghton', 'Knopf', 'Lane', 'Lippincott', 'Llpplncott', 'Little', 'Liveright', 'Longmans', 'Macmillan', 'McBride', 'McClure', 'McGraw', 'Moffat', 'Oxford', 'Page', 'Pott', 'Putnam', 'Scribner', 'Simmons', 'Stokes', 'Viking', 'Walton', 'Warne', 'Wessels', 'Wilde', 'Wiley', 'Winston', 'Yale']
+publishers = ['Liverlght', 'Appleton', 'Baker', 'Barnes', 'Benziger', 'Bobbs', "Brentano's", 'Brewer', 'Cassell', 'Century', 'Columbia', 'Crowell', 'Dial', 'Ditson', 'Dodd', 'Doran', 'Doubleday', 'Dutton', 'Farrar', 'Ginn', 'Goodspeed', 'Harcourt', 'Harper', 'Harvard', 'Heath', 'Holt', 'Houghton', 'Knopf', 'Lane', 'Lippincott', 'Llpplncott', 'Little', 'Liveright', 'Longmans', 'Macmillan', 'Macmlllan', 'McBride', 'McClure', 'McGraw', 'Moffat', 'Morrow', 'Norton', 'Oxford', 'Page', 'Putnam', 'Scribner', 'Simmons', 'Simon', 'Stokes', 'Vanguard', 'Viking', 'Walton', 'Warne', 'Wessels', 'Wilde', 'Wiley', 'Winston', 'Yale']
 
 quotefieldnames = ['bookauthor', 'booktitle', 'brdpage', 'price', 'publisher', 'publication',
                 'sentiment', 'citation', 'quote']
