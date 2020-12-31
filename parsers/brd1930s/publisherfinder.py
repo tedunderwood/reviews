@@ -6,6 +6,8 @@ from collections import Counter
 
 anynumregex = re.compile('\S{0,3}\d\S{0,3}')
 
+stopwords = {'the', 'from', 'of', 'and'}
+
 args = sys.argv
 
 year = args[1]
@@ -39,7 +41,7 @@ with open(targetpath, encoding = 'utf-8') as f:
 
         for w in publishwords:
             w = w.strip('.,[]()')
-            if len(w) < 3:
+            if len(w) < 3 or w in stopwords:
                 continue
             elif anynumregex.fullmatch(w):
                 continue
