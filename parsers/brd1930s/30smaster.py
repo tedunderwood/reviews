@@ -27,10 +27,10 @@ with open('/media/secure_volume/brd/meta/1930sfiles.tsv', encoding = 'utf-8') as
         quartets.append(quartet)
 
 for year, vol, startpage, endpage in quartets:
-    print(year, vol, startpage, endpage)
     outfile = '/media/secure_volume/brd/output/' + year + '_' + vol + '.tsv'
     pagelist = extractor.extract(vol, startpage, endpage)
     books, author_errors = bookmaker.get_books(pagelist, publishers)
+    print(year, vol, startpage, endpage, len(books))
     quotations = quotationmaker.divide_into_quotations(books, publishers)
 
     with open(outfile, mode = 'w', encoding = 'utf-8') as f:

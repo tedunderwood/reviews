@@ -248,7 +248,7 @@ def get_books(pagelist, publishers):
     ('lineendingyear', '[\'"•■]\d+'),
     ('volandpgrange', '[0-9]+[:][0-9-]+'),
     ('somenumeric', '.?.?.?[0-9]{1,7}.?.?[0-9]*.?'),
-    ('allcaps', '[A-Z\'\,\‘\.\-]+'),
+    ('allcaps', '[A-Z\'\,\‘\.\-\:]+'),
     ('dollarprice', '.{0,2}[$\"\'\“].?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
     ('hyphennumber', '.?[0-9]{1,2}[-—~]+[0-9]{3,7}.?'),
@@ -409,9 +409,19 @@ def get_books(pagelist, publishers):
 
             taglist = lexparse.apply_rule_list(rule_list, tokens)
 
+            firstword = taglist.stringseq[0]
+            firsttagset = taglist.tagseq[0]
+
+            mustcitestart = False
+
+            if 'allcaps' in firsttagset and len(firstword) > 5 and linenum + 4 < len(page):
+                for lookforward in range(1, 4):
+                    futureline = page[linenum + lookforward]
+                    if '$' in futureline:
+                        mustcitestart = True # this captures encyclopedias where title is the
+                                                # capitalized part
+
             if not citation_started and not cannotcitestart:
-                firstword = taglist.stringseq[0]
-                firsttagset = taglist.tagseq[0]
 
                 allcapcount = 0
                 for tags in taglist.tagseq:
@@ -428,6 +438,8 @@ def get_books(pagelist, publishers):
                         pctupin15 = 0
 
                     if 'allcaps' in firsttagset and ('commastop' in firsttagset or 'fullstop' in firsttagset) and len(firstword) > 2:
+                        this_line_is_new_citation = True
+                    elif mustcitestart:
                         this_line_is_new_citation = True
                     elif lineuppercasepct > 0.72 and len(line) > 14:
                         this_line_is_new_citation = True
