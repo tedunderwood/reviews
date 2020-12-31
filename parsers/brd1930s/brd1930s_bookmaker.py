@@ -412,14 +412,13 @@ def get_books(pagelist, publishers):
             firstword = taglist.stringseq[0]
             firsttagset = taglist.tagseq[0]
 
-            mustcitestart = False
+            dollarsoon = False
 
-            if 'allcaps' in firsttagset and len(firstword) > 5 and linenum + 4 < len(page):
+            if 'allcaps' in firsttagset and len(firstword) > 2 and linenum + 4 < len(page):
                 for lookforward in range(1, 4):
                     futureline = page[linenum + lookforward]
                     if '$' in futureline:
-                        mustcitestart = True # this captures encyclopedias where title is the
-                                                # capitalized part
+                        dollarsoon = True
 
             if not citation_started and not cannotcitestart:
 
@@ -437,9 +436,7 @@ def get_books(pagelist, publishers):
                     else:
                         pctupin15 = 0
 
-                    if 'allcaps' in firsttagset and ('commastop' in firsttagset or 'fullstop' in firsttagset) and len(firstword) > 2:
-                        this_line_is_new_citation = True
-                    elif mustcitestart:
+                    if 'allcaps' in firsttagset and ('commastop' in firsttagset or 'fullstop' in firsttagset) and len(firstword) > 2 and dollarsoon:
                         this_line_is_new_citation = True
                     elif lineuppercasepct > 0.72 and len(line) > 14:
                         this_line_is_new_citation = True
