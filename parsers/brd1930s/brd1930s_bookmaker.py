@@ -331,7 +331,7 @@ def get_books(pagelist, publishers):
                 if len(line) > 15:
                     thetail = line[-11: ]
                     thematch = match_strings('—Continued.', thetail)
-                    if thematch > 0.8:
+                    if thematch > 0.75:
                         continue
 
                 if line.isdigit() and aligned < 4:
@@ -440,7 +440,7 @@ def get_books(pagelist, publishers):
 
                 lineuppercasepct = percent_upper(line)
 
-                if (allcapcount > 0 and lineuppercasepct > 0.1 and len(line) > 9) or (lineuppercasepct > 0.6 and len(line) > 9) or (allcapcount > 0 and cluescitationahead > 0):
+                if (allcapcount > 0 and lineuppercasepct > 0.1 and len(line) > 9) or (lineuppercasepct > 0.6 and len(line) > 9) or (allcapcount > 0 and cluescitationahead > 0 and len(line) > 9):
 
                     percentageupper = percent_upper(firstword)
                     if len(line) > 15:
