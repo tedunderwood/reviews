@@ -1,4 +1,5 @@
 code	fullname	nation	deprecated
+America	America	us	
 Am Anthropol	American Anthropologist	us	
 Am Chem Soc J	Journal of the American Chemical Society	us	
 Am. Econ. R.	American Economic Review	us	
@@ -51,7 +52,7 @@ Harvard Business R.	Harvard Business Review	us
 Harvard Law R.	Harvard Law Review	us	
 Hibbert J.	Hibbert Journal	uk	
 Hist. Outlook	Historical Outlook	us	y
-Horn Bk.	Horn Book Magazine	us	
+Horn Bk. M.	Horn Book Magazine	us	
 Ind. & Eng. Chem.	Industrial and Engineering Chemistry	us	
 Ind.	Independent	us	y
 Int. Bk. R.	International Book Review	us	y
@@ -68,6 +69,7 @@ Library Q.	Library Quarterly	us
 Lit. R.	Literary Review of the Saturday Evening Post	us	y
 Lit. D.	Literary Digest	us	y
 Living Age	Living Age	us	y
+Living Church	Living Church	us	
 Lond. Times.	London Times Literary Supplement	uk	y
 Management and Adm.	Management and Administration	us	y
 Management R.	Management Review		

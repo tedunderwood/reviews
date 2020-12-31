@@ -76,7 +76,7 @@ def pricetranslate(astring):
         except:
             price = 0.0
 
-    if price > 40:
+    if price > 99:
         price = 0.0
 
     return price
@@ -399,7 +399,9 @@ def get_books(pagelist, publishers):
 
                     if 'allcaps' in firsttagset and ('commastop' in firsttagset or 'fullstop' in firsttagset) and len(firstword) > 2:
                         this_line_is_new_citation = True
-                    elif lineuppercasepct > 0.8 and len(line) > 16:
+                    elif lineuppercasepct > 0.72 and len(line) > 12:
+                        this_line_is_new_citation = True
+                    elif pctupin15 > .35 and '$' in line and len(reviewlines) > 3:
                         this_line_is_new_citation = True
                     elif percentageupper > 0.7 and len(firstword) > 4 and allcapcount > 2:
                         this_line_is_new_citation = True
