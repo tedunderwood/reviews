@@ -20,6 +20,7 @@ import lexparse
 valid_prices = {"81": 1.00, "81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35, '81.85': 1.85, '81.95': 1.95, '81.45': 1.45, '83.50': 3.50, '85': 5.0, '84': 4.0}
 
 pronunciation = re.compile('\(\S*-\S*\)')
+hyphenregex = re.compile('.?[0-9]{1,2}[-—~]+[0-9]{3,7}.?')
 
 def match_strings(stringA, stringB):
     m = SequenceMatcher(None, stringA, stringB)
@@ -248,7 +249,7 @@ def get_books(pagelist, publishers):
     ('lineendingyear', '[\'"•■]\d+'),
     ('volandpgrange', '[0-9]+[:][0-9-]+'),
     ('somenumeric', '.?.?.?[0-9]{1,7}.?.?[0-9]*.?'),
-    ('allcaps', '[A-Z\'\,\‘\.\-:;]+'),
+    ('allcaps', '[[A-Z\'\,\‘\.\-:;]*[A-Z]{2,}[A-Z\'\,\‘\.\:;]*'),
     ('dollarprice', '.{0,2}[$\"\'\“].?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
     ('hyphennumber', '.?[0-9]{1,2}[-—~]+[0-9]{3,7}.?'),
@@ -412,9 +413,9 @@ def get_books(pagelist, publishers):
             firstword = taglist.stringseq[0]
             firsttagset = taglist.tagseq[0]
 
-            dollarsoon = False
+            cluescitationahead = 0
 
-            distancetolook = 5
+            distancetolook = 6
 
             if (len(page) - linenum) < distancetolook:
                 distancetolook = len(page) - linenum
@@ -423,7 +424,12 @@ def get_books(pagelist, publishers):
                 for lookforward in range(1, distancetolook):
                     futureline = page[linenum + lookforward]
                     if '$' in futureline or "ed." in futureline:
-                        dollarsoon = True
+                        cluescitationahead += 1
+                    if cluescitationahead > 0:
+                        futuretokens = futureline.split()
+                        for t in futuretokens:
+                            if hyphenregex.fullmatch(t):
+                                cluescitationahead += 1
 
             if not citation_started and not cannotcitestart:
 
@@ -434,18 +440,19 @@ def get_books(pagelist, publishers):
 
                 lineuppercasepct = percent_upper(line)
 
-                if (allcapcount > 0 and lineuppercasepct > 0.1 and len(line) > 9) or (lineuppercasepct > 0.6 and len(line) > 9):
+                if (allcapcount > 0 and lineuppercasepct > 0.1 and len(line) > 9) or (lineuppercasepct > 0.6 and len(line) > 9) or (allcapcount > 0 and cluescitationahead > 0):
+
                     percentageupper = percent_upper(firstword)
                     if len(line) > 15:
                         pctupin15 = percent_upper(line[0: 15])
                     else:
                         pctupin15 = 0
 
-                    if 'allcaps' in firsttagset and len(firstword) > 2 and dollarsoon:
+                    if 'allcaps' in firsttagset and len(firstword) > 2 and cluescitationahead > 0:
                         this_line_is_new_citation = True
                     elif lineuppercasepct > 0.72 and len(line) > 14:
                         this_line_is_new_citation = True
-                    elif pctupin15 > .35 and '$' in line and len(reviewlines) > 3:
+                    elif pctupin15 > .35 and ('$' in line or cluescitationahead > 1) and len(reviewlines) > 3:
                         this_line_is_new_citation = True
                     elif percentageupper > 0.7 and len(firstword) > 4 and allcapcount > 2:
                         this_line_is_new_citation = True
