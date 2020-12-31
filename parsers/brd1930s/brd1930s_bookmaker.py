@@ -248,7 +248,7 @@ def get_books(pagelist, publishers):
     ('lineendingyear', '[\'"•■]\d+'),
     ('volandpgrange', '[0-9]+[:][0-9-]+'),
     ('somenumeric', '.?.?.?[0-9]{1,7}.?.?[0-9]*.?'),
-    ('allcaps', '[A-Z\'\,\‘\.\-\:]+'),
+    ('allcaps', '[A-Z\'\,\‘\.\-:;]+'),
     ('dollarprice', '.{0,2}[$\"\'\“].?.?[0-9]{1,7}.?[0-9]*[,.:=]?'),
     ('centprice', '.?.?[0-9]{1,7}.?[0-9]*c+[,.:=]?'),
     ('hyphennumber', '.?[0-9]{1,2}[-—~]+[0-9]{3,7}.?'),
@@ -414,10 +414,15 @@ def get_books(pagelist, publishers):
 
             dollarsoon = False
 
-            if 'allcaps' in firsttagset and len(firstword) > 2 and linenum + 4 < len(page):
-                for lookforward in range(1, 4):
+            distancetolook = 5
+
+            if (len(page) - linenum) < distancetolook:
+                distancetolook = len(page) - linenum
+
+            if 'allcaps' in firsttagset and len(firstword) > 2 and distancetolook > 1:
+                for lookforward in range(1, distancetolook):
                     futureline = page[linenum + lookforward]
-                    if '$' in futureline:
+                    if '$' in futureline or "ed." in futureline:
                         dollarsoon = True
 
             if not citation_started and not cannotcitestart:
@@ -436,7 +441,7 @@ def get_books(pagelist, publishers):
                     else:
                         pctupin15 = 0
 
-                    if 'allcaps' in firsttagset and ('commastop' in firsttagset or 'fullstop' in firsttagset) and len(firstword) > 2 and dollarsoon:
+                    if 'allcaps' in firsttagset and len(firstword) > 2 and dollarsoon:
                         this_line_is_new_citation = True
                     elif lineuppercasepct > 0.72 and len(line) > 14:
                         this_line_is_new_citation = True
