@@ -13,11 +13,13 @@
 # Once we find citations, we turn the lines between citations into
 # Book objects.
 
-import os, sys
+import os, sys, re
 from difflib import SequenceMatcher
 import lexparse
 
 valid_prices = {"81": 1.00, "81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35, '81.85': 1.85, '81.95': 1.95, '81.45': 1.45, '83.50': 3.50, '85': 5.0, '84': 4.0}
+
+pronunication = re.compile('\(\S*-\S*\)')
 
 def match_strings(stringA, stringB):
     m = SequenceMatcher(None, stringA, stringB)
@@ -70,7 +72,7 @@ def pricetranslate(astring):
     else:
         price = 0.0
 
-    if price > 40 and len(digits) > 1 and (digits[0] == '5' or digits[0] == '8'):
+    if price > 49 and len(digits) > 1 and '.' in digits and (digits[0] == '5' or digits[0] == '8'):
         try:
             price = float(digits[1:])
         except:
@@ -377,9 +379,37 @@ def get_books(pagelist, publishers):
             if len(tokens) < 1:
                 continue
 
+            if len(tokens) == 2:
+                if tokens[0].isupper() and pronunciation.fullmatch(tokens[1]):
+                    continue
+
+                    # this takes care of lines at the bottom of a page like
+                    # MEREZHKOVSKII (mer-ezh-kov-ske)
+
+            # There are things that look like the beginning of a citation but
+            # are actually cross-references
+
+            if "See" in line:
+                skepticalofcitestart = True
+            else:
+                skepticalofcitestart = False
+
+            nextline = linenum + 1
+
+            if nextline < len(page) and "See" in page[nextline]:
+                skepticalofcitestart = True
+
+            cannotcitestart = False
+
+            if skepticalofcitestart and linenum + 5 < len(page):
+                for lookforward in range(1, 5):
+                    futureline = page[linenum + lookforward]
+                    if percent_upper(futureline) > .3:
+                        cannotcitestart = True
+
             taglist = lexparse.apply_rule_list(rule_list, tokens)
 
-            if not citation_started:
+            if not citation_started and not cannotcitestart:
                 firstword = taglist.stringseq[0]
                 firsttagset = taglist.tagseq[0]
 
@@ -399,7 +429,7 @@ def get_books(pagelist, publishers):
 
                     if 'allcaps' in firsttagset and ('commastop' in firsttagset or 'fullstop' in firsttagset) and len(firstword) > 2:
                         this_line_is_new_citation = True
-                    elif lineuppercasepct > 0.72 and len(line) > 12:
+                    elif lineuppercasepct > 0.72 and len(line) > 14:
                         this_line_is_new_citation = True
                     elif pctupin15 > .35 and '$' in line and len(reviewlines) > 3:
                         this_line_is_new_citation = True
@@ -425,6 +455,9 @@ def get_books(pagelist, publishers):
                             # line are more stringent than they will be from the second onward
                             citation_finished = True
                             break
+
+            elif not citation_started and cannotcitestart:
+                reviewlines.append(line)
 
             else:
                 # if a citation has been started, let's see if we should end it
