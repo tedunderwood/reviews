@@ -19,7 +19,7 @@ import lexparse
 
 valid_prices = {"81": 1.00, "81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35, '81.85': 1.85, '81.95': 1.95, '81.45': 1.45, '83.50': 3.50, '85': 5.0, '84': 4.0}
 
-pronunciation = re.compile('\(\S*[a-zA-Z]\S*-\S*\)')
+pronunciationline = re.compile('[A-Z][A-Z\s]{3,}\s\(\S*[a-zA-Z]\S*[-\']\S*\)')
 hyphenregex = re.compile('.?[0-9]{1,2}[-—~]+[0-9]{3,7}.?')
 
 def match_strings(stringA, stringB):
@@ -380,13 +380,12 @@ def get_books(pagelist, publishers):
             if len(tokens) < 1:
                 continue
 
-            if len(tokens) == 2:
-                if tokens[0].isupper() and pronunciation.fullmatch(tokens[1]):
-                    print(line)
-                    continue
+            if pronunciationline.fullmatch(line):
+                print(line)
+                continue
 
                     # this takes care of lines at the bottom of a page like
-                    # MEREZHKOVSKII (mer-ezh-kov-ske)
+                    # MEREZHKOVSKII (mer-ezh-kov'ske)
 
             # There are things that look like the beginning of a citation but
             # are actually cross-references
