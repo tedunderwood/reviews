@@ -542,7 +542,7 @@ def get_books(pagelist, publishers):
                 lineuppercasepct = percent_upper(line)
                 lastuppercasepct = percent_upper(citationlines[-2])
 
-                if lineuppercasepct > .45 and cluescitationahead > 0 and len(line) > 12 and lastuppercasepct < .85:
+                if lineuppercasepct > .45 and cluescitationahead > 0 and len(line) > 12 and lastuppercasepct < .45:
                     # we started a citation in error two or more lines back; this is the actual
                     # citation start
                     # notice that we check the pct uppercase of last line to make sure this isn't
