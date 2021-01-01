@@ -384,8 +384,8 @@ def get_books(pagelist, publishers):
                 print(line)
                 continue
 
-                    # this takes care of lines at the bottom of a page like
-                    # MEREZHKOVSKII (mer-ezh-kov'ske)
+                # this takes care of lines at the bottom of a page like
+                # MEREZHKOVSKII (mer-ezh-kov'ske)
 
             # There are things that look like the beginning of a citation but
             # are actually cross-references
