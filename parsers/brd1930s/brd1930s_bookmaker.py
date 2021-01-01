@@ -19,7 +19,7 @@ import lexparse
 
 valid_prices = {"81": 1.00, "81.50": 1.50, "81.25": 1.25, "81": 1.0, "82": 2.0, "83": 3.0, "81.75": 1.75, "82.50": 2.50, "81.35": 1.35, '81.85': 1.85, '81.95': 1.95, '81.45': 1.45, '83.50': 3.50, '85': 5.0, '84': 4.0}
 
-pronunciation = re.compile('\(\S*-\S*\)')
+pronunciation = re.compile('\(\S*[a-zA-Z]\S*-\S*\)')
 hyphenregex = re.compile('.?[0-9]{1,2}[-—~]+[0-9]{3,7}.?')
 
 def match_strings(stringA, stringB):
