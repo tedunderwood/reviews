@@ -528,7 +528,7 @@ def get_books(pagelist, publishers):
                     author_errors.append((textpage, last_author_name, new_author))
                 last_author_name = new_author
 
-            elif len(citationlines) > 7:
+            elif len(citationlines) > 8:
                 # this is too many lines, and we were probably in error to have
                 # started the citation, so put those lines back in reviewlines.
                 # This is esp. likely to happen at the top of a page, when
@@ -538,6 +538,21 @@ def get_books(pagelist, publishers):
                 citationlines = []
                 citation_started = False
 
+            elif len(citationlines) > 2:
+                lineuppercasepct = percent_upper(line)
+                lastuppercasepct = percent_upper(citationlines[-2])
+
+                if lineuppercasepct > .45 and cluescitationahead > 0 and len(line) > 12 and lastuppercasepct < .85:
+                    # we started a citation in error two or more lines back; this is the actual
+                    # citation start
+                    # notice that we check the pct uppercase of last line to make sure this isn't
+                    # just a long multiline author name!
+
+                    discarded = citation_lines[0: -1]
+                    for d in discarded:
+                        print(d)
+                    citationlines = [citationlines[-1]]
+                    print()
 
     return books, author_errors
 
