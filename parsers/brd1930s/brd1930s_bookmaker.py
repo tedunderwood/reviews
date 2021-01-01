@@ -382,6 +382,7 @@ def get_books(pagelist, publishers):
 
             if len(tokens) == 2:
                 if tokens[0].isupper() and pronunciation.fullmatch(tokens[1]):
+                    print(line)
                     continue
 
                     # this takes care of lines at the bottom of a page like
@@ -548,11 +549,10 @@ def get_books(pagelist, publishers):
                     # notice that we check the pct uppercase of last line to make sure this isn't
                     # just a long multiline author name!
 
-                    discarded = citationlines[0: -1]
-                    for d in discarded:
-                        print(d)
+                    # discarded = citationlines[0: -1]
+                    # for d in discarded:
+                    #     print(d)
                     citationlines = [citationlines[-1]]
-                    print()
 
     return books, author_errors
 
