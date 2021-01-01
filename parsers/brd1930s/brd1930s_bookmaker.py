@@ -548,7 +548,7 @@ def get_books(pagelist, publishers):
                     # notice that we check the pct uppercase of last line to make sure this isn't
                     # just a long multiline author name!
 
-                    discarded = citation_lines[0: -1]
+                    discarded = citationlines[0: -1]
                     for d in discarded:
                         print(d)
                     citationlines = [citationlines[-1]]
