@@ -177,7 +177,7 @@ def divide_into_quotations(booklist, publishers):
                 if 'somenumeric' in tags and not '-' in word and not ',' in word:
                     oddsofreview += 1
 
-            if (oddsofreview > 1 and linecount > 1) or oddsofreview > 2:
+            if (oddsofreview > 1 and linecount > 4 and reviewwordyet) or oddsofreview > 2:
                 sentimentbits = []
 
                 numericyet = False
