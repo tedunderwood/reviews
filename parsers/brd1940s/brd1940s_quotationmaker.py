@@ -39,6 +39,11 @@ class Quotation:
 def divide_into_quotations(booklist, publishers):
 
     all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1940s.tsv')
+
+    with open('allreviewwords.txt', mode = 'w', encoding = 'utf-8') as f:
+        for w in all_reviewwords:
+            f.write(w + '\n')
+
     reviewnames = set(reviewdict.keys())
 
     lexical_patterns = [('numeric', '.?[0-9]{1,7}.?[0-9]*[,.:=]?'), \
@@ -166,18 +171,19 @@ def divide_into_quotations(booklist, publishers):
                     continue
 
             oddsofreview = 0
-            reviewwordyet = False
+            reviewwords = 0
 
             for word, tags in zip(taglist.stringseq, taglist.tagseq):
                 if 'reviewword' in tags and not reviewwordyet:
-                    oddsofreview += 1
-                    reviewwordyet = True
+                    reviewwords += 1
+                    if reviewwords < 3:
+                        oddsofreview += 1
                 if 'plusorminus' in tags:
                     oddsofreview += 1
                 if 'somenumeric' in tags and not '-' in word and not ',' in word:
                     oddsofreview += 1
 
-            if (oddsofreview > 1 and linecount > 4 and reviewwordyet) or oddsofreview > 2:
+            if (oddsofreview > 2 and linecount > 4 and reviewwords > 0) or oddsofreview > 3:
                 sentimentbits = []
 
                 numericyet = False
