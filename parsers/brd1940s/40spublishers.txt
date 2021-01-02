@@ -47,6 +47,7 @@ Macmlllan
 McBride
 McClure
 McGraw
+Messner
 Moffat
 Morrow
 Norton
@@ -54,6 +55,7 @@ Oxford
 Page
 Pellegrini
 Prentice-Hall
+Princeton
 Putnam
 Random
 Reynal
