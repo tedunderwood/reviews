@@ -2,7 +2,7 @@
 
 import csv
 
-not_allowed = ['a', 'an', 'to', 'the', 'of', 'and', 'am', 'A.']
+not_allowed = ['a', 'an', 'to', 'the', 'of', 'and', 'am', 'A.', '&']
 
 def get_names(path):
 

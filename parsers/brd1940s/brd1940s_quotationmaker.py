@@ -174,22 +174,22 @@ def divide_into_quotations(booklist, publishers):
             reviewwords = 0
             plusyet = False
 
-            clues = []
+            # clues = []
 
             for word, tags in zip(taglist.stringseq, taglist.tagseq):
-                if 'reviewword' in tags:
+                if 'reviewword' in tags and not word == "Review":
                     reviewwords += 1
-                    clues.append(word)
+                    # clues.append(word)
                 if 'plusorminus' in tags and not plusyet:
                     numbersandsigns += 1
                     plusyet = True
-                    clues.append(word)
+                    # clues.append(word)
                 if 'somenumeric' in tags and not '-' in word and not ',' in word:
                     numbersandsigns += 1
-                    clues.append(word)
+                    # clues.append(word)
 
-            if numbersandsigns > 0 and reviewwords > 0:
-                sentimentbits = clues
+            if numbersandsigns > 0 and reviewwords > 0 and (numbersandsigns + reviewwords) > 2:
+                sentimentbits = []
 
                 numericyet = False
                 publisherbits = []
