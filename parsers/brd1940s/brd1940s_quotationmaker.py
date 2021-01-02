@@ -174,7 +174,7 @@ def divide_into_quotations(booklist, publishers):
             reviewwords = 0
 
             for word, tags in zip(taglist.stringseq, taglist.tagseq):
-                if 'reviewword' in tags and not reviewwordyet:
+                if 'reviewword' in tags:
                     reviewwords += 1
                     if reviewwords < 3:
                         oddsofreview += 1
