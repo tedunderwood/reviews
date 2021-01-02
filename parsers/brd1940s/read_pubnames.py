@@ -2,9 +2,11 @@
 
 import csv
 
+not_allowed = ['a', 'an', 'to', 'the', 'of', 'and', 'am', 'A.']
+
 def get_names(path):
 
-	pubwords = set()
+	pubwords = {'kirkus', 'york', 'times', 'chicago', 'tribune', 'yorker'}
 	pubnames = dict()
 
 	with open(path, mode = 'r', encoding = 'utf-8') as f:
@@ -13,15 +15,10 @@ def get_names(path):
 			code = row['code']
 			words = code.split()
 			for w in words:
-				pubwords.add(w)
-				pubwords.add(w.strip('.'))
-				pubwords.add(w.lower())
+				if w not in not_allowed:
+					pubwords.add(w)
+					pubwords.add(w.strip('.'))
 			name = row['fullname']
 			pubnames[code] = name
-
-	not_allowed = ['a', 'an', 'to', 'the', 'of']
-	for n in not_allowed:
-		if n in pubwords:
-			pubwords.remove(n)
 
 	return pubwords, pubnames

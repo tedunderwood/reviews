@@ -170,7 +170,7 @@ def divide_into_quotations(booklist, publishers):
                     matched = True
                     continue
 
-            oddsofreview = 0
+            numbersandsigns = 0
             reviewwords = 0
             plusyet = False
 
@@ -179,18 +179,16 @@ def divide_into_quotations(booklist, publishers):
             for word, tags in zip(taglist.stringseq, taglist.tagseq):
                 if 'reviewword' in tags:
                     reviewwords += 1
-                    if reviewwords < 3:
-                        oddsofreview += 1
-                        clues.append(word)
+                    clues.append(word)
                 if 'plusorminus' in tags and not plusyet:
-                    oddsofreview += 1
+                    numbersandsigns += 1
                     plusyet = True
                     clues.append(word)
                 if 'somenumeric' in tags and not '-' in word and not ',' in word:
-                    oddsofreview += 1
+                    numbersandsigns += 1
                     clues.append(word)
 
-            if (oddsofreview > 2 and linecount > 4 and reviewwords > 0) or oddsofreview > 3:
+            if numbersandsigns > 0 and reviewwords > 0:
                 sentimentbits = clues
 
                 numericyet = False
