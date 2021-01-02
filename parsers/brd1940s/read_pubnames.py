@@ -1,4 +1,4 @@
-# read_pubnames.py
+## read_pubnames.py
 
 import csv
 
