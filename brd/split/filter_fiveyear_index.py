@@ -1,22 +1,30 @@
-# compares the cumulative index to the previous four years and
-# identifies books that are only in the fifth year
-
-# in the process, identifies records from earlier years
-# that are filed under a heading not attested in the
-# cumulative index
-
 import sys, os
 from difflib import SequenceMatcher
+
+rootdir = '../copydata/'
+
+availables = [x for x in os.listdir(rootdir) if x.endswith('.txt')]
 
 args = sys.argv
 
 year = int(args[1])
 
 def get_authtitle(line):
-    lineparts = line.split('$')
+    tokens = line.split()
+    author = []
+    title = []
+    titleyet = False
 
-    author = lineparts[0]
-    title = lineparts[1]
+    for t in tokens:
+        if t.startswith('<') and t.endswith('>'):
+            titleyet = True
+        elif titleyet:
+            title.append(t)
+        else:
+            author.append(t)
+
+    title = ' '.join(title)
+    author = ' '.join(author)
 
     return author, title
 
@@ -40,11 +48,10 @@ def get_metadata(path):
         elif line.startswith('<') and line.endswith('>'):
             line = line.replace('"', '').replace("'", ''). replace('”', '').replace('>', '')
             heading = ' '.join(line.split(' ')[1: ])
-        elif '$' in line:
+        else:
+
             author, title = get_authtitle(line)
             metadata.append((author, title, heading))
-        else:
-            print(line)
 
     return metadata
 
@@ -79,13 +86,7 @@ def do_headings_match(headingstring, heading):
     headings2 = headingstring.split('|')
     headingsmatch = False
 
-    if len(headingstring) > 11:
-        headingstring = headingstring[0: 11]
-
     for h2 in headings2:
-
-        if len(h2) > 11:
-            h2 = h2[0: 11]
 
         matcher = SequenceMatcher(None, heading, h2)
         heading_match = matcher.ratio()
@@ -96,7 +97,7 @@ def do_headings_match(headingstring, heading):
 
     return headingsmatch
 
-indexpath = '/media/secure_volume/brd/output_index/volume' + str(year) + ' extract.txt'
+indexpath = rootdir + 'extract' + str(year) + '.txt'
 
 indexmeta = get_metadata(indexpath)
 
@@ -135,10 +136,7 @@ for auth, title, heading in indexmeta:
         if '|' not in h2:
             h2 = h2 + '|' + str(uniqueindex)
             uniqueindex += 1
-        if heading not in h2:
-            h3 = h2 + '|' + heading
-        else:
-            h3 = h2
+        h3 = h2 + '|' + heading
         alreadyhave[matchindex] = (a2, b2, h3)
         alreadyhave.append((auth, title, h3))
     else:
@@ -150,10 +148,7 @@ for auth, title, heading in indexmeta:
     if maxmatch > 0.6:
         matchindex = alreadyhave.index(bestmatch)
         a2, b2, h2 = alreadyhave[matchindex]
-        if heading not in h2:
-            h3 = h2 + '|' + heading
-        else:
-            h3 = h2
+        h3 = h2 + '|' + heading
         alreadyhave[matchindex] = (a2, b2, h3)
         alreadyhave.append((auth, title, h3))
     else:
@@ -166,7 +161,7 @@ for y in range(year - 4, year):
     print()
     print(y)
 
-    path = '/media/secure_volume/brd/output_index/volume' + str(y) + ' extract.txt'
+    path = rootdir + 'extract' + str(y) + '.txt'
 
     meta = get_metadata(path)
     print("titles in this year", len(meta))
@@ -301,45 +296,16 @@ print('Unmatched in cum index: ', count)
 
 headinglist.sort()
 
-outfolder = '/media/secure_volume/brd/split/'
+with open('unmatched.txt', mode = 'w', encoding = 'utf-8') as f:
+    for heading in headinglist:
+        f.write('<\\heading ' + heading + '>\n')
+        for a, t in headingdict[heading]:
+            f.write(a + ' <:> ' + t + '\n')
 
-unmatchedlines = []
+with open('heading_discrepancies.txt', mode = 'w', encoding = 'utf-8') as f:
+    for row in discrepancies:
+        f.write(' > '.join(row) + '\n')
 
-for heading in headinglist:
-    unmatchedlines.append('<\\heading ' + heading + '>\n')
-    for a, t in headingdict[heading]:
-        unmatchedlines.append(a + ' <:> ' + t + '\n')
-
-numlines = len(unmatchedlines)
-fileindex = 0
-
-for floor in range(0, numlines, 58):
-    filename = outfolder + 'uml' + str(fileindex) + '.txt'
-    fileindex += 1
-
-    with open(filename, mode = 'w', encoding = 'utf-8') as f:
-        f.write('\n')
-        for l in unmatchedlines[floor: floor + 58]:
-            outline = '  ' + l
-            f.write(outline)
-
-discreplines = []
-for row in discrepancies:
-    if row[3] != row[6]:  # if they actually match headings, don't use
-        discreplines.append(' > '.join(row) + '\n')
-
-numlines = len(discreplines)
-fileindex = 0
-
-for floor in range(0, numlines, 58):
-    filename = outfolder + 'dcl' + str(fileindex) + '.txt'
-    fileindex += 1
-
-    with open(filename, mode = 'w', encoding = 'utf-8') as f:
-        f.write('\n')
-        for l in discreplines[floor: floor + 58]:
-            outline = '  ' + l
-            f.write(outline)
 
 
 

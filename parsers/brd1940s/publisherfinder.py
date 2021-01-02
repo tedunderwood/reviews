@@ -14,14 +14,14 @@ year = args[1]
 
 import read_pubnames
 
-all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1930s.tsv')
+all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1940s.tsv')
 
 all_review_codes = set([x.replace('.', '') for x in reviewdict.keys()])
 all_review_codes.add('summary')
 
 publishers = []
 
-with open('30spublishers.txt', encoding = 'utf-8') as f:
+with open('40spublishers.txt', encoding = 'utf-8') as f:
     for line in f:
         publishers.append(line.strip())
 
