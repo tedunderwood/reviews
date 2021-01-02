@@ -174,19 +174,21 @@ def divide_into_quotations(booklist, publishers):
             reviewwords = 0
             plusyet = False
 
-            # clues = []
-
             for word, tags in zip(taglist.stringseq, taglist.tagseq):
-                if 'reviewword' in tags and not word == "Review":
+                if 'reviewword' in tags:
                     reviewwords += 1
-                    # clues.append(word)
+
                 if 'plusorminus' in tags and not plusyet:
-                    numbersandsigns += 1
+                    reviewwords += 1
                     plusyet = True
-                    # clues.append(word)
-                if 'somenumeric' in tags and not '-' in word and not ',' in word:
+
+                if 'wordcount' in tags or 'OCRwordcount' in tags:
+                    reviewwords += 1
+                    # we count wordcount as a review word rather than a number
+                    # mainly so we can catch new reviews before they're in our list
+
+                if 'somenumeric' in tags and not '-' in word and not ',' in word and 'wordcount' not in tags:
                     numbersandsigns += 1
-                    # clues.append(word)
 
             if numbersandsigns > 0 and reviewwords > 0 and (numbersandsigns + reviewwords) > 2:
                 sentimentbits = []
