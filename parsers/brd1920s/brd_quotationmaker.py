@@ -47,6 +47,8 @@ def divide_into_quotations(booklist):
         elif len(reviewparts[0]) > 4:
             longreviewnames.add(reviewparts[0])
 
+    publishers = ['Liverlght', 'Appleton', 'Baker', 'Barnes', 'Benziger', 'Bobbs', "Brentano's", 'Cassell', 'Century', 'Collier-Fox', 'Crowell', 'Ditson', 'Dodd', 'Doran', 'Doubleday', 'Dutton', 'Elder', 'Estes', 'Ginn', 'Goodspeed', 'Harper', 'Heath', 'Holt', 'Houghton', 'Knopf', 'Lane', 'Lippincott', 'Little', 'Liveright', 'Longmans', 'Macmillan', 'McBride', 'McClure', 'McGraw', 'Moffat', 'Oxford', 'Page', 'Pott', 'Putnam', 'Scribner', 'Simmons', 'Stokes', 'Walton', 'Warne', 'Wessels', 'Wilde', 'Wiley', 'Winston', 'Yale']
+
     lexical_patterns = [('numeric', '.?[0-9]{1,7}.?[0-9]*[,.:=]?'), \
     ('reviewword', all_reviewwords),
     ('openparen', '\(.*'),
