@@ -74,6 +74,8 @@ def divide_into_quotations(booklist, publishers):
     plusmisreads = {'-4-', '4-', '1-', '-1-', '4—', '1—', '-|-',
         '-l-', '-)-', '—|—', '-I-', '-(-', '-f'}
 
+    monthnames = {'Ja', 'F', 'Mr', 'Ap', 'My', 'Je', 'Jl', 'Ag', 'S' , 'O', 'D'}
+
     for book in booklist:
         lines = book.reviewlines
 
@@ -165,31 +167,38 @@ def divide_into_quotations(booklist, publishers):
                     matched = True
                     continue
 
-            numbersandsigns = 0
+            numberwords = 0
             reviewwords = 0
             plusyet = False
-
-            # clues = []
+            totalclues = 0
 
             for word, tags in zip(taglist.stringseq, taglist.tagseq):
                 if 'reviewword' in tags:
                     reviewwords += 1
+                    totalclues += 1
 
-                if 'plusorminus' in tags and not plusyet:
-                    reviewwords += 1
+                elif 'plusorminus' in tags and not plusyet:
+                    reviewwords += 0.5
+                    totalclues += 1
                     plusyet = True
-                    # clues.append(word)
 
-                if 'wordcount' in tags or 'OCRwordcount' in tags:
-                    reviewwords += 1
-                    # we count wordcount as a review word rather than a number
-                    # mainly so we can catch new reviews before they're in our list
+                elif word in monthnames:
+                    totalclues += 1
 
-                if 'somenumeric' in tags and not '-' in word and not ',' in word and 'wordcount' not in tags:
-                    numbersandsigns += 1
-                    # clues.append(word)
+                elif 'somenumeric' in tags and not '-' in word and not ',' in word:
+                    numberwords += 1
+                    totalclues += 1
+                    if word.endswith('w'):
+                        totalclues += 1
+                        reviewwords += 0.5
+                    elif ':' in word:
+                        totalclues += 1
+                        reviewwords += 0.5
+                    elif word.startswith('p'):
+                        totalclues += 1
+                        reviewwords += 0.5
 
-            if numbersandsigns > 0 and reviewwords > 0 and (numbersandsigns + reviewwords) > 2:
+            if numberwords > 0 and reviewwords > 0.9 and totalclues > 3:
                 sentimentbits = []
 
                 numericyet = False
@@ -266,7 +275,7 @@ def divide_into_quotations(booklist, publishers):
                 if len(citationbits) > 0 and not wordcountregex.fullmatch(citationbits[-1]) and not ocrwordcountregex.fullmatch(citationbits[-1]):
                     if linecount < (len(lines) - 1):
                         wordsinnextline = lines[linecount + 1].strip().split()
-                        if len(wordsinnextline) > 0 and wordcountregex.fullmatch(wordsinnextline[-1]):
+                        if len(wordsinnextline) > 0 and len(wordsinnextline) < 3 and wordcountregex.fullmatch(wordsinnextline[-1]):
                             citationbits.extend(wordsinnextline)
                             skipnext = True
 
