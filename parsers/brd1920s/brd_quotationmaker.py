@@ -38,7 +38,7 @@ class Quotation:
 
 def divide_into_quotations(booklist):
 
-    all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1930s.tsv')
+    all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1920s.tsv')
     longreviewnames = set()
     for rev in reviewdict.keys():
         reviewparts = rev.split()
