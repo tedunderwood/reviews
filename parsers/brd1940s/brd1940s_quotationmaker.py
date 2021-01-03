@@ -273,7 +273,6 @@ def divide_into_quotations(booklist, publishers):
                         addtonext = ' '.join(taglist.stringseq[nextwordctr : ])
                         break
 
-
                 # if this line doesn't end with a word count, and the next one does?
                 # probably a continuation
 
