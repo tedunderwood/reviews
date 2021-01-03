@@ -183,7 +183,7 @@ def divide_into_quotations(booklist, publishers):
                     totalclues += 1
 
                 elif 'plusorminus' in tags and not plusyet:
-                    reviewwords += 1
+                    reviewwords += 0.5
                     totalclues += 1
                     plusyet = True
 
@@ -195,13 +195,15 @@ def divide_into_quotations(booklist, publishers):
                     totalclues += 1
                     if word.endswith('w'):
                         totalclues += 1
-                        reviewwords += 1
+                        reviewwords += 0.5
                     elif ':' in word:
                         totalclues += 1
+                        reviewwords += 0.5
                     elif word.startswith('p'):
                         totalclues += 1
+                        reviewwords += 0.5
 
-            if numberwords > 0 and reviewwords > 0 and totalclues > 3:
+            if numberwords > 0 and reviewwords > 0.9 and totalclues > 3:
                 sentimentbits = []
 
                 numericyet = False
@@ -278,7 +280,7 @@ def divide_into_quotations(booklist, publishers):
                 if len(citationbits) > 0 and not wordcountregex.fullmatch(citationbits[-1]) and not ocrwordcountregex.fullmatch(citationbits[-1]):
                     if linecount < (len(lines) - 1):
                         wordsinnextline = lines[linecount + 1].strip().split()
-                        if len(wordsinnextline) > 0 and wordcountregex.fullmatch(wordsinnextline[-1]):
+                        if len(wordsinnextline) > 0 and len(wordsinnextline) < 3 and wordcountregex.fullmatch(wordsinnextline[-1]):
                             citationbits.extend(wordsinnextline)
                             skipnext = True
 
