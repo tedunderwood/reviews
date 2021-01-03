@@ -38,8 +38,14 @@ class Quotation:
 
 def divide_into_quotations(booklist):
 
-    all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1920s.tsv')
-    reviewnames = set(reviewdict.keys())
+    all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1930s.tsv')
+    longreviewnames = set()
+    for rev in reviewdict.keys():
+        reviewparts = rev.split()
+        if len(reviewparts) < 1:
+            continue
+        elif len(reviewparts[0]) > 4:
+            longreviewnames.add(reviewparts[0])
 
     lexical_patterns = [('numeric', '.?[0-9]{1,7}.?[0-9]*[,.:=]?'), \
     ('reviewword', all_reviewwords),
@@ -61,10 +67,12 @@ def divide_into_quotations(booklist):
     ('openquote', '[\"\'“‘]+\S*'),
     ('plusorminus', '[\+\-\—]+'),
     ('reviewword', all_reviewwords),
-    ('wordcount', '\d*0w[.]?')
+    ('wordcount', '\d*0w[.]?'),
+    ('OCRwordcount', '\S*Ow[.]?')
     ]
 
     wordcountregex = re.compile('\d*0w[.]?')
+    ocrwordcountregex = re.compile('\S*Ow[.]?')
 
     rule_list = lexparse.patterns2rules(lexical_patterns)
     allquotes = []
@@ -110,7 +118,33 @@ def divide_into_quotations(booklist):
                 for tags in taglist.tagseq:
                     if 'hyphennumber' in tags or 'dollarprice' in tags or 'centprice' in tags:
                         trailingbibline = True
+
                 if trailingbibline:
+
+                    # get the existing publisher to see if it makes more sense
+                    # fused with something in this trailing line
+
+                    existingpubparts = book.publisher.split()
+                    if len(existingpubparts) > 0:
+                        existingpub = existingpubparts[-1].strip('-')
+                    else:
+                        existingpub = 'not a publisher'
+
+                    tokenssofar = []
+                    for l in accumulated:
+                        tokenssofar.extend(l.strip().split())
+                    tokenssofar.extend(tokens)
+
+                    tokenssofar = [x.strip('.,[]()-') for x in tokenssofar]
+
+                    for tok in tokenssofar:
+                        if tok in publishers:
+                            book.publisher = tok
+
+                        rejoined = existingpub + tok
+                        if rejoined in publishers:
+                            book.publisher = book.publisher.strip('-') + tok
+
                     line = line + ' <endsubj>'
                     accumulated.append(line)
                     continue
@@ -137,19 +171,51 @@ def divide_into_quotations(booklist):
                     matched = True
                     continue
 
-            oddsofreview = 0
-            reviewwordyet = False
+            numberwords = 0
+            reviewwords = 0
+            plusyet = False
+            totalclues = 0
 
             for word, tags in zip(taglist.stringseq, taglist.tagseq):
-                if 'reviewword' in tags and not reviewwordyet:
-                    oddsofreview += 1
-                    reviewwordyet = True
-                if 'plusorminus' in tags:
-                    oddsofreview += 1
-                if 'somenumeric' in tags and not '-' in word and not ',' in word:
-                    oddsofreview += 1
+                if 'reviewword' in tags:
+                    reviewwords += 1
+                    totalclues += 1
 
-            if (oddsofreview > 1 and linecount > 1) or oddsofreview > 2:
+                elif 'plusorminus' in tags and not plusyet:
+                    reviewwords += 0.5
+                    totalclues += 1
+                    plusyet = True
+
+                elif 'monthabbrev' in tags:
+                    totalclues += 1
+
+                elif 'somenumeric' in tags and not '-' in word and not ',' in word:
+                    numberwords += 1
+                    totalclues += 1
+                    if word.endswith('w'):
+                        totalclues += 1
+                        reviewwords += 0.5
+                    elif ':' in word:
+                        totalclues += 1
+                        reviewwords += 0.5
+                    elif word.startswith('p'):
+                        totalclues += 1
+                        reviewwords += 0.5
+
+            # fuzzy match in situations where everything is there except the review
+            # because it could easily be ocr error
+
+            if numberwords > 0 and totalclues > 2 and reviewwords < 0.9:
+                firstword = taglist.stringseq[0]
+                if len(firstword) > 3:
+                    for longname in longreviewnames:
+                        similarity = match_strings(firstword, longname)
+                        if similarity > .7:
+                            reviewwords += 1
+                            totalclues += 1
+                            break
+
+            if numberwords > 0 and reviewwords > 0.9 and totalclues > 3:
                 sentimentbits = []
 
                 numericyet = False
@@ -215,7 +281,7 @@ def divide_into_quotations(booklist):
                     else:
                         citationbits.append(word)
 
-                    if numericyet and 'wordcount' in tags and (nextwordctr < len(taglist.stringseq)):
+                    if numericyet and ('wordcount' in tags or 'OCRwordcount' in tags) and (nextwordctr < len(taglist.stringseq)):
                         addtonext = ' '.join(taglist.stringseq[nextwordctr : ])
                         break
 
@@ -223,10 +289,10 @@ def divide_into_quotations(booklist):
                 # if this line doesn't end with a word count, and the next one does?
                 # probably a continuation
 
-                if len(citationbits) > 0 and not wordcountregex.fullmatch(citationbits[-1]):
+                if len(citationbits) > 0 and not wordcountregex.fullmatch(citationbits[-1]) and not ocrwordcountregex.fullmatch(citationbits[-1]):
                     if linecount < (len(lines) - 1):
                         wordsinnextline = lines[linecount + 1].strip().split()
-                        if len(wordsinnextline) > 0 and wordcountregex.fullmatch(wordsinnextline[-1]):
+                        if len(wordsinnextline) > 0 and len(wordsinnextline) < 3 and wordcountregex.fullmatch(wordsinnextline[-1]):
                             citationbits.extend(wordsinnextline)
                             skipnext = True
 
