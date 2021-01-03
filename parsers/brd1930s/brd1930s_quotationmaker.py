@@ -209,12 +209,13 @@ def divide_into_quotations(booklist, publishers):
 
             if numberwords > 0 and totalclues > 2 and reviewwords < 0.9:
                 firstword = taglist.stringseq[0]
-                for longname in longreviewnames:
-                    similarity = match_strings(firstword, longname)
-                    if similarity > .7:
-                        reviewwords += 1
-                        totalclues += 1
-                        break
+                if len(firstword) > 3:
+                    for longname in longreviewnames:
+                        similarity = match_strings(firstword, longname)
+                        if similarity > .7:
+                            reviewwords += 1
+                            totalclues += 1
+                            break
 
             if numberwords > 0 and reviewwords > 0.9 and totalclues > 3:
                 sentimentbits = []

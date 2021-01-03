@@ -38,9 +38,14 @@ class Quotation:
 
 def divide_into_quotations(booklist, publishers):
 
-    all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1940s.tsv')
-
-    reviewnames = set(reviewdict.keys())
+    all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1930s.tsv')
+    longreviewnames = set()
+    for rev in reviewdict.keys():
+        reviewparts = rev.split()
+        if len(reviewparts) < 1:
+            continue
+        elif len(reviewparts[0]) > 4:
+            longreviewnames.add(reviewparts[0])
 
     lexical_patterns = [('numeric', '.?[0-9]{1,7}.?[0-9]*[,.:=]?'), \
     ('reviewword', all_reviewwords),
@@ -198,6 +203,16 @@ def divide_into_quotations(booklist, publishers):
                     elif word.startswith('p'):
                         totalclues += 1
                         reviewwords += 0.5
+
+            if numberwords > 0 and totalclues > 2 and reviewwords < 0.9:
+                firstword = taglist.stringseq[0]
+                if len(firstword) > 3:
+                    for longname in longreviewnames:
+                        similarity = match_strings(firstword, longname)
+                        if similarity > .7:
+                            reviewwords += 1
+                            totalclues += 1
+                            break
 
             if numberwords > 0 and reviewwords > 0.9 and totalclues > 3:
                 sentimentbits = []
