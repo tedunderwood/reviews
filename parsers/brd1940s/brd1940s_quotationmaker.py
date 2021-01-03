@@ -79,6 +79,8 @@ def divide_into_quotations(booklist, publishers):
     plusmisreads = {'-4-', '4-', '1-', '-1-', '4—', '1—', '-|-',
         '-l-', '-)-', '—|—', '-I-', '-(-', '-f'}
 
+    monthnames = {'Ja', 'F', 'Mr', 'Ap', 'My', 'Je', 'Jl', 'Ag', 'S' , 'O', 'D'}
+
     for book in booklist:
         lines = book.reviewlines
 
@@ -170,27 +172,36 @@ def divide_into_quotations(booklist, publishers):
                     matched = True
                     continue
 
-            numbersandsigns = 0
+            numberwords = 0
             reviewwords = 0
             plusyet = False
+            totalclues = 0
 
             for word, tags in zip(taglist.stringseq, taglist.tagseq):
                 if 'reviewword' in tags:
                     reviewwords += 1
+                    totalclues += 1
 
-                if 'plusorminus' in tags and not plusyet:
+                elif 'plusorminus' in tags and not plusyet:
                     reviewwords += 1
+                    totalclues += 1
                     plusyet = True
 
-                if 'wordcount' in tags or 'OCRwordcount' in tags:
-                    reviewwords += 1
-                    # we count wordcount as a review word rather than a number
-                    # mainly so we can catch new reviews before they're in our list
+                elif word in monthnames:
+                    totalclues += 1
 
-                if 'somenumeric' in tags and not '-' in word and not ',' in word and 'wordcount' not in tags:
-                    numbersandsigns += 1
+                elif 'somenumeric' in tags and not '-' in word and not ',' in word:
+                    numberwords += 1
+                    totalclues += 1
+                    if word.endswith('w'):
+                        totalclues += 1
+                        reviewwords += 1
+                    elif ':' in word:
+                        totalclues += 1
+                    elif word.startswith('p'):
+                        totalclues += 1
 
-            if numbersandsigns > 0 and reviewwords > 0 and (numbersandsigns + reviewwords) > 2:
+            if numberwords > 0 and reviewwords > 0 and totalclues > 3:
                 sentimentbits = []
 
                 numericyet = False
