@@ -40,10 +40,6 @@ def divide_into_quotations(booklist, publishers):
 
     all_reviewwords, reviewdict = read_pubnames.get_names('brd_pubs_indexed1940s.tsv')
 
-    with open('allreviewwords.txt', mode = 'w', encoding = 'utf-8') as f:
-        for w in all_reviewwords:
-            f.write(w + '\n')
-
     reviewnames = set(reviewdict.keys())
 
     lexical_patterns = [('numeric', '.?[0-9]{1,7}.?[0-9]*[,.:=]?'), \
