@@ -42,7 +42,9 @@ def divide_into_quotations(booklist, publishers):
     longreviewnames = set()
     for rev in reviewdict.keys():
         reviewparts = rev.split()
-        if len(reviewparts[0]) > 4:
+        if len(reviewparts) < 1:
+            continue
+        elif len(reviewparts[0]) > 4:
             longreviewnames.add(reviewparts[0])
 
     lexical_patterns = [('numeric', '.?[0-9]{1,7}.?[0-9]*[,.:=]?'), \
