@@ -14,7 +14,7 @@
 
 import pandas as pd
 import numpy as np
-import re, math, csv
+import re, math, csv, sys
 from difflib import SequenceMatcher
 
 wordcountregex = re.compile('\d*0w[.]?')
@@ -33,14 +33,12 @@ wordcountregex = re.compile('\d*0w[.]?')
 
 triplets2process = []
 
-with open('pairing_meta2.tsv', encoding = 'utf-8') as f:
+metafile = sys.argv[1]
+
+with open(metafile, encoding = 'utf-8') as f:
     reader = csv.DictReader(f, delimiter = '\t')
     for row in reader:
         triplets2process.append(row)
-
-# triplets2process = [{'indexpath': '/Users/tunder/Dropbox/python/reviews/brd/data/volume14 extract.txt',
-#     'reviewpath': '/Users/tunder/Dropbox/python/reviews/output/brd_quotes.tsv',
-#     'outfilepath': 'outfile.tsv'}]
 
 def get_ratio(stringA, stringB):
 
@@ -488,33 +486,23 @@ for triplet in triplets2process:
 
     allsentiments = []
 
-    matchedindexes = list(matchedreviews.keys())
+    matchedindexes = set(matchedreviews.keys())
 
-    for idx in matchedindexes:
+    for idx in indexes_of_unique_books:
         author = unique_books.loc[idx, 'bookauthor']
         title = unique_books.loc[idx, 'booktitle']
         publisher = unique_books.loc[idx, 'publisher']
         price = unique_books.loc[idx, 'price']
-        headings = ' | '.join([x[2] for x in matchedreviews[idx]])
+        if idx in matchedindexes:
+            headings = ' | '.join([x[2] for x in matchedreviews[idx]])
+        else:
+            headings = 'nonfiction'
 
         matchingrows = reviews.loc[(reviews.bookauthor == author) & (reviews.booktitle == title),  : ]
 
         sentiments = []
-        wordcount = 0
 
         for idx2, row in matchingrows.iterrows():
-
-            if not pd.isnull(row.citation):
-                citationparts = row.citation.split()
-                if len(citationparts) > 0 and wordcountregex.fullmatch(citationparts[-1]):
-                    thesewords = makeint(citationparts[-1])
-                    if thesewords < 3000:
-                        wordcount += thesewords
-                    else:
-                        wordcount += 3000
-                        # we impose a cap on super-long reviews because I'm skeptical
-                else:
-                    wordcount += 10
 
             if pd.isnull(row.sentiment):
                 thissent = float('NaN')
@@ -530,21 +518,21 @@ for triplet in triplets2process:
             allsentiments.append(thissent)
             sentiments.append(thissent)
 
-        bookdata[idx] = [author, title, price, wordcount, idx2, publisher, sentiments, headings]
+        bookdata[idx] = [author, title, price, idx2, publisher, sentiments, headings]
 
     average_sentiment = np.nanmean(allsentiments)
 
     for idx, data in bookdata.items():
-        sentiments = data[6]
+        sentiments = data[5]
         sentcount = np.count_nonzero(~np.isnan(sentiments))
         sentiments = [average_sentiment if math.isnan(x) else x for x in sentiments]
         sentiment = np.mean(sentiments)
-        data[6] = sentiment
+        data[5] = sentiment
         data.append(sentcount) # number of non-NaN reviews
         data.append(len(sentiments)) # total number of reviews
 
     with open(outfilepath + '.tsv', mode = 'w', encoding = 'utf-8') as f:
-        f.write('index\tauthor\ttitle\tprice\twordcount\trows\tpublisher\tavgsent\theadings\tnumreviewswithsent\tnumallreviews\tcloseness\ttarget\n')
+        f.write('index\tauthor\ttitle\tprice\trows\tpublisher\tavgsent\theadings\tnumreviewswithsent\tnumallreviews\tcloseness\ttarget\n')
         newindex = 0
         for idx, data in bookdata.items():
             outrow = [str(newindex)]
