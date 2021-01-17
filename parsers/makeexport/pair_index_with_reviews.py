@@ -402,7 +402,13 @@ for triplet in triplets2process:
 
     reallynotfound = []
 
+    counter = 0
     for lastname, first_initials, title, indexlinenum, heading in notfound:
+
+        counter += 1
+
+        if counter % 100 == 1:
+            print(counter)
 
         closestreviewidx = -1
         maxcloseness = 0

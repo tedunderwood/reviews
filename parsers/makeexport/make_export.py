@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# select_fiction_reviews.py
-# Ted Underwood, Dec 2019
+# make_export.py
+# Ted Underwood, Jan 2021
 
 # This script does a complicated join on two sets of files:
 
