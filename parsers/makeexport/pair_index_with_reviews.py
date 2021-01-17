@@ -402,6 +402,8 @@ for triplet in triplets2process:
 
     reallynotfound = []
 
+    notfound = [] # this kills searching in discard for debug purposes
+
     counter = 0
     for lastname, first_initials, title, indexlinenum, heading in notfound:
 
@@ -530,7 +532,12 @@ for triplet in triplets2process:
 
     for idx, data in bookdata.items():
         sentiments = data[5]
-        sentwithoutmissing = np.nanmean(data[5])
+
+        if len(data[5]) > 0:
+            sentwithoutmissing = np.nanmean(data[5])
+        else:
+            sentwithoutmissing = float('nan')
+
         sentcount = np.count_nonzero(~np.isnan(sentiments))
         sentiments = [average_sentiment if math.isnan(x) else x for x in sentiments]
         sentwithmissing = np.mean(sentiments)
@@ -546,7 +553,11 @@ for triplet in triplets2process:
             outrow = [str(newindex)]
             newindex += 1
             outrow.extend([str(x) for x in data])
-            outrow.extend([str(bookmeta[idx]['closeness']), bookmeta[idx]['target']])
+            if idx in bookmeta:
+                outrow.extend([str(bookmeta[idx]['closeness']), bookmeta[idx]['target']])
+            else:
+                outrow.extend([0, 'nonfiction'])
+
             f.write('\t'.join(outrow) + '\n')
 
 
