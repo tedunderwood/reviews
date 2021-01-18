@@ -402,7 +402,7 @@ for triplet in triplets2process:
 
     reallynotfound = []
 
-    notfound = [] # this kills searching in discard for debug purposes
+    # notfound = [] this kills searching in discard for debug purposes
 
     counter = 0
     for lastname, first_initials, title, indexlinenum, heading in notfound:
@@ -547,7 +547,7 @@ for triplet in triplets2process:
         data.append(len(sentiments)) # total number of reviews
 
     with open(outfilepath + '.tsv', mode = 'w', encoding = 'utf-8') as f:
-        f.write('index\tauthor\ttitle\tprice\trows\tpublisher\tavgsent\tavgsentwmissing\theadings\tnumreviewswithsent\tnumallreviews\tcloseness\ttarget\n')
+        f.write('index\tauthor\ttitle\tprice\trows\tpublisher\tavgsent\theadings\tavgsentwmissing\tnumreviewswithsent\tnumallreviews\tcloseness\ttarget\n')
         newindex = 0
         for idx, data in bookdata.items():
             outrow = [str(newindex)]
