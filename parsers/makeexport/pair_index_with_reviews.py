@@ -556,7 +556,7 @@ for triplet in triplets2process:
             if idx in bookmeta:
                 outrow.extend([str(bookmeta[idx]['closeness']), bookmeta[idx]['target']])
             else:
-                outrow.extend([0, 'nonfiction'])
+                outrow.extend(['0', 'nonfiction'])
 
             f.write('\t'.join(outrow) + '\n')
 
