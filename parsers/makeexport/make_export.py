@@ -60,7 +60,7 @@ for triplet in triplets2process:
 
         thisdf = reviews.loc[(reviews['booktitle'] == title) & (reviews['bookauthor'] == auth), : ]
 
-        thisdf = thisdf.assign(wordcount = row['wordcount'])
+        # thisdf = thisdf.assign(wordcount = row['wordcount'])
         thisdf = thisdf.assign(avgsentiment = row['avgsent'])
         thisdf = thisdf.assign(avgsentwmissing = row['avgsentwmissing'])
         thisdf = thisdf.assign(bookindex = idx)
