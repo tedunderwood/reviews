@@ -8,7 +8,7 @@
 # with one line for each ~review~
 # and
 # b) the files produced by pair_index_with_reviews.py, which
-# have one line for each ~book~, but only fiction books,
+# have one line for each ~book~,
 # and also some summary data at the book level, like mean sentiment
 
 # we want to get all the lines from (a) that match auth-title pairs
@@ -16,11 +16,13 @@
 # headings, unfortunately, because we're not allowed to export them.
 
 import pandas as pd
-import csv
+import csv, sys
+
+metafile = sys.argv[1]
 
 triplets2process = []
 
-with open('pairing_meta.tsv', encoding = 'utf-8') as f:
+with open(metafile, encoding = 'utf-8') as f:
     reader = csv.DictReader(f, delimiter = '\t')
     for row in reader:
         triplets2process.append(row)
@@ -60,6 +62,7 @@ for triplet in triplets2process:
 
         thisdf = thisdf.assign(wordcount = row['wordcount'])
         thisdf = thisdf.assign(avgsentiment = row['avgsent'])
+        thisdf = thisdf.assign(avgsentwmissing = row['avgsentwmissing'])
         thisdf = thisdf.assign(bookindex = idx)
         thisdf = thisdf.assign(numreviewswithsent = row['numreviewswithsent'])
         thisdf = thisdf.assign(numreviewsofbk = row['numallreviews'])
@@ -96,7 +99,7 @@ for triplet in triplets2process:
 
     selected = pd.concat(list_of_dfs)
 
-    outname = bookpath.replace('pairedvol', 'fiction')
+    outname = bookpath.replace('pairedvol', 'nonconsumptive')
 
     selected.to_csv(outname, sep = '\t', index = False)
 
