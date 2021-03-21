@@ -249,7 +249,7 @@ def split_discard_line(dline):
     return author, title
 
 
-for quadruplet in reversed(quads2proces):
+for quadruplet in reversed(quads2process):
 
     indexpath = quadruplet['indexpath']
 
