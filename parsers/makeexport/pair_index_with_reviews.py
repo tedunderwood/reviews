@@ -451,10 +451,10 @@ for quadruplet in quads2process:
 
     for init, df in initialdict.items():
 
-        hathicandidates = hathinitials[init]
-
-        if init not in initialdict:
+        if init not in hathinitials:
             continue
+
+        hathicandidates = hathinitials[init]
 
         df = initialdict[init]
 
