@@ -110,7 +110,7 @@ def title_compare(stringA, stringB):
     prev_similarity = 0
     prev_threshold = 0
 
-    for threshold in range(4, 40, 8):
+    for threshold in range(5, 40, 7):
         if threshold > minlen:
             break
         else:
@@ -123,11 +123,12 @@ def title_compare(stringA, stringB):
         similarity = m.ratio()
 
         if similarity < .75:
+            prev_similarity = similarity
             break
         else:
             prev_similarity = similarity
 
-    adjustment = (prev_threshold / 100) - 0.18
+    adjustment = (prev_threshold / 100) - 0.19
 
     return prev_similarity + adjustment
 
