@@ -488,8 +488,14 @@ for quadruplet in quads2process:
                 overallmatch = (lastmatch * titlematch) + initialsupp
 
                 if overallmatch > 0.8:
-                    matchedreviews[reviewidx] = []
+                    if reviewidx not in matchedreviews:
+                        matchedreviews[reviewidx] = []
                     matchedreviews[reviewidx].append((overallmatch, -1, 'Hathi'))
+
+                    if reviewidx not in bookmeta:
+                        bookmeta[closestreviewidx] = dict()
+                        bookmeta[closestreviewidx]['closeness'] = overallmatch
+                        bookmeta[closestreviewidx]['target'] = "Hathi: " + lastname + ' + ' + hathititle
 
 
     print('--- before including discard ---')
@@ -689,7 +695,7 @@ for quadruplet in quads2process:
             if idx in bookmeta:
                 outrow.extend([str(bookmeta[idx]['closeness']), bookmeta[idx]['target']])
             else:
-                outrow.extend(['0', 'nonfiction'])
+                outrow.extend(['0', 'not-in-index'])
 
             f.write('\t'.join(outrow) + '\n')
 
