@@ -19,6 +19,8 @@ from difflib import SequenceMatcher
 
 wordcountregex = re.compile('\d*0w[.]?')
 
+nonworddelim = re.compile('\W+')
+
 # we read a list of files to process from disk
 # each row of this file contains three data elements:
 #
@@ -31,14 +33,15 @@ wordcountregex = re.compile('\d*0w[.]?')
 #
 # * an 'outfilename' under which the results will be saved
 
-triplets2process = []
+quads2process = []
 
 metafile = sys.argv[1]
 
 with open(metafile, encoding = 'utf-8') as f:
     reader = csv.DictReader(f, delimiter = '\t')
     for row in reader:
-        triplets2process.append(row)
+        row['year'] = int(outfilename[-4 : ])
+        quads2process.append(row)
 
 def get_ratio(stringA, stringB):
 
@@ -96,6 +99,57 @@ def get_title_ratio(stringA, stringB):
         secondarymatch = m2.ratio()
 
         return max(primarymatch, secondarymatch)
+
+def title_compare(stringA, stringB):
+    '''
+    Alternate version of the above tested for Hathi
+    '''
+
+    minlen = min(len(stringA), len(stringB))
+
+    prev_similarity = 0
+    prev_threshold = 0
+
+    for threshold in range(4, 40, 8):
+        if threshold > minlen:
+            break
+        else:
+            partA = stringA[0: threshold]
+            partB = stringB[0: threshold]
+            prev_threshold = threshold
+
+        m = SequenceMatcher(None, partA, partB)
+
+        similarity = m.ratio()
+
+        if similarity < .75:
+            break
+        else:
+            prev_similarity = similarity
+
+    adjustment = (prev_threshold / 100) - 0.18
+
+    print(prev_threshold, prev_similarity, adjustment)
+
+    return prev_similarity + adjustment
+
+def initial_supplement(namesA, namesB):
+    initialsA = set([x[0] for x in namesA])
+    initialsB = set([x[0] for x in namesB])
+
+    overlap = len(initialsA.intersection(initialsB))
+    difference = len(initialsA.symmetric_difference(initialsB))
+
+    surplus = overlap - difference
+
+    if surplus < 1:
+        return surplus * .04
+    else:
+        for name in namesA:
+            if len(name) > 2 and name in namesB:
+                surplus += 1
+
+    return surplus * .04
 
 def onlyalpha(astring):
     alphapart = ''
@@ -197,15 +251,52 @@ def split_discard_line(dline):
     return author, title
 
 
-for triplet in triplets2process:
+for quadruplet in quads2process:
 
-    indexpath = triplet['indexpath']
+    indexpath = quadruplet['indexpath']
 
-    reviewsname = triplet['reviewsname']
+    reviewsname = quadruplet['reviewsname']
     reviewspath = '/media/secure_volume/brd/output/' + reviewsname
 
-    outfilename = triplet['outfilename']
+    outfilename = quadruplet['outfilename']
     outfilepath = '/media/secure_volume/brd/paired/' + outfilename
+
+    baseyear = quadruplet['year']
+
+    hathi = pd.read_csv('shortmeta.tsv', sep = '\t', low_memory = False)
+
+    hathinitials = dict()
+
+    for idx, row in hathi.iterrows():
+
+        hathiyear = int(row['latestcomp'])
+
+        difference = baseyear - hathiyear
+
+        if difference > 3 or difference < -15:  # hathi date can be 15 after review date
+            continue                            # but only 3 years before it
+
+        author = row['author']
+        if pd.isnull(author):
+            author = 'x'
+
+        names = [x.lower() for x in nonworddelim.split(author) if len(x) > 0]
+
+        title = row['shorttitle']
+        if pd.isnull(title):
+            title = 'x'
+
+        title = title.lower().replace('[', '').replace(']', '').strip()
+
+        if title.endswith('a novel'):
+            title.replace('a novel', '')
+
+        initial = names[0][0]
+
+        if initial not in hathinitials:
+            hathinitials[initial] = []
+
+        hathinitials[initial].append((names, title))
 
     bookdata = dict()
     bookmeta = dict()
@@ -252,6 +343,8 @@ for triplet in triplets2process:
 
             fic_authors[theinitial].append((lastname, initials, title, indexlinenum, currentheading))
             numindexlines += 1
+
+    potentialbooks = numindexlines
 
     reviews = pd.read_csv(reviewspath, sep = '\t')
 
@@ -358,8 +451,47 @@ for triplet in triplets2process:
 
                 notfound.append((lastname, first_initials, title, indexlinenum, heading))
 
+    for init, df in initialdict.items():
+
+        hathicandidates = hathinitials[init]
+
+        df = initialdict[init]
+
+        for reviewidx, row in df.iterrows():
+            if reviewidx in matchedreviews:
+                continue
+
+            bookauthor = row['bookauthor'].strip('.,')
+            booktitle = row['booktitle']
+
+            if pd.isnull(bookauthor) or pd.isnull(booktitle):
+                continue
+            elif len(bookauthor) < 5 or len(booktitle) < 4:
+                continue
+            else:
+                booktitle = booktitle.lower().replace('— ', '').replace('- ', '')
+                authnames = [x.lower() for x in nonworddelim.split(bookauthor) if len(x) > 0]
+
+            for hathinames, hathititle in hathicandidates:
+                lastmatch = get_ratio(authnames[0], hathinames[0])
+                if lastmatch < .7:
+                    continue
+
+                titlematch = title_compare(booktitle, hathititle)
+
+                if titlematch < 0.6:
+                    continue
+
+                initialsupp = initial_supplement(hathinames, authnames)
+
+                overallmatch = (lastmatch * titlematch) + initialsupp
+
+                if overallmatch > 0.8:
+                    matchedreviews[reviewidx] = []
+                    matchedreviews[reviewidx].append((overallmatch, -1, 'Hathi'))
+
+
     print('--- before including discard ---')
-    potentialbooks = len(matchedreviews) + len(notfound)
 
     percentfound = len(matchedreviews) / potentialbooks
 
@@ -367,6 +499,8 @@ for triplet in triplets2process:
 
     print('Potential: ' + str(potentialbooks) + '\t Found: ' + str(len(matchedreviews)))
     print('Not found: ' + str(len(notfound)) + '\t Percent found: ' + str(percentfound))
+
+    # Note that not found will count some that actually got found in Hathi
 
     currentheading = 'unclassified'
     discardpath = indexpath.replace('extract', 'discard')
@@ -496,15 +630,13 @@ for triplet in triplets2process:
 
     matchedindexes = set(matchedreviews.keys())
 
-    for idx in indexes_of_unique_books:
+    for idx in matchedindexes:   # we're now leaving out nonfiction
         author = unique_books.loc[idx, 'bookauthor']
         title = unique_books.loc[idx, 'booktitle']
         publisher = unique_books.loc[idx, 'publisher']
         price = unique_books.loc[idx, 'price']
-        if idx in matchedindexes:
-            headings = ' | '.join([x[2] for x in matchedreviews[idx]])
-        else:
-            headings = 'nonfiction'
+
+        headings = ' | '.join([x[2] for x in matchedreviews[idx]])
 
         matchingrows = reviews.loc[(reviews.bookauthor == author) & (reviews.booktitle == title),  : ]
 
