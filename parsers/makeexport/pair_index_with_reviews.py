@@ -249,7 +249,7 @@ def split_discard_line(dline):
     return author, title
 
 
-for quadruplet in quads2process[1:]:
+for quadruplet in reversed(quads2proces):
 
     indexpath = quadruplet['indexpath']
 
@@ -495,7 +495,7 @@ for quadruplet in quads2process[1:]:
                     if reviewidx not in bookmeta:
                         bookmeta[reviewidx] = dict()
                         bookmeta[reviewidx]['closeness'] = overallmatch
-                        bookmeta[reviewidx]['target'] = "Hathi: " + lastname + ' + ' + hathititle
+                        bookmeta[reviewidx]['target'] = "Hathi: " + ' '.join(hathinames) + ' + ' + hathititle
 
 
     print('--- before including discard ---')
