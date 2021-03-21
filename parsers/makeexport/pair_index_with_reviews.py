@@ -129,8 +129,6 @@ def title_compare(stringA, stringB):
 
     adjustment = (prev_threshold / 100) - 0.18
 
-    print(prev_threshold, prev_similarity, adjustment)
-
     return prev_similarity + adjustment
 
 def initial_supplement(namesA, namesB):
@@ -455,11 +453,14 @@ for quadruplet in quads2process:
 
         hathicandidates = hathinitials[init]
 
+        if init not in initialdict:
+            continue
+
         df = initialdict[init]
 
         for reviewidx, row in df.iterrows():
-            if reviewidx in matchedreviews:
-                continue
+            # if reviewidx in matchedreviews:
+                # continue
 
             bookauthor = row['bookauthor'].strip('.,')
             booktitle = row['booktitle']
