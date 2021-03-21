@@ -40,7 +40,7 @@ metafile = sys.argv[1]
 with open(metafile, encoding = 'utf-8') as f:
     reader = csv.DictReader(f, delimiter = '\t')
     for row in reader:
-        row['year'] = int(outfilename[-4 : ])
+        row['year'] = int(row['outfilename'][-4 : ])
         quads2process.append(row)
 
 def get_ratio(stringA, stringB):
