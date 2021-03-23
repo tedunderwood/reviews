@@ -87,7 +87,7 @@ for triplet in triplets2process:
                 else:
                     allowedwords.append(w.strip('. ,"'))
 
-            allowedwords.sort()  # goodbye sequential order
+            allowedwords = sorted(allowedwords, key =str.casefold)  # goodbye sequential order
 
             wordbag = ' '.join(allowedwords)
 
