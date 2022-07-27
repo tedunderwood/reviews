@@ -8,10 +8,16 @@ import extract_pagelist as extractor
 
 from difflib import SequenceMatcher
 
-def strings_similar(a, b):
+def strings_similar(a, b, caplength):
+
+    if len(a) > caplength:
+        a = a[0: caplength]
+    if len(b) > caplength:
+        b = b[0: caplength]
+
     matcher = SequenceMatcher(None, a, b)
     ratio = matcher.ratio()
-    if ratio > .81:
+    if ratio > .80:
         return True
     else:
         return False
@@ -24,10 +30,10 @@ clm_volumes = ['39015079928167', '39015079928159', '39015079928183',
         '39015079928209', '39015079928191']
 
 def starts_uppercase(astring):
-    if len(astring) < 5:
+    if len(astring) < 6:
         return False
-    elif len(astring) > 7:
-        sample = astring[0: 7]
+    elif len(astring) > 8:
+        sample = astring[0: 8]
     else:
         sample = astring
 
@@ -39,7 +45,7 @@ def starts_uppercase(astring):
         if letter.isalpha():
             lettercount += 1
 
-    if lettercount >= 4:
+    if lettercount >= 5:
         return True
     else:
         return False
@@ -68,7 +74,7 @@ for vol in clm_volumes:
                     startedyet = True
             elif not starts_uppercase(line):
                 words = line.strip().split()
-                for word in line:
+                for word in words:
                     if yearregex.fullmatch(word):
                         year = int(word[-3: -1])
                         yearsforauth[byorabout].append(year)
@@ -76,11 +82,13 @@ for vol in clm_volumes:
                     else:
                         wordsthatfail += 1
             else:
-                if strings_similar(line, 'LITTLE MAGAZINE INDEX'):
+                if strings_similar(line, 'LITTLE MAGAZINE INDEX', 22):
                     continue
-                elif strings_similar(line, 'WORKS BY'):
+                elif strings_similar(line, 'MAGAZINES INDEXED', 22):
+                    continue
+                elif strings_similar(line, 'WORKS BY', 9):
                     byorabout = 'BY'
-                elif strings_similar(line, 'WORKS ABOUT'):
+                elif strings_similar(line, 'WORKS ABOUT', 12):
                     byorabout = 'ABOUT'
                 else:
                     results.append((author, outoforder, yearsforauth))
