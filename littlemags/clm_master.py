@@ -73,6 +73,8 @@ for vol in clm_volumes:
                 if line.startswith('VOLUM') or line.startswith('WORKS'):
                     startedyet = True
             elif not starts_uppercase(line):
+                line = line.replace(')', ') ')  # these two replace operations
+                line = line.replace("'", " '")  # ensure '39) is surrounded by spaces
                 words = line.strip().split()
                 for word in words:
                     if yearregex.fullmatch(word):
@@ -100,6 +102,7 @@ for vol in clm_volumes:
                     yearsforauth = dict()
                     for option in workoptions:
                         yearsforauth[option] = []
+                    byorabout = 'BY'
 
     results.append((author, outoforder, yearsforauth))
 
