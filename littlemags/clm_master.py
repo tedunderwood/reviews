@@ -69,21 +69,11 @@ for vol in clm_volumes:
 
     for page in pagelist:
         for line in page:
+
             if not startedyet:
                 if line.startswith('VOLUM') or line.startswith('WORKS'):
                     startedyet = True
-            elif not starts_uppercase(line):
-                line = line.replace(')', ') ')  # these two replace operations
-                line = line.replace("'", " '")  # ensure '39) is surrounded by spaces
-                words = line.strip().split()
-                for word in words:
-                    if yearregex.fullmatch(word):
-                        year = int(word[-3: -1])
-                        yearsforauth[byorabout].append(year)
-                        wordsthatfit += 1
-                    else:
-                        wordsthatfail += 1
-            else:
+            elif starts_uppercase(line):
                 if strings_similar(line, 'LITTLE MAGAZINE INDEX', 22):
                     continue
                 elif strings_similar(line, 'MAGAZINES INDEXED', 22):
@@ -98,11 +88,25 @@ for vol in clm_volumes:
                         outoforder = True
                     else:
                         outoforder = False
+                    if len(line) > 50:
+                        line = line[0: 50]
+                    line = line.replace('\t', ' ')
                     author = line
                     yearsforauth = dict()
                     for option in workoptions:
                         yearsforauth[option] = []
                     byorabout = 'BY'
+            
+            line = line.replace(')', ') ')  # these two replace operations
+            line = line.replace("'", " '")  # ensure '39) is surrounded by spaces
+            words = line.strip().split()
+            for word in words:
+                if yearregex.fullmatch(word):
+                    year = int(word[-3: -1])
+                    yearsforauth[byorabout].append(year)
+                    wordsthatfit += 1
+                else:
+                    wordsthatfail += 1
 
     results.append((author, outoforder, yearsforauth))
 
