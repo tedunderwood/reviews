@@ -18,7 +18,7 @@ def extract(suffix, startpage, stoppage):
 	stoppage.
 	'''
 
-	datadir = '/media/secure_volume/brd/'
+	datadir = '/media/secure_volume/clm/'
 	zippath = datadir + suffix + '.zip'
 
 	pages = []

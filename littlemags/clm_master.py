@@ -4,7 +4,7 @@
 
 import os, sys, csv, re
 
-import extract_clm_pagelist as extractor
+import extract_pagelist as extractor
 
 from difflib import SequenceMatcher
 
@@ -14,6 +14,7 @@ def strings_similar(a, b):
     if ratio > .81:
         return True
     else:
+        return False
 
 workoptions = ['BY', 'ABOUT']
 yearregex = re.compile('.{0,1}\d{2}\)')
@@ -23,16 +24,25 @@ clm_volumes = ['39015079928167', '39015079928159', '39015079928183',
         '39015079928209', '39015079928191']
 
 def starts_uppercase(astring):
-    if len(astring) < 1:
+    if len(astring) < 5:
         return False
-    elif len(astring) > 4:
-        sample = astring[0: 4]
+    elif len(astring) > 7:
+        sample = astring[0: 7]
     else:
         sample = astring
 
-    if sample.is_upper():
-        return True
+    if not sample.isupper():
+        return False
 
+    lettercount = 0
+    for letter in sample:
+        if letter.isalpha():
+            lettercount += 1
+
+    if lettercount >= 4:
+        return True
+    else:
+        return False
 
 for vol in clm_volumes:
     outfile = '/media/secure_volume/clm/output/' + vol + '.tsv'
@@ -51,12 +61,12 @@ for vol in clm_volumes:
     for page in pagelist:
         for line in page:
             if not startedyet:
-                if line.startswith('VOLUM') or line.startwith('WORKS'):
+                if line.startswith('VOLUM') or line.startswith('WORKS'):
                     startedyet = True
             elif not starts_uppercase(line):
-                words = line.strip().split():
+                words = line.strip().split()
                 for word in line:
-                    if hyphenregex.fullmatch(word):
+                    if yearregex.fullmatch(word):
                         year = int(word[-3: -1])
                         yearsforauth[byorabout].append(year)
             else:
@@ -82,6 +92,8 @@ for vol in clm_volumes:
     with open(outfile, mode = 'w', encoding = 'utf-8') as f:
         f.write('author\toutoforder\tbyorabout\tyearlist\n')
         for auth, outoforder, yearsforauth in results:
+            if len(yearsforauth['BY']) < 1 and len(yearsforauth['ABOUT']) < 1:
+                continue
             f.write(auth + '\t' + str(outoforder) + '\t' + 'BY\t' + ' '.join([str(x) for x in yearsforauth['BY']]) + '\n')
             f.write(auth + '\t' + str(outoforder) + '\t' + 'ABOUT\t' + ' '.join([str(x) for x in yearsforauth['ABOUT']]) + '\n')
 
