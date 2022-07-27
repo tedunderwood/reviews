@@ -58,6 +58,9 @@ for vol in clm_volumes:
     for option in workoptions:
         yearsforauth[option] = []
 
+    wordsthatfail = 0
+    wordsthatfit = 0
+
     for page in pagelist:
         for line in page:
             if not startedyet:
@@ -69,6 +72,9 @@ for vol in clm_volumes:
                     if yearregex.fullmatch(word):
                         year = int(word[-3: -1])
                         yearsforauth[byorabout].append(year)
+                        wordsthatfit += 1
+                    else:
+                        wordsthatfail += 1
             else:
                 if strings_similar(line, 'LITTLE MAGAZINE INDEX'):
                     continue
@@ -88,6 +94,8 @@ for vol in clm_volumes:
                         yearsforauth[option] = []
 
     results.append((author, outoforder, yearsforauth))
+
+    print(wordsthatfit, wordsthatfail)
 
     with open(outfile, mode = 'w', encoding = 'utf-8') as f:
         f.write('author\toutoforder\tbyorabout\tyearlist\n')
