@@ -18,7 +18,7 @@ for afilepath in filelist:
 	authors = set([str(x) for x in matched.author])
 
 	for auth in authors:
-		df = matched.loc[matched.author = auth, : ]
+		df = matched.loc[matched.author == auth, : ]
 		pubyrs = set()
 		for years in df.yearlist:
 			combos = years.split()
@@ -36,7 +36,7 @@ for afilepath in filelist:
 					hits[gap] = 0
 				hits[gap] += 1
 
-		df = matched.loc[matched.author = auth, : ]
+		df = matched.loc[matched.author == auth, : ]
 		for yearstrings in df.yearlist:
 			years = [int(x) for x in yearstring.split()]
 			for yr in years:
