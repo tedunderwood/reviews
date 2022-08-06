@@ -38,7 +38,7 @@ for afilepath in filelist:
 					hits[gap] = 0
 				hits[gap] += 1
 
-		df = matched.loc[matched.author == auth, : ]
+		df = alternate.loc[alternate.author == auth, : ]
 		for yearstring in df.yearlist:
 			if pd.isnull(yearstring):
 				continue
