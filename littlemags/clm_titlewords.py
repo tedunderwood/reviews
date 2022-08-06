@@ -126,13 +126,14 @@ for vol in clm_volumes:
                                 maxmatch = thematchratio
                         if maxmatch > 0:
                             books = titles.loc[titles.author == authmatch.lower(), : ]
-                            print(authmatch, len(books))
+                            # print(authmatch, len(books))
                             titledict = dict()
                             for idx, row in books.iterrows():
                                 words = row.titlewords.split()
                                 date = int(row.date)
                                 for w in words:
                                     titledict[w] = date
+                                print(authmatch, len(titledict))
                         else:
                             titledict = dict()
                             publicationyearmatch = 0
@@ -146,7 +147,8 @@ for vol in clm_volumes:
             for word in words:
                 if word in titledict:
                     publicationyearmatch = titledict[word]
-                if yearregex.fullmatch(word) and publicationyearmatch > 0:
+                    print(publicationyearmatch)
+                if yearregex.fullmatch(word) and int(publicationyearmatch) > 0:
                     year = int(word[-3: -1])
                     yearsforauth[byorabout].append(str(year) + '--' + str(publicationyearmatch))
                     wordsthatfit += 1
