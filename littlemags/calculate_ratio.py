@@ -21,6 +21,8 @@ for afilepath in filelist:
 		df = matched.loc[matched.author == auth, : ]
 		pubyrs = set()
 		for years in df.yearlist:
+			if pd.isnull(years):
+				continue
 			combos = years.split()
 			for c in combos:
 				yr, pubyr = c.split('--')
@@ -37,7 +39,9 @@ for afilepath in filelist:
 				hits[gap] += 1
 
 		df = matched.loc[matched.author == auth, : ]
-		for yearstrings in df.yearlist:
+		for yearstring in df.yearlist:
+			if pd.isnull(yearstring):
+				continue
 			years = [int(x) for x in yearstring.split()]
 			for yr in years:
 				if yr < 80:
