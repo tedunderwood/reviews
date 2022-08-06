@@ -95,10 +95,10 @@ for vol in clm_volumes:
                     continue
                 elif strings_similar(line, 'MAGAZINES INDEXED', 22):
                     continue
-                elif strings_similar(line, 'WORKS BY', 9):
-                    byorabout = 'BY'
                 elif strings_similar(line, 'WORKS ABOUT', 12):
                     byorabout = 'ABOUT'
+                elif strings_similar(line, 'WORKS BY', 9):
+                    byorabout = 'BY'
                 else:
                     results.append((author, outoforder, yearsforauth))
                     if line < author:
@@ -132,6 +132,9 @@ for vol in clm_volumes:
                                 words = row.titlewords.split()
                                 date = int(row.date)
                                 for w in words:
+                                    w = w.strip('",[]')
+                                    if w == 'novel' or w == 'stories':
+                                        continue
                                     titledict[w] = date
                                 print(authmatch, len(titledict))
                         else:
