@@ -145,13 +145,16 @@ for vol in clm_volumes:
             line = line.replace("'", " '")  # ensure '39) is surrounded by spaces
             words = line.strip().split()
             for word in words:
-                if word in titledict:
-                    publicationyearmatch = titledict[word]
-                    print(publicationyearmatch)
-                if yearregex.fullmatch(word) and int(publicationyearmatch) > 0:
+                wordlow = word.lower().strip(':;,.()[]')
+                if wordlow in titledict:
+                    publicationyearmatch = titledict[wordlow]
+                    print(word, publicationyearmatch)
+                if yearregex.fullmatch(word):
                     year = int(word[-3: -1])
-                    yearsforauth[byorabout].append(str(year) + '--' + str(publicationyearmatch))
+                    if publicationyearmatch > 0:
+                        yearsforauth[byorabout].append(str(year) + '--' + str(publicationyearmatch))
                     wordsthatfit += 1
+                    publicationyearmatch = 0
                 else:
                     wordsthatfail += 1
 
