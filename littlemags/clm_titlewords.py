@@ -126,6 +126,7 @@ for vol in clm_volumes:
                                 maxmatch = thematchratio
                         if maxmatch > 0:
                             books = titles.loc[titles.author == authmatch.lower(), : ]
+                            print(authmatch, len(books))
                             titledict = dict()
                             for idx, row in books.iterrows():
                                 words = row.titlewords.split()
